@@ -27,14 +27,26 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-class Order(models.Model):
-    product = models.ManyToManyField(Product)
-    order_number = models.IntegerField(unique = True, null = False, blank = False)
-    ordering_customer = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False, related_name = 'customer')
-    customer_address = models.CharField(max_length = 200, null = False)
-    quantity = models.IntegerField(null = False, blank = False)
+class Order(models.Model): 
+    # ~~~~~ TODO: Test database to check if fields are sufficient. ~~~~
+    # product = models.ManyToManyField(Product)
+    # ordering_customer = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False, related_name = 'customer')
+    # customer_address = models.CharField(max_length = 200, null = False)
+    # quantity = models.IntegerField(null = False, blank = False)
+    id = models.BigAutoField(primary_key = True, unique = True)
+    order_date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
+        return str(self.id)
+
+class OrderDetails(models.Model): 
+    id = models.BigAutoField(primary_key = True, unique = True)
+    order_number = models.ForeignKey(Order, on_delete = models.PROTECT, null = False, blank = False)
+    customer = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False, blank = False)
+    products = models.ManyToManyField(Product)
+    quantity = models.IntegerField(null = False, blank = False)
+
+    def __str__(self): 
         return str(self.order_number)
 
 class Review(models.Model):
@@ -46,11 +58,11 @@ class Review(models.Model):
         (5, '5'),
     )
     user = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False)
-    order_id = models.ForeignKey(Order, on_delete = models.PROTECT, null = False)
+    order_number = models.ForeignKey(Order, on_delete = models.PROTECT, null = False)
     product = models.ForeignKey(Product, on_delete = models.PROTECT, null = False)
     rating = models.PositiveSmallIntegerField(choices = RATING_OPTIONS, null = False)
     description = models.CharField(max_length = 500)
 
     def __str__(self):
-        return str(self.order_id)
+        return str(self.order_number)
     
