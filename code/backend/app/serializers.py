@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Type, Product, Order, CustomUser, Review
 
+# ~~~~ Create serializer for new models ~~~~
 # Order & User only ones with def create()
 
 class TypeSerializer(serializers.ModelSerializer):

@@ -2,6 +2,8 @@ from django.urls import path
 from .views import *
 from . import views
 
+# Fix urlpatterns for new models
+
 urlpatterns = [
     path('login/', views.MyTokenObtainPairView.as_view(), name = 'token_obtain_pair'),
     path('register/', views.register),
