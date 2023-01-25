@@ -9,6 +9,7 @@ function App() {
       <Header/>
       <br/>
       <PhotoCarousel/>
+      <Product/>
     </div>
   );
 }
