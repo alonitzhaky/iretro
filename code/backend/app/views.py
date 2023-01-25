@@ -5,7 +5,6 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, HttpResponse
 
 from .models import Type, Product, CustomUser

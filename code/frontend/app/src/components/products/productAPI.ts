@@ -4,7 +4,7 @@ import { SERVER } from '../../env'
 
 export function getAllProducts() {
     return new Promise<{ data: Product[] }>((resolve) =>
-        axios.get(SERVER + '/' + 'product/').then(res => resolve({ data: res.data }))
+        axios.get(SERVER + '/product/').then(res => resolve({ data: res.data }))
     );
 }
 

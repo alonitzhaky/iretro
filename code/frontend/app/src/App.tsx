@@ -1,11 +1,14 @@
 import React from 'react';
-import './App.css';
-import { Product } from './features/products/Product';
+import Header from './components/header/Header';
+import PhotoCarousel from './components/photo-carousel/PhotoCarousel';
+import { Product } from './components/products/Product';
 
 function App() {
   return (
-    <div className="App">
-      <Product></Product>
+    <div>
+      <Header/>
+      <br/>
+      <PhotoCarousel/>
     </div>
   );
 }
