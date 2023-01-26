@@ -7,9 +7,9 @@ from rest_framework import status
 
 from django.shortcuts import redirect, HttpResponse
 
-from .models import Type, Product, CustomUser
+from .models import Review, Type, Product, CustomUser
 from .forms import ReviewForm
-from .serializers import TypeSerializer, ProductSeralizer
+from .serializers import ReviewSerializer, TypeSerializer, ProductSeralizer
 
 # Create your views here.
 
@@ -39,7 +39,7 @@ def register(request):
     user.is_active = True
     user.is_staff = False # To prevent bugs with normal customers
     user.save()
-    return Response()
+    return Response("Created.")
 
 # ~~~~~~~~~~ Register ~~~~~~~~~
 
@@ -160,4 +160,22 @@ def submit_review(request):
         form = ReviewForm()
     return Response('Success!')
 
-# ~~~~~~~~~~ Reviews ~~~~~~~~~~
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_reviews(request, id = -1): 
+    if id == -1:
+        serializer = ReviewSerializer(Review.objects.all(), many=True)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+    else:
+        try:
+            serializer = ReviewSerializer(Review.objects.get(id=id))
+        except:
+                return Response(status=status.HTTP_400_BAD_REQUEST, data="product not found")
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def delete_review(request, id = -1):
+    pass
+
+# ~~~~~~~~~~ Reviews ~~~~~~~~~

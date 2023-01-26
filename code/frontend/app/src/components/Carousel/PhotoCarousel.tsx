@@ -4,8 +4,9 @@ import Carousel from "react-bootstrap/Carousel";
 const PhotoCarousel = () => {
   return (
     <div>
-      <br/>
-      <Carousel slide={true}>
+      <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/></head>
+      <br />
+      <Carousel className="animate__animated animate__fadeInUp" slide={true} interval={3000}>
         <Carousel.Item>
           <img
             className="d-block w-100"
@@ -13,7 +14,7 @@ const PhotoCarousel = () => {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h3 style={{color:"white"}}>iRetro - Preserve Your Technology</h3>
+            <h3 style={{ color: "white" }}>iRetro - Preserve Your Technology</h3>
             <p>Keep your old iPhone, showing off its internal beauty.</p>
           </Carousel.Caption>
         </Carousel.Item>
@@ -25,7 +26,7 @@ const PhotoCarousel = () => {
           />
 
           <Carousel.Caption>
-            <h3 style={{color:"white"}}>Second slide label</h3>
+            <h3 style={{ color: "white" }}>Second slide label</h3>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </Carousel.Caption>
         </Carousel.Item>
@@ -37,14 +38,13 @@ const PhotoCarousel = () => {
           />
 
           <Carousel.Caption>
-            <h3 style={{color:"white"}}>Third slide label</h3>
+            <h3 style={{ color: "white" }}>Third slide label</h3>
             <p>
               Praesent commodo cursus magna, vel scelerisque nisl consectetur.
             </p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>
-      
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import AboutUs from './components/about-us/AboutUs';
+import AboutUs from './components/About-Us/AboutUs';
 import Footer from './components/Footer/Footer';
-import Header from './components/header/Header';
-import PhotoCarousel from './components/photo-carousel/PhotoCarousel';
-import { Product } from './components/products/Product';
+import Header from './components/Header/Header';
+import PhotoCarousel from './components/Carousel/PhotoCarousel';
+import { Product } from './components/Products/Product';
 
 function App() {
   return (

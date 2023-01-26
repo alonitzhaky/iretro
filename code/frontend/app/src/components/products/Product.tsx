@@ -7,17 +7,16 @@ import {
 } from "./productSlice";
 
 export function Product() {
+  const iretroBrown = "rgb(62,56,54)"
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllProductsAsync());
   }, []);
   return (
-    <div>
+    <div className='text-center'>
       <br/>
-      Products
-      <br/>
-      {products.length}
+      <h1 style={{color: iretroBrown}}>Products</h1>
       {products.map((product, index) => (
         <div key={index}>
           <hr/>
@@ -31,7 +30,7 @@ export function Product() {
           <br/>
           Image:
           <br/>
-          <img src = {SERVER + product.image}/>
+          <img src = {SERVER + product.image} style={{height:"200px", width:"200px"}}/>
         </div>
       ))}
     </div>

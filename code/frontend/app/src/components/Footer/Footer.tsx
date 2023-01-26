@@ -7,7 +7,6 @@ const Footer = () => {
     return (
         <footer className="bg-dark text-white py-4">
             <Container className='text-center'>
-
                 <a href="https://github.com/alonitzhaky" target="_blank" style={{ color: "white" }}>
                     <FontAwesomeIcon icon={faGithub} style={{margin: "0 10px"}}/>
                 </a>
@@ -19,9 +18,7 @@ const Footer = () => {
                 </a>
             </Container>
             <br/>
-            
             <p className="text-center">Copyright &copy; {new Date().getFullYear()} Alon Itzhaky</p>
-
         </footer>
     );
 }
