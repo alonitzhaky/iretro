@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import Product from '../../models/Product';
 import { addProduct, getAllProducts, deleteProduct, updateProduct } from './productAPI';
-
 interface ProductState {
     status: 'idle' | 'loading' | 'failed';
     products: Product[]

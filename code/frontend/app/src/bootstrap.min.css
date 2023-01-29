@@ -12481,3 +12481,14 @@ th {
     color: inherit
 }
 
+main {
+    min-height: 72vh;
+}
+
+a {
+    text-decoration: none;
+  }
+
+.animate__animated.animate__fadeInUp {
+    --animate-duration: 2s
+}

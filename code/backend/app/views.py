@@ -46,7 +46,6 @@ def register(request):
 # ~~~~~~~~~~ Full CRUD - APIViews ~~~~~~~~~
 
 # Categories
-
 @api_view(["GET"])
 def get_category(request,id = -1):
     if request.method == "GET":
@@ -91,13 +90,9 @@ def change_category(request,id = -1):
             return HttpResponse(res, status=status.HTTP_200_OK)
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST, data="category not found")
-
 # Categories
 
 # Products
-
-# ~~~~~~~~~~ Full CRUD - Products with APIViews ~~~~~~~~~
-
 @api_view(["GET"])
 def get_products(request,id=-1):
     if request.method == "GET":
@@ -113,6 +108,7 @@ def get_products(request,id=-1):
 
 @api_view(["POST","DELETE","PUT"])
 @permission_classes([IsAdminUser])
+# Seperate between API Views
 def change_products(request,id=-1):
     if request.method == "POST":
         # create varabile with the serialixation type , if it valid we save it to the DB 
@@ -121,7 +117,6 @@ def change_products(request,id=-1):
             new_product.save()
             return Response(status=status.HTTP_201_CREATED, data=new_product.data)
         return Response(status=status.HTTP_400_BAD_REQUEST, data="product not valid")
-
     # delete by id
     elif request.method == "DELETE":
         id_2_del = id
@@ -131,21 +126,15 @@ def change_products(request,id=-1):
         except:
             return Response(status=status.HTTP_400_BAD_REQUEST, data="product not found")
         return Response(status=status.HTTP_200_OK, data="product delete")
-
     # update by id
     elif request.method == "PUT":
-        id_2_upd = id
-        try:
-            ser = ProductSeralizer(data=request.data)
-            old_product = Product.objects.get(id=id_2_upd)
+        if id == id:
+            ser = ProductSeralizer(data = request.data)
+            old_product = Product.objects.get(id = id)
             res = ser.update(old_product, request.data)
-            return HttpResponse(res, status=status.HTTP_200_OK)
-        except:
-            return Response(status=status.HTTP_400_BAD_REQUEST, data="product nor found")
-
-
-# ~~~~~~~~~~ Full CRUD - Products with APIViews ~~~~~~~~~
-
+            return HttpResponse(res, status = status.HTTP_200_OK)
+        else:
+            return Response(status = status.HTTP_400_BAD_REQUEST, data = "product not found")
 # Products
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~~

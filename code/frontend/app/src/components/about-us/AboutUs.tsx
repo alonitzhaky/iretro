@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 const AboutUs = () => {
   const iretroBrown = "rgb(62,56,54)"
+  const [showHR, setShowHR] = useState(false)
+  useEffect(() => {
+    setTimeout(() => {
+      setShowHR(true);
+    }, 1920); // delays appearance of <hr> element after all info has loaded.
+  }, []);
   return (
     <div>
-      <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/></head>
+      <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" /></head>
       <h1 className='animate__animated animate__fadeInUp' style={{ textAlign: "center", color: iretroBrown }}>About Us</h1>
-      <hr />
+      {showHR && <hr className="animate__animated animate__fadeInUp" />}
       <div className='animate__animated animate__fadeInUp'>
         <p style={{ textAlign: "center" }}>We believe every piece of techology should be cherished and kept as a piece of memory.</p>
         <h3 style={{ textAlign: "center", color: iretroBrown }}>So We Did. </h3>

@@ -6,6 +6,7 @@ import {
   getAllProductsAsync,
 } from "./productSlice";
 
+
 export function Product() {
   const iretroBrown = "rgb(62,56,54)"
   const products = useAppSelector(selectProducts);
@@ -15,7 +16,6 @@ export function Product() {
   }, []);
   return (
     <div className='text-center'>
-      <br/>
       <h1 style={{color: iretroBrown}}>Products</h1>
       {products.map((product, index) => (
         <div key={index}>

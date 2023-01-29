@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Type, Product, Order, CustomUser, Review
+from rest_framework_simplejwt.tokens import RefreshToken
 
 # ~~~~ Create serializer for new models ~~~~
 # Order & User only ones with def create()
@@ -13,6 +14,10 @@ class ProductSeralizer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
+
+    def create(self, validated_data): 
+        user = self.context['user']
+        return Product.objects.create(**validated_data, user = user)
 
 class OrderSerializer(serializers.ModelSerializer): 
     class Meta:
@@ -41,3 +46,13 @@ class ReviewSerializer(serializers.ModelSerializer):
     def create(self, validated_data): 
         user = self.context['user']
         return Review.objects.create(**validated_data, user = user)
+
+class UserSerializerWithToken(CustomUserSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+    class Meta:
+        model = CustomUser
+        fields = ['id',  'username', 'email', 'name', 'admin', 'token']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)

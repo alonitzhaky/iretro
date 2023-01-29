@@ -1,37 +1,56 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container, Navbar, Nav, NavItem, NavLink } from 'react-bootstrap';
-import { faGithub, faInstagram, faLinkedin } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPhone } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
+  const [token, setToken] = useState('')
+  useEffect(() => {
+    if(!token){
+      const storedToken = localStorage.getItem("token")
+      setToken(JSON.parse(String(storedToken)))
+    }
+  }, [])
+  
   return (
     <div>
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container fluid>
-          <a href="/"><img src="./logo.png" alt="Bootstrap" width="80" height="80"></img></a>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Brand href="/"><img src='./logo.png' style={{ height: '60px' }}></img></Navbar.Brand>
+          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="navbarColor01" >
-            <Nav navbar>
-              <NavItem>
-                <NavLink href="/">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/about">About Us</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/shop">Shop</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="#">Contact</NavLink>
-              </NavItem>
+            <Nav className="me-auto">
+                <NavItem>
+                  <NavLink href="/">Home</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/about">About Us</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/shop">Shop</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/contact">Contact</NavLink>
+                </NavItem>
             </Nav>
-            <Navbar.Text>
-            <a href="tel:+972547144714" target="_blank" style={{ color: "white" }}>
-                <FontAwesomeIcon icon={faPhone} />
-              </a>
-            </Navbar.Text>
-
+            <Nav style={{margin: "0 5px"}}>
+              <Navbar.Text>
+                <a href="tel:+972547144714" target="_blank" style={{ color: "white", margin: "0 10px"}}>
+                  <FontAwesomeIcon icon={faPhone} />
+                  <a>{" "}Call Us</a>
+                </a>
+                {"|"}
+                <a href="/cart" target="_blank" style={{ color: "white", margin: "0 10px"}}>
+                  <FontAwesomeIcon icon={faCartShopping}/>
+                  <a>{" "}Cart</a>
+                </a>
+                {"|"}
+                <a href="/login" style={{ color: "white", margin: "0 10px"}}>
+                  <FontAwesomeIcon icon={faUser}/>
+                  {token ? " Log out" : <a>{" "}Log in</a>}
+                </a>
+              </Navbar.Text>
+            </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
