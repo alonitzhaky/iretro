@@ -6,11 +6,11 @@ const PhotoCarousel = () => {
     <div>
       <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/></head>
       <br />
-      <Carousel className="animate__animated animate__fadeInUp" slide={true} interval={3000}>
+      <Carousel className="animate__animated animate__fadeIn" slide={true} interval={3000}>
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="grid4s.webp"
+            src="grid4s.jpeg"
             alt="First slide"
           />
           <Carousel.Caption>
@@ -21,7 +21,7 @@ const PhotoCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="grid4s.webp"
+            src="grid1.webp"
             alt="Second slide"
           />
 
@@ -33,7 +33,7 @@ const PhotoCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="grid4s.webp"
+            src="grid4.webp"
             alt="Third slide"
           />
 

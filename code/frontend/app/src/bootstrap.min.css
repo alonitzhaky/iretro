@@ -12489,6 +12489,6 @@ a {
     text-decoration: none;
   }
 
-.animate__animated.animate__fadeInUp {
-    --animate-duration: 2s
+.animate__animated.animate__fadeIn {
+    --animate-duration: 1.5s
 }

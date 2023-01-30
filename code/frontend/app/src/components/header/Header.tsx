@@ -47,7 +47,7 @@ const Header = () => {
                 {"|"}
                 <a href="/login" style={{ color: "white", margin: "0 10px"}}>
                   <FontAwesomeIcon icon={faUser}/>
-                  {token ? " Log out" : <a>{" "}Log in</a>}
+                  {token ? " Log Out" : <a>{" "}Log in</a>}
                 </a>
               </Navbar.Text>
             </Nav>

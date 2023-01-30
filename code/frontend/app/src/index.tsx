@@ -13,7 +13,6 @@ import Authentication from './components/Authentication/Authentication';
 import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
 
-
 import './bootstrap.min.css';
 
 const container = document.getElementById('root')!;

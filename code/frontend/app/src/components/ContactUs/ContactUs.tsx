@@ -31,7 +31,7 @@ const ContactUs = () => {
                     yet we strive to ship worldwide in the near future.</p>
                 <p style={{ textAlign: "center" }}>Q: How long will it be until I get my order?</p>
                 <p style={{ textAlign: "center", opacity: "0.5" }}>A: With the help of UPS, your order will arrive within 5 business days, max.
-                We promise! .</p>
+                We promise!</p>
                 <p style={{ textAlign: "center" }}>Q: What are the differences between the DIY kit and the Fully-Built kit?</p>
                 <p style={{ textAlign: "center", opacity: "0.5" }}>A: We know your time is valueable, so we offer the options of sending you the parts and building it yourself, 
                 or we can provide you with a fully built frame, just to save some time {":)"}</p>
