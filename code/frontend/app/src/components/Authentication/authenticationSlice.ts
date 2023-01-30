@@ -1,18 +1,19 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { loginUser, registerUser } from './authenticationAPI';
+import { loginUser, logoutUser, registerUser } from './authenticationAPI';
 import jwt_decode from "jwt-decode";
-
 interface AuthenticationState {
   token: string
   isLogged: Boolean
   username: string
+  is_staff: Boolean
 }
 
 export const initialState: AuthenticationState = {
   token: "",
   isLogged: false,
-  username: ""
+  username: "",
+  is_staff: false
 }
 
 export const registerUserAsync = createAsyncThunk(
@@ -29,6 +30,14 @@ export const loginUserAsync = createAsyncThunk(
     const response = await loginUser(details);
     return response;
   });
+
+export const logoutUserAsync = createAsyncThunk(
+  'authentication/logoutUser',
+  async () => {
+    const response = await logoutUser();
+    return response;
+  }
+)
 
 export const authenticationSlice = createSlice({
   name: 'authentication',
@@ -53,16 +62,28 @@ export const authenticationSlice = createSlice({
         token_type: string;
         user_id: number;
         username: string;
+        is_staff: boolean;
       }
       const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
       state.token = action.payload.data['refresh']
-      state.username = decoded.username
-      // console.log(jwt_decode(action.payload.data.access))
+      state.username = decoded.username;
+      state.is_staff = decoded.is_staff;
       localStorage.setItem("token", JSON.stringify(state.token))
       localStorage.setItem("username", JSON.stringify(state.username));
-      state.isLogged = true
-    })
-  }});
+      localStorage.setItem("is_staff", JSON.stringify(state.is_staff));
+      setTimeout(function () {
+        window.location.replace("/")
+      }, 2000)
+      state.isLogged = true;
+    }).addCase(logoutUserAsync.fulfilled, (state, action) => {
+      localStorage.clear()
+      setTimeout(function () {
+        window.location.replace("/");
+      }, 1000);
+      state.isLogged = false;
+    });
+  },
+  });
 
 export const { getToken } = authenticationSlice.actions;
 export const selectIsLogged = (state: RootState) => state.authentication.isLogged;

@@ -21,7 +21,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token = super().get_token(user)
         # Add more properties
         token['username'] = user.username
-        print(user.username)
+        token['is_staff'] = user.is_staff
         return token
 
 class MyTokenObtainPairView(TokenObtainPairView):
