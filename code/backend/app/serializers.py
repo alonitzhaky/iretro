@@ -29,11 +29,26 @@ class OrderSerializer(serializers.ModelSerializer):
         return Order.objects.create(**validated_data, user = user)
 
 class CustomUserSerializer(serializers.ModelSerializer): 
+    name = serializers.SerializerMethodField(read_only=True)
+    id = serializers.SerializerMethodField(read_only=True)
+    admin = serializers.SerializerMethodField(read_only=True)
     class Meta: 
         model = CustomUser
         fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
 
+    def get_name(self, object):
+        name = object.first_name
+        if name == '':
+            name = object.email
+        return name
+
+    def get_id(self, object):
+        return object.id
+
+    def get_admin(self, object):
+        return object.is_staff
+  
     def create(self, validated_data): 
         user = self.context['user']
         return CustomUser.objects.create(**validated_data, user = user)
@@ -49,10 +64,11 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class UserSerializerWithToken(CustomUserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
+    username = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = CustomUser
-        fields = ['id',  'username', 'email', 'name', 'admin', 'token']
+        fields = ['id', 'username', 'email', 'name', 'admin', 'token']
 
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
+    def get_token(self, object):
+        token = RefreshToken.for_user(object)
         return str(token.access_token)

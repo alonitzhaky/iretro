@@ -11,6 +11,6 @@ export function registerUser(username: string, password: string, email: string) 
 // 
 export function loginUser(details: any) {
     return new Promise<{ data: any }>((resolve) => 
-    axios.post(SERVER + "/login/", {username: details.username, password: details.password}).then(res => resolve({data: res.data}))
-    )
+    axios.post(SERVER + "/login/", {username: details.username, password: details.password}).then(res => resolve({data: res.data})))
+    
 }

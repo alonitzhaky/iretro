@@ -4,13 +4,21 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = () => {
-  const [token, setToken] = useState('')
+  const [token, setToken] = useState("")
+  const [userName, setUserName] = useState("")
   useEffect(() => {
     if(!token){
       const storedToken = localStorage.getItem("token")
       setToken(JSON.parse(String(storedToken)))
     }
   }, [])
+  useEffect(() => {
+    if(!userName){
+      const storedUserName = localStorage.getItem("username")
+      setUserName(JSON.parse(String(storedUserName)))
+    }
+  }, [])
+  
   
   return (
     <div>
@@ -47,7 +55,7 @@ const Header = () => {
                 {"|"}
                 <a href="/login" style={{ color: "white", margin: "0 10px"}}>
                   <FontAwesomeIcon icon={faUser}/>
-                  {token ? " Log Out" : <a>{" "}Log in</a>}
+                  {token ? ` ${userName}` : <a>{" "}Log in</a>}
                 </a>
               </Navbar.Text>
             </Nav>

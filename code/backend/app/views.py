@@ -9,7 +9,7 @@ from django.shortcuts import redirect, HttpResponse
 
 from .models import Review, Type, Product, CustomUser
 from .forms import ReviewForm
-from .serializers import ReviewSerializer, TypeSerializer, ProductSeralizer
+from .serializers import ReviewSerializer, TypeSerializer, ProductSeralizer, UserSerializerWithToken
 
 # Create your views here.
 
@@ -19,7 +19,9 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
+        # Add more properties
         token['username'] = user.username
+        print(user.username)
         return token
 
 class MyTokenObtainPairView(TokenObtainPairView):
