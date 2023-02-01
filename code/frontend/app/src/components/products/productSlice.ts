@@ -65,6 +65,7 @@ export const productSlice = createSlice({
             temporary.price = action.payload.price
             temporary.description = action.payload.description
             temporary.image = action.payload.image
+            temporary.quantity = action.payload.quantity
         });
     },
 });

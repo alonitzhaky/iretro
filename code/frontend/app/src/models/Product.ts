@@ -5,4 +5,5 @@ export default class Product {
     price: number = 0
     description: string = ""
     image: string = ""
+    quantity: number = 0
 }

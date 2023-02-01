@@ -3,10 +3,15 @@ import { Container, Navbar, Nav, NavItem, NavLink, Dropdown } from 'react-bootst
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../app/hooks';
-import { logoutUserAsync } from '../Authentication/authenticationSlice';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { logoutUserAsync, selectIsLogged } from '../Authentication/authenticationSlice';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Cart from '../Cart/Cart';
+
 
 const Header = () => {
+  const test = useAppSelector(selectIsLogged)
   const dispatch = useAppDispatch()
   const iretroBrown = "rgb(62,56,54)"
   const [token, setToken] = useState("")
@@ -22,9 +27,10 @@ const Header = () => {
       setIsStaff(JSON.parse(String(isAdmin)))
     }
   }, [])
-
+  console.log(test)
   return (
     <div>
+      <ToastContainer />
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container fluid>
           <Navbar.Brand href="/"><img src='./logo.png' style={{ height: '60px' }}></img></Navbar.Brand>
@@ -54,7 +60,19 @@ const Header = () => {
               <Dropdown.Menu>
                 {!token && <Dropdown.Item as={Link} to={"/login"}>Login</Dropdown.Item>}
                 {isStaff && <Dropdown.Item href="http://127.0.0.1:8000/admin/">Admin Panel</Dropdown.Item>}
-                {token && <Dropdown.Item onClick={() => dispatch(logoutUserAsync())} style={{ color: iretroBrown }}>
+                {token && <Dropdown.Item onClick={() => {
+                  dispatch(logoutUserAsync()); toast.error("Logging out, please wait...", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    rtl: false,
+                    pauseOnFocusLoss: true,
+                    draggable: true,
+                    pauseOnHover: true,
+                    theme: "light"
+                  });
+                }} style={{ color: iretroBrown }}>
                   Logout
                 </Dropdown.Item>}
               </Dropdown.Menu>
@@ -65,12 +83,11 @@ const Header = () => {
                   <FontAwesomeIcon icon={faPhone} />
                   <a>{" "}Call Us</a>
                 </a>
-                {"|"}
-                <a href="/cart" target="_blank" style={{ color: "white", margin: "0 10px" }}>
-                  <FontAwesomeIcon icon={faCartShopping} />
-                  <a>{" "}Cart</a>
-                </a>
-                {"|"}
+                <Nav>
+                  <Nav.Link>
+                    <Cart />
+                  </Nav.Link>
+                </Nav>
               </Navbar.Text>
             </Nav>
           </Navbar.Collapse>

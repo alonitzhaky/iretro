@@ -77,13 +77,13 @@ export const authenticationSlice = createSlice({
       state.isLogged = true;
     }).addCase(logoutUserAsync.fulfilled, (state, action) => {
       localStorage.clear()
-      setTimeout(function () {
-        window.location.replace("/");
-      }, 1000);
+        setTimeout(function () {
+          window.location.replace("/");
+        }, 1000);
       state.isLogged = false;
     });
   },
-  });
+});
 
 export const { getToken } = authenticationSlice.actions;
 export const selectIsLogged = (state: RootState) => state.authentication.isLogged;

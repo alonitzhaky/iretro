@@ -28,7 +28,6 @@ root.render(
           <Routes>
             <Route path="/" element={<PhotoCarousel />} />
             <Route path="/shop" element={<Product />} />
-            {/* Temporary - need to fix CSS + Component Name */}
             <Route path="/about" element={<AboutUs/>} />
             <Route path="/login" element={<Authentication />} />
             <Route path="/register" element={<Register />} />

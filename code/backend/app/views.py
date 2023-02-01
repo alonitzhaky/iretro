@@ -49,17 +49,12 @@ def register(request):
 
 # Categories
 @api_view(["GET"])
-def get_category(request,id = -1):
-    if request.method == "GET":
-        if id == -1:
-            serializer = TypeSerializer(Type.objects.all(), many=True)
-            return Response(status=status.HTTP_200_OK, data=serializer.data)
-        else:
-            try:
-                serializer = TypeSerializer(Type.objects.get(id = id))
-            except:
-                 return Response(status=status.HTTP_400_BAD_REQUEST, data="teacher nor found")
-            return Response(status=status.HTTP_200_OK, data=serializer.data)    
+def get_products_from_category(request, id):
+    try: 
+        serializer = ProductSeralizer(Product.objects.filter(category = id), many = True)
+        return Response(serializer.data)
+    except:
+        return Response(status = status.HTTP_404_BAD_REQUEST)
 
 @api_view(["POST","DELETE","PUT"])
 @permission_classes([IsAdminUser])

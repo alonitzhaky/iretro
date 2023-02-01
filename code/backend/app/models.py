@@ -24,6 +24,7 @@ class Product(models.Model):
     name = models.CharField(max_length=50)
     price = models.DecimalField(decimal_places = 2, max_digits = 5, validators = [MinValueValidator(Decimal('0.01'))])
     description = models.CharField(max_length = 200)
+    quantity = models.IntegerField(null = False, blank = False, validators=[MinValueValidator(1)], default = 0)
     image = models.ImageField(null = False, blank = False, default='placeholder.png')
 
     def __str__(self):
