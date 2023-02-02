@@ -5,7 +5,8 @@ import Profile from "../../models/Profile";
 
 export interface ProfileState {
     status: 'idle' | 'loading' | 'failed';
-    name: string
+    first_name: string
+    last_name: string
     email: string
     admin: boolean
     username: string
@@ -13,7 +14,8 @@ export interface ProfileState {
 
 const initialState: ProfileState = {
     status: 'idle',
-    name: '',
+    first_name: '',
+    last_name: '',
     email: '',
     admin: false,
     username: '', 
@@ -34,7 +36,8 @@ export const profileSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getUserProfileAsync.fulfilled, (state, action) => {
             console.log(action.payload.data)
-            state.name = action.payload.data.name
+            state.first_name = action.payload.data.first_name
+            state.last_name = action.payload.data.last_name
             state.email = action.payload.data.email
             state.username = action.payload.data.username
             state.admin = action.payload.data.admin

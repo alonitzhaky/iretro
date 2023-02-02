@@ -15,6 +15,7 @@ import ContactUs from './components/ContactUs/ContactUs';
 import Profile from './components/Profile/Profile';
 
 import './bootstrap.min.css';
+import UpdateInfo from './components/Profile/UpdateInfo';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -34,6 +35,7 @@ root.render(
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/update" element={<UpdateInfo />} />
           </Routes>
         </Container>
         <br/>

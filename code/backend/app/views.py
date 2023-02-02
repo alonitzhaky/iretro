@@ -22,6 +22,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         # Add more properties
         token['username'] = user.username
         token['is_staff'] = user.is_staff
+        token['first_name'] = user.first_name
+        token['last_name'] = user.last_name
         return token
 
 class MyTokenObtainPairView(TokenObtainPairView):
@@ -34,7 +36,10 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['POST'])
 def register(request): 
     # User - check for 'Class'.object (CustomUser, User or AbstactUser)
-    user = CustomUser.objects.create_user(username = request.data['username'],
+    user = CustomUser.objects.create_user(
+            first_name = request.data['first_name'],
+            last_name = request.data['last_name'],           
+            username = request.data['username'],
             email = request.data['email'],
             password = request.data['password'])
     

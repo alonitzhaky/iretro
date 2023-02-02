@@ -1,9 +1,9 @@
 import axios from 'axios'
 import { SERVER } from '../../env'
 
-export function registerUser(username: string, password: string, email: string) {
+export function registerUser(username: string, password: string, email: string, first_name: string, last_name: string) {
     return new Promise<{ data: any }>((resolve) =>
-        axios.post(SERVER + "/register/", { username, password, email }).then(res => resolve({ data: res.data })))
+        axios.post(SERVER + "/register/", { username, password, email, first_name, last_name }).then(res => resolve({ data: res.data })))
 }
 // export function loginUser(username: string, password: string) {
 //     return new Promise<{ data: any }>((resolve) =>

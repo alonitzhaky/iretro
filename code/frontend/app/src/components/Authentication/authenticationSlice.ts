@@ -7,20 +7,24 @@ interface AuthenticationState {
   isLogged: Boolean
   username: string
   is_staff: Boolean
+  first_name: string
+  last_name: string
 }
 
 export const initialState: AuthenticationState = {
   token: "",
   isLogged: false,
   username: "",
-  is_staff: false
+  is_staff: false, 
+  first_name: "", 
+  last_name: ""
 }
 
 export const registerUserAsync = createAsyncThunk(
   'authentication/registerUser',
   async (info:
-    { username: string, password: string, email: string }) => {
-    const response = await registerUser(info.username, info.password, info.email);
+    { username: string, password: string, email: string, first_name: string, last_name: string}) => {
+    const response = await registerUser(info.username, info.password, info.email, info.first_name, info.last_name);
     return response.data;
   });
 

@@ -6,6 +6,8 @@ import { registerUserAsync } from './authenticationSlice';
 const Register = () => {
     const iretroBrown = "rgb(62,56,54)"
     const dispatch = useAppDispatch()
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [passwordconfirm, setPasswordConfirm] = useState("")
@@ -21,7 +23,20 @@ const Register = () => {
                     <Col md={6}>
                         <h2 style={{color: iretroBrown}} className="text-center mb-4">Register</h2>
                         <Form>
-                            <Form.Group controlId="formBasicName">
+                        <Form.Group controlId="formBasicFirstName">
+                                <div className='d-flex justify-content-center'>
+                                    <Form.Label>First Name</Form.Label>
+                                </div>
+                                <Form.Control required type="text" placeholder="Enter your first name" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                            </Form.Group>
+                            <Form.Group controlId="formBasicLastName">
+                                <div className='d-flex justify-content-center'>
+                                    <Form.Label>Last Name</Form.Label>
+                                </div>
+                                <Form.Control required type="text" placeholder="Enter your last name" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                            </Form.Group>
+
+                            <Form.Group controlId="formBasicUserName">
                                 <div className='d-flex justify-content-center'>
                                     <Form.Label>Username</Form.Label>
                                 </div>
@@ -48,7 +63,7 @@ const Register = () => {
                             <br />
                             {isValid &&
                                 <div className='d-flex justify-content-center'>
-                                    <Button style={{color: iretroBrown}} variant="primary" type="submit" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email }))}>
+                                    <Button style={{color: iretroBrown}} variant="primary" type="submit" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email, first_name: firstName, last_name: lastName }))}>
                                         Register
                                     </Button>
                                 </div> || 'The passwords are not identical. Try again.'}
