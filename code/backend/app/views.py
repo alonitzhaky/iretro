@@ -9,7 +9,7 @@ from django.shortcuts import redirect, HttpResponse
 
 from .models import Review, Type, Product, CustomUser
 from .forms import ReviewForm
-from .serializers import ReviewSerializer, TypeSerializer, ProductSeralizer, UserSerializerWithToken
+from .serializers import CustomUserSerializer, ReviewSerializer, TypeSerializer, ProductSeralizer, UserSerializerWithToken
 
 # Create your views here.
 
@@ -165,3 +165,15 @@ def delete_review(request, id = -1):
     pass
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~
+
+# ~~~~~~~~~~ User Profile ~~~~~~~~~
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    serilaizer = CustomUserSerializer(user, many=False)
+    return Response(serilaizer.data)
+
+# ~~~~~~~~~~ User Profile ~~~~~~~~~
+

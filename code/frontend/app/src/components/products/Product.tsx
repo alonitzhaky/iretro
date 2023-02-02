@@ -7,8 +7,6 @@ import {
   selectProducts,
   getAllProductsAsync,
 } from "./productSlice";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
 export function Product() {
   const iretroBrown = "rgb(62,56,54)";
@@ -22,38 +20,11 @@ export function Product() {
     <div className="text-center">
       <h1 style={{ color: iretroBrown }}>Products</h1>
       <hr style={{ color: iretroBrown }} />
-      <Row>
-        <Col sm={4}>
-          <h3 style={{color: iretroBrown}}>Categories</h3>
-          <hr/>
-        </Col>
-        <Col sm={8}>sm=8</Col>
-      </Row> 
-
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gridGap: "20px",
-        }}
-      >
-        
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: "20px" }}>
         {products.map((product, index) => (
-          <div
-            key={index}
-            style={{
-              backgroundColor: "#fff",
-              padding: "20px",
-              borderRadius: "10px",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <img
-              src={SERVER + product.image}
-              style={{ height: "150px", width: "100%", objectFit: "cover" }}
-              alt={product.name}
-            />
-            <hr></hr>
+          <div key={index} style={{ backgroundColor: "#fff", padding: "20px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
+            <img src={SERVER + product.image} style={{ height: "150px", width: "100%", objectFit: "cover" }} alt={product.name} />
+            <hr />
             <p>ID: {product.id}</p>
             <p>Price: {product.price}</p>
             <p>Description: {product.description}</p>
@@ -65,30 +36,14 @@ export function Product() {
                     {index + 1}
                   </option>
                 ))}
-              </Form.Control>
-            ) : (
+              </Form.Control>) : (
               <Button className="disabled mt-3" style={{ backgroundColor: iretroBrown, opacity: "50%" }}>
                 Out Of Stock
               </Button>
             )}
-            {product.quantity > 0 && (
-              <Button
-                onClick={() =>
-                  dispatch(
-                    addtoCart({
-                      id: product.id,
-                      price: product.price,
-                      name: product.name,
-                      image: product.image,
-                      quantity: productQuantity
-                    })
-                  )
-                }
-                style={{ backgroundColor: iretroBrown }}
-                className="mt-3"
-              >
-                Add to Cart
-              </Button>
+            {product.quantity > 0 && (<Button onClick={() => dispatch(addtoCart({ id: product.id, price: product.price, name: product.name, image: product.image, quantity: productQuantity }))} style={{ backgroundColor: iretroBrown }} className="mt-3">
+              Add to Cart
+            </Button>
             )}
           </div>
         ))}

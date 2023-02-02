@@ -12,6 +12,7 @@ import { Product } from './components/Products/Product';
 import Authentication from './components/Authentication/Authentication';
 import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
+import Profile from './components/Profile/Profile';
 
 import './bootstrap.min.css';
 
@@ -32,6 +33,7 @@ root.render(
             <Route path="/login" element={<Authentication />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </Container>
         <br/>
