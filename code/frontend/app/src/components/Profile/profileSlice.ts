@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import { getUserProfile } from "./profileAPI";
+import Profile from "../../models/Profile";
 
 export interface ProfileState {
     status: 'idle' | 'loading' | 'failed';
@@ -15,7 +16,7 @@ const initialState: ProfileState = {
     name: '',
     email: '',
     admin: false,
-    username: ''
+    username: '', 
 };
 
 export const getUserProfileAsync = createAsyncThunk(
@@ -32,6 +33,7 @@ export const profileSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getUserProfileAsync.fulfilled, (state, action) => {
+            console.log(action.payload.data)
             state.name = action.payload.data.name
             state.email = action.payload.data.email
             state.username = action.payload.data.username

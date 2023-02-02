@@ -1,17 +1,23 @@
-import React from 'react'
-import { useAppSelector } from '../../app/hooks';
-import { getUserProfile } from './profileSlice';
+import React, { useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { getUserProfileAsync } from './profileSlice';
 
 const Profile = () => {
     const iretroBrown = "rgb(62,56,54)";
-    const information = useAppSelector(getUserProfile())
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        dispatch(getUserProfileAsync())
+
+    }, [])
+
+    const {name, email, admin, username} = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: iretroBrown }}>
-            User Profile
+                User Profile
             </h1>
-            <hr/>
-            
+            <hr />
+            <h2>{name}</h2>
         </div>
     )
 }

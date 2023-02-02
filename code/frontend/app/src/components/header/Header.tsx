@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Container, Navbar, Nav, NavItem, NavLink, Dropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping, faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { logoutUserAsync, selectIsLogged } from '../Authentication/authenticationSlice';
+import { loggedCheck, logoutUserAsync, selectIsLogged, staffCheck, tokenCheck } from '../Authentication/authenticationSlice';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from '../Cart/Cart';
+import { cartFix } from '../Cart/cartSlice';
 
 
 const Header = () => {
@@ -17,7 +18,16 @@ const Header = () => {
   const [token, setToken] = useState("")
   const [userName, setUserName] = useState("")
   const [isStaff, setIsStaff] = useState(false)
+  
   useEffect(() => {
+
+    if(localStorage.getItem("token")){
+      dispatch(loggedCheck())
+      dispatch(staffCheck())
+      dispatch(tokenCheck())
+      dispatch(cartFix())
+    }
+
     if (!token) {
       const storedToken = localStorage.getItem("token")
       setToken(JSON.parse(String(storedToken)));

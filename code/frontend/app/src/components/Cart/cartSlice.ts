@@ -16,6 +16,12 @@ export const CartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
+
+        cartFix: (state) => {
+            if(localStorage.getItem("acrt")){
+                state.cart = JSON.parse(String(localStorage.getItem("cart")))
+            }
+        },
         addtoCart: (state, action) => {
             let correctCart = false;
             for (let index = 0; index < state.cart.length; index++) {
@@ -59,6 +65,6 @@ export const CartSlice = createSlice({
     }
 })
 
-export const { addtoCart, removefromCart, addQuantity, removeQuantity } = CartSlice.actions;
+export const { addtoCart, removefromCart, addQuantity, removeQuantity, cartFix } = CartSlice.actions;
 export const selectCart = (state: RootState) => state.cart.cart;
 export default CartSlice.reducer;

@@ -43,12 +43,24 @@ export const authenticationSlice = createSlice({
   name: 'authentication',
   initialState,
   reducers: {
-    getToken: (state) => {
-      if (localStorage.getItem("token") || "") { state.token = localStorage.getItem("token") || "" }
+    // Checks for LocalStorage information during every refresh. 
+    loggedCheck: (state) => {
+      if (localStorage.getItem("token")) {
+        state.isLogged = true
+      }
     },
-    getUsername: (state) => {
-      if (localStorage.getItem("username") || "") { state.username = localStorage.getItem("username") || "" }
+    staffCheck: (state) => {
+      if (localStorage.getItem("is_staff") === "true") {
+        state.is_staff = true
+      }
+    },
+    tokenCheck: (state) => {
+      if (localStorage.getItem("token")) {
+        state.token = JSON.parse(String(localStorage.getItem("token")))
+      }
     }
+
+
   },
   extraReducers: (builder) => {
     builder.addCase(registerUserAsync.fulfilled, (state, action) => {
@@ -65,7 +77,8 @@ export const authenticationSlice = createSlice({
         is_staff: boolean;
       }
       const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
-      state.token = action.payload.data['refresh']
+      state.token = action.payload.data['access']
+      console.log(state.token)
       state.username = decoded.username;
       state.is_staff = decoded.is_staff;
       localStorage.setItem("token", JSON.stringify(state.token))
@@ -77,14 +90,17 @@ export const authenticationSlice = createSlice({
       state.isLogged = true;
     }).addCase(logoutUserAsync.fulfilled, (state, action) => {
       localStorage.clear()
-        setTimeout(function () {
-          window.location.replace("/");
-        }, 1000);
+      setTimeout(function () {
+        window.location.replace("/");
+      }, 1000);
       state.isLogged = false;
     });
   },
 });
 
-export const { getToken } = authenticationSlice.actions;
+export const { loggedCheck, staffCheck, tokenCheck } = authenticationSlice.actions;
 export const selectIsLogged = (state: RootState) => state.authentication.isLogged;
+export const selectToken = (state: RootState) => state.authentication.token
+export const selectUser = (state: RootState) => state.authentication.username
+export const selectStaff = (state: RootState) => state.authentication.is_staff
 export default authenticationSlice.reducer;
