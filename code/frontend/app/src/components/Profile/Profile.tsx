@@ -3,6 +3,7 @@ import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserProfileAsync } from './profileSlice';
+import { SERVER } from '../../env';
 
 const Profile = () => {
     const iretroBrown = "rgb(62,56,54)";
@@ -12,7 +13,7 @@ const Profile = () => {
 
     }, [])
 
-    const { first_name, last_name, username, admin, email } = useAppSelector((state) => state.profile)
+    const { first_name, last_name, username, admin, email, image } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: iretroBrown }}>
@@ -30,10 +31,27 @@ const Profile = () => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Row>
+                                <Col xs={6}><strong>Username:</strong></Col>
+                                <Col>{username}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
                                 <Col xs={6}><strong>Email Address:</strong></Col>
                                 <Col>{email}</Col>
                             </Row>
                         </ListGroup.Item>
+                        
+                        <ListGroup.Item>
+                            <Row>
+                                <Col xs={6}><strong>Profile Picture:</strong></Col>
+                                <Col>
+                                <img style={{ maxWidth: "200px", maxHeight: "400px"}} src={SERVER + image} />
+                                </Col>
+                            </Row>
+                        </ListGroup.Item>
+                        
                         <ListGroup.Item>
                             {admin === true &&
                                 <Row>

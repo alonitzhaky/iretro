@@ -10,6 +10,7 @@ class CustomUser(AbstractUser):
     age = models.IntegerField(null = True, blank = True)
     location = models.CharField(max_length = 30, blank = True)
     birthday = models.DateField(null = True, blank = True)
+    image = models.ImageField(null = False, blank = False, default='user_avatar.png')
 
 class Type(models.Model):
     name = models.CharField(max_length=30)

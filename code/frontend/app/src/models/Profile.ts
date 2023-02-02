@@ -5,4 +5,7 @@ export default class Profile {
     email: string = ""
     admin: boolean = false
     username: string = ""
+    image: string = ""
+    phone: string = ""
+    address: string = ""
 }

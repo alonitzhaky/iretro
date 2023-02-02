@@ -180,5 +180,24 @@ def get_user_profile(request):
     serilaizer = CustomUserSerializer(user, many=False)
     return Response(serilaizer.data)
 
+# @api_view(['PUT'])
+# @permission_classes([IsAuthenticated])
+# def update_user_profile(request):
+#     new_info = CustomUserSerializer(data = request.data)
+#     if new_info.is_valid():
+#         new_info.save()
+#         return Response(status=status.HTTP_200_OK, data = new_info.data)
+#     return Response(status=status.HTTP_400_BAD_REQUEST, data = "data not valid")
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_user_profile(request):
+    user = request.user
+    serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+    return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
 # ~~~~~~~~~~ User Profile ~~~~~~~~~
 

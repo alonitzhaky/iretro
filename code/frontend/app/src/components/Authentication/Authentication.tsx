@@ -5,6 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { selectIsLogged, loginUserAsync } from "./authenticationSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { Form, Button } from 'react-bootstrap'
+import axios from "axios";
+import { SERVER } from "../../env";
 
 const Authentication = () => {
   const [username, setUsername] = useState("");
@@ -14,6 +16,7 @@ const Authentication = () => {
   const handleClick = () => {
     window.location.assign("http://localhost:3000/register");
   };
+
 
   useEffect(() => {
     if (logged) {
@@ -30,6 +33,40 @@ const Authentication = () => {
       });
     }
   }, [logged]);
+
+  const checkCredentials = (username: string, password: string) => {
+    axios.post(SERVER + '/login/', { username, password })
+      .then((response) => {
+        // Successful login
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 401) {
+          toast.error("Incorrect Password or Username", {
+            position: "top-center",
+            // autoClose: 2000,
+            // hideProgressBar: false,
+            // closeOnClick: true,
+            // rtl: false,
+            // pauseOnFocusLoss: true,
+            // draggable: true,
+            // pauseOnHover: true,
+            // theme: "light"
+          });
+        } else {
+          toast.error('Please check you have filled all required fields.', {
+            position: "top-center",
+            // autoClose: 2000,
+            // hideProgressBar: false,
+            // closeOnClick: true,
+            // rtl: false,
+            // pauseOnFocusLoss: true,
+            // draggable: true,
+            // pauseOnHover: true,
+            // theme: "light"
+          })
+        }
+      })
+  }
 
   return (
     <div>
@@ -61,7 +98,17 @@ const Authentication = () => {
           </Form.Control>
         </Form.Group>
         <div className="d-flex justify-content-center">
-          <Button className="btn btn-light" style={{ margin: '10px' }} onClick={() => dispatch(loginUserAsync({ username, password }))} >Login</Button>
+          {/* <Button className="btn btn-light" style={{ margin: '10px' }} onClick={() => dispatch(loginUserAsync({ username, password }))} >Login</Button> */}
+          <Button
+            className="btn btn-light"
+            style={{ margin: "10px" }}
+            onClick={() => {
+              dispatch(loginUserAsync({ username, password }));
+              checkCredentials(username, password);
+            }}
+          >
+            Login
+          </Button>;
         </div>
       </Form>
       <h3 className="d-flex justify-content-center">Not registered?</h3>

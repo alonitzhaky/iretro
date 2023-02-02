@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
-import { getUserProfile } from "./profileAPI";
 import Profile from "../../models/Profile";
+import { getUserProfile, updateUserProfile } from "./profileAPI";
+
 
 export interface ProfileState {
     status: 'idle' | 'loading' | 'failed';
@@ -10,6 +11,7 @@ export interface ProfileState {
     email: string
     admin: boolean
     username: string
+    image: string
 }
 
 const initialState: ProfileState = {
@@ -19,6 +21,7 @@ const initialState: ProfileState = {
     email: '',
     admin: false,
     username: '', 
+    image: ''
 };
 
 export const getUserProfileAsync = createAsyncThunk(
@@ -29,18 +32,27 @@ export const getUserProfileAsync = createAsyncThunk(
     }
 )
 
+export const updateUserProfileAsync = createAsyncThunk(
+    'profile/updateUserProfile', 
+    async (profileData: Profile) => {
+        const response = await updateUserProfile(profileData); 
+        return response; 
+    } 
+)
+
 export const profileSlice = createSlice({
     name: 'profile',
     initialState,
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(getUserProfileAsync.fulfilled, (state, action) => {
-            console.log(action.payload.data)
+            // console.log(action.payload.data)
             state.first_name = action.payload.data.first_name
             state.last_name = action.payload.data.last_name
             state.email = action.payload.data.email
             state.username = action.payload.data.username
             state.admin = action.payload.data.admin
+            state.image = action.payload.data.image
         })
     }
 })

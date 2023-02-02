@@ -68,7 +68,7 @@ export const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(registerUserAsync.fulfilled, (state, action) => {
-      console.log(action.payload)
+      // console.log(action.payload)
       state.isLogged = true
     }).addCase(loginUserAsync.fulfilled, (state, action) => {
       interface JwtPayload {
@@ -82,7 +82,7 @@ export const authenticationSlice = createSlice({
       }
       const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
       state.token = action.payload.data['access']
-      console.log(state.token)
+      // console.log(state.token)
       state.username = decoded.username;
       state.is_staff = decoded.is_staff;
       localStorage.setItem("token", JSON.stringify(state.token))

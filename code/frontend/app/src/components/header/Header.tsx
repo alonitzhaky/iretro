@@ -37,7 +37,7 @@ const Header = () => {
       setIsStaff(JSON.parse(String(isAdmin)))
     }
   }, [])
-  console.log(test)
+  // console.log(test)
   return (
     <div>
       <ToastContainer />

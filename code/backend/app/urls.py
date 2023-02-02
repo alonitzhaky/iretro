@@ -15,5 +15,6 @@ urlpatterns = [
     path('change-product/', views.change_products),
     path('change-product/<int:id>', views.change_products), 
     path('reviews/', views.submit_review),
-    path('profile/', views.get_user_profile)
+    path('profile/', views.get_user_profile),
+    path('profile/update/', views.update_user_profile)
 ]

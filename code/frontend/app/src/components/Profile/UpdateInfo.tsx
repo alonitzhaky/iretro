@@ -1,14 +1,31 @@
 import React, { useState } from 'react'
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { updateUserProfileAsync } from './profileSlice';
 
 const UpdateInfo = () => {
-    const [firstName, setFirstName] = useState("")
-    const [lastName, setLastName] = useState("")
+    const dispatch = useAppDispatch()
+    const { first_name, last_name, username, admin, image } = useAppSelector((state) => state.profile)
+    const [firstName, setFirstName] = useState(first_name)
+    const [lastName, setLastName] = useState(last_name)
     const [email, setEmail] = useState("")
     const [phone, setPhone] = useState("")
     const [address, setAddress] = useState("")
+    const [picture, setPicture] = useState("")
     const iretroBrown = "rgb(62,56,54)";
 
+    const handleUpdate = () => {
+        dispatch(updateUserProfileAsync({
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone: phone,
+            address: address,
+            image: image,
+            admin: false,
+            username: username,
+        }));
+    };
     return (
         <div>
             <div className='text-center'>
@@ -44,7 +61,7 @@ const UpdateInfo = () => {
                                 </Form.Group>
                                 <Form.Group controlId='changePhone'>
                                     <Form.Label>
-                                        Phone Number: 
+                                        Phone Number:
                                     </Form.Label>
                                     <Form.Control type='text' value={phone} placeholder="555-123-4567" onChange={(e) => setPhone(e.target.value)}>
                                     </Form.Control>
@@ -56,8 +73,23 @@ const UpdateInfo = () => {
                                     <Form.Control type='text' value={address} placeholder="123 Wall St." onChange={(e) => setAddress(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
-                                <br/>
-                                <Button style={{color: iretroBrown}} variant='primary' type='submit' className='btn btn-light'>
+                                <Form.Group controlId='formFile'>
+                                    <Form.Label>
+                                        Image:
+                                    </Form.Label>
+                                    <Form.Control type="file" onChange={(e) => setPicture(e.target.value)} />
+                                </Form.Group>
+                                <br />
+                                <Button style={{ color: iretroBrown }} variant='primary' onClick={() => dispatch(updateUserProfileAsync({
+                                    first_name: firstName,
+                                    last_name: lastName,
+                                    email: email,
+                                    phone: phone,
+                                    address: address,
+                                    image: image,
+                                    admin: false,
+                                    username: username,
+                                }))} className='btn btn-light'>
                                     Update Info
                                 </Button>
                             </Form>
