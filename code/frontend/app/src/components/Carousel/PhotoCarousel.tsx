@@ -21,7 +21,7 @@ const PhotoCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="grid1.webp"
+            src="grid4s.webp"
             alt="Second slide"
           />
 
@@ -33,7 +33,7 @@ const PhotoCarousel = () => {
         <Carousel.Item>
           <img
             className="d-block w-100"
-            src="grid4.webp"
+            src="grid4s.webp"
             alt="Third slide"
           />
 
