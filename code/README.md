@@ -6,7 +6,7 @@
 We all thought of having an iPhone taken apart and framed for its beauty.
 
 Our initial concept was preserving the internal beauty of our everyday electronic devices inside of a beautiful frame. 
-<h2>Now, it's possible. Introducing:</h2>
+Now, it's possible. Introducing
 
 <h1>The iRetro Store! 🍎</h1>
 
