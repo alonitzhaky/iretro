@@ -43,26 +43,10 @@ const Authentication = () => {
         if (error.response && error.response.status === 401) {
           toast.error("Incorrect Password or Username", {
             position: "top-center",
-            // autoClose: 2000,
-            // hideProgressBar: false,
-            // closeOnClick: true,
-            // rtl: false,
-            // pauseOnFocusLoss: true,
-            // draggable: true,
-            // pauseOnHover: true,
-            // theme: "light"
           });
         } else {
           toast.error('Please check you have filled all required fields.', {
             position: "top-center",
-            // autoClose: 2000,
-            // hideProgressBar: false,
-            // closeOnClick: true,
-            // rtl: false,
-            // pauseOnFocusLoss: true,
-            // draggable: true,
-            // pauseOnHover: true,
-            // theme: "light"
           })
         }
       })
