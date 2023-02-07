@@ -68,7 +68,6 @@ export const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(registerUserAsync.fulfilled, (state, action) => {
-      // console.log(action.payload)
       state.isLogged = true
     }).addCase(loginUserAsync.fulfilled, (state, action) => {
       interface JwtPayload {

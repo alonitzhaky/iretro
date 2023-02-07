@@ -82,7 +82,6 @@ const Authentication = () => {
           </Form.Control>
         </Form.Group>
         <div className="d-flex justify-content-center">
-          {/* <Button className="btn btn-light" style={{ margin: '10px' }} onClick={() => dispatch(loginUserAsync({ username, password }))} >Login</Button> */}
           <Button
             className="btn btn-light"
             style={{ margin: "10px" }}
@@ -92,7 +91,7 @@ const Authentication = () => {
             }}
           >
             Login
-          </Button>;
+          </Button>
         </div>
       </Form>
       <h3 className="d-flex justify-content-center">Not registered?</h3>
