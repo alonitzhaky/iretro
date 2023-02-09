@@ -20,10 +20,10 @@ export function Product() {
     <div className="text-center">
       <h1 style={{ color: iretroBrown }}>Products</h1>
       <hr style={{ color: iretroBrown }} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: "20px" }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridGap: "40px" }}>
         {products.map((product, index) => (
           <div key={index} style={{ backgroundColor: "#fff", padding: "20px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
-            <img src={SERVER + product.image} style={{ height: "150px", width: "100%", objectFit: "cover" }} alt={product.name} />
+            <img src={SERVER + product.image} style={{ height: "250px", width: "80%", objectFit: "cover" }} alt={product.name} />
             <hr />
             <p>ID: {product.id}</p>
             <p>Price: {product.price}</p>

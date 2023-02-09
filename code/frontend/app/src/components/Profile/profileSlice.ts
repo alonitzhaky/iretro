@@ -11,7 +11,9 @@
         email: string
         admin: boolean
         username: string
-        image: string
+        image: string, 
+        address: string, 
+        phone_number: string
     }
 
     const initialState: ProfileState = {
@@ -21,7 +23,9 @@
         email: '',
         admin: false,
         username: '', 
-        image: ''
+        image: '', 
+        address: '', 
+        phone_number: ''
     };
 
     export const getUserProfileAsync = createAsyncThunk(
@@ -34,7 +38,7 @@
 
     export const updateUserProfileAsync = createAsyncThunk(
         'profile/updateUserProfile', 
-        async (profileData: Profile) => {
+        async (profileData: any) => {
             const response = await updateUserProfile(profileData); 
             return response; 
         } 
@@ -53,9 +57,12 @@
                 state.username = action.payload.data.username
                 state.admin = action.payload.data.admin
                 state.image = action.payload.data.image
+                state.address = action.payload.data.address
             })
         }
     })
 
     export const { } = profileSlice.actions; 
+    // ⤵ Ask Lidor if line below is relevant or RootState not needed in reducer.
+    // export const selectProfile = (state: RootState) => state.profile.username
     export default profileSlice.reducer;

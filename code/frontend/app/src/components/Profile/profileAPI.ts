@@ -1,6 +1,7 @@
 import axios from "axios";
 import Profile from "../../models/Profile";
 import { SERVER } from "../../env"
+import { toast } from "react-toastify";
 
 
 export function getUserProfile() {
@@ -16,7 +17,7 @@ export function getUserProfile() {
     ))
 }
 
-export function updateUserProfile(profileData: Profile) {
+export function updateUserProfile(profileData: any) {
     const accessToken = JSON.parse(String(localStorage.getItem("token")))
     let config = {
         headers: {
@@ -24,5 +25,11 @@ export function updateUserProfile(profileData: Profile) {
         }
     }
     return new Promise<{ data: Profile }>((resolve) => 
-    axios.put(SERVER + '/profile/update/', profileData, config).then(res => resolve({ data: res.data })))
+    axios.put(SERVER + '/profile/update/', profileData, config)
+    .then(res => {
+        resolve({ data: res.data });
+        toast.success("Your profile has been updated successfully!", {
+            position: "top-center",
+        });
+    }));
 }

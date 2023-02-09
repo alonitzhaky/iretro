@@ -48,11 +48,13 @@ export const authenticationSlice = createSlice({
   initialState,
   reducers: {
     // Checks for LocalStorage information during every refresh. 
+    // ⤵ loggedCheck - checks if there is an existing token, for data presentation.
     loggedCheck: (state) => {
       if (localStorage.getItem("token")) {
         state.isLogged = true
       }
     },
+      // ⤵ staffCheck - checks for priviliges of Staff / Administrator.
     staffCheck: (state) => {
       if (localStorage.getItem("is_staff") === "true") {
         state.is_staff = true

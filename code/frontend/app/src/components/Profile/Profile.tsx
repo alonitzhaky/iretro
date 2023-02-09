@@ -13,7 +13,7 @@ const Profile = () => {
 
     }, [])
 
-    const { first_name, last_name, username, admin, email, image } = useAppSelector((state) => state.profile)
+    const { first_name, last_name, username, admin, email, image, address } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: iretroBrown }}>
@@ -42,7 +42,15 @@ const Profile = () => {
                                 <Col>{email}</Col>
                             </Row>
                         </ListGroup.Item>
-                        
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col xs={6}><strong>Address:</strong></Col>
+                                <Col>{address}</Col>
+                            </Row>
+                        </ListGroup.Item>
+ 
+
                         <ListGroup.Item>
                             <Row>
                                 <Col xs={6}><strong>Profile Picture:</strong></Col>
@@ -51,18 +59,18 @@ const Profile = () => {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-                        
+                        {/* Present if the user has admin priviliges. */}
                         <ListGroup.Item>
                             {admin === true &&
                                 <Row>
-                                    <Col xs={6}><strong>Status:</strong></Col>
-                                    <Col>Staff</Col>
+                                    <Col xs={6}><strong>Administrator Priviliges:</strong></Col>
+                                    <Col>{String(admin)}</Col>
                                 </Row>
                             }
                             {admin === false &&
                                 <Row>
-                                    <Col xs={6}><strong>Status:</strong></Col>
-                                    <Col>Active Customer</Col>
+                                    <Col xs={6}><strong>Administrator Priviliges:</strong></Col>
+                                    <Col>{String(admin)}</Col>
                                 </Row>
                             }
                         </ListGroup.Item>

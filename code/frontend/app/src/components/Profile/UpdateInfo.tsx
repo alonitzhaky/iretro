@@ -2,32 +2,44 @@ import React, { useState } from 'react'
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { updateUserProfileAsync } from './profileSlice';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const UpdateInfo = () => {
     const dispatch = useAppDispatch()
-    const { first_name, last_name, username, admin, image } = useAppSelector((state) => state.profile)
+    const { first_name, last_name, image, email, address, phone_number } = useAppSelector((state) => state.profile)
     const [firstName, setFirstName] = useState(first_name)
     const [lastName, setLastName] = useState(last_name)
-    const [email, setEmail] = useState("")
+    const [emailAddress, setEmailAddress] = useState(email)
     const [phone, setPhone] = useState("")
-    const [address, setAddress] = useState("")
-    const [picture, setPicture] = useState("")
+    const [shippingAddress, setShippingAddress] = useState(address)
+    const [picture, setPicture] = useState<any>();
     const iretroBrown = "rgb(62,56,54)";
 
-    const handleUpdate = () => {
-        dispatch(updateUserProfileAsync({
-            first_name: firstName,
-            last_name: lastName,
-            email: email,
-            phone: phone,
-            address: address,
-            image: image,
-            admin: false,
-            username: username,
-        }));
-    };
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setPicture(e.target.files ? e.target.files[0] : undefined);
+    }
+
+    const handleUpdate = (e: any) => {
+        e.preventDefault()
+        const formData = new FormData()
+        if (picture) {
+            formData.append('image', picture)
+        }
+        formData.append('first_name', firstName)
+        formData.append('last_name', lastName)
+        formData.append('email', emailAddress)
+        formData.append('phone', phone_number)
+        formData.append('address', shippingAddress)
+        dispatch(updateUserProfileAsync(formData))
+    }
+
     return (
         <div>
+            <>
+                <ToastContainer />
+            </>
             <div className='text-center'>
                 <h1 style={{ color: iretroBrown }}>
                     Update Your Information
@@ -56,7 +68,7 @@ const UpdateInfo = () => {
                                     <Form.Label>
                                         Email Address:
                                     </Form.Label>
-                                    <Form.Control type='text' value={email} placeholder="john@doe.com" onChange={(e) => setEmail(e.target.value)}>
+                                    <Form.Control type='text' value={emailAddress} placeholder="john@doe.com" onChange={(e) => setEmailAddress(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group controlId='changePhone'>
@@ -70,26 +82,17 @@ const UpdateInfo = () => {
                                     <Form.Label>
                                         Address:
                                     </Form.Label>
-                                    <Form.Control type='text' value={address} placeholder="123 Wall St." onChange={(e) => setAddress(e.target.value)}>
+                                    <Form.Control type='text' value={shippingAddress} placeholder="123 Wall St." onChange={(e) => setShippingAddress(e.target.value)}>
                                     </Form.Control>
                                 </Form.Group>
                                 <Form.Group controlId='formFile'>
                                     <Form.Label>
                                         Image:
                                     </Form.Label>
-                                    <Form.Control type="file" onChange={(e) => setPicture(e.target.value)} />
+                                    <Form.Control type="file" onChange={handleImageChange} />
                                 </Form.Group>
                                 <br />
-                                <Button style={{ color: iretroBrown }} variant='primary' onClick={() => dispatch(updateUserProfileAsync({
-                                    first_name: firstName,
-                                    last_name: lastName,
-                                    email: email,
-                                    phone: phone,
-                                    address: address,
-                                    image: image,
-                                    admin: false,
-                                    username: username,
-                                }))} className='btn btn-light'>
+                                <Button style={{ color: iretroBrown }} variant='primary' onClick={handleUpdate} className='btn btn-light'>
                                     Update Info
                                 </Button>
                             </Form>

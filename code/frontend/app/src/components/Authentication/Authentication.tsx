@@ -5,8 +5,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { selectIsLogged, loginUserAsync } from "./authenticationSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { Form, Button } from 'react-bootstrap'
-import axios from "axios";
-import { SERVER } from "../../env";
 
 const Authentication = () => {
   const [username, setUsername] = useState("");
@@ -17,9 +15,9 @@ const Authentication = () => {
     window.location.assign("http://localhost:3000/register");
   };
 
-
   useEffect(() => {
     if (logged) {
+      // If user's credentials match database's information: 
       toast("Welcome, " + `${username} 🎉`, {
         position: "top-center",
         autoClose: 2000,
@@ -33,24 +31,6 @@ const Authentication = () => {
       });
     }
   }, [logged]);
-
-  const checkCredentials = (username: string, password: string) => {
-    axios.post(SERVER + '/login/', { username, password })
-      .then((response) => {
-        // Successful login
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          toast.error("Incorrect Password or Username", {
-            position: "top-center",
-          });
-        } else {
-          toast.error('Please check you have filled all required fields.', {
-            position: "top-center",
-          })
-        }
-      })
-  }
 
   return (
     <div>
@@ -87,7 +67,6 @@ const Authentication = () => {
             style={{ margin: "10px" }}
             onClick={() => {
               dispatch(loginUserAsync({ username, password }));
-              checkCredentials(username, password);
             }}
           >
             Login
