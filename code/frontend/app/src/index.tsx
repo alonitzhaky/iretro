@@ -13,9 +13,9 @@ import Authentication from './components/Authentication/Authentication';
 import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
 import Profile from './components/Profile/Profile';
+import UpdateInfo from './components/Profile/UpdateInfo';
 
 import './bootstrap.min.css';
-import UpdateInfo from './components/Profile/UpdateInfo';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);

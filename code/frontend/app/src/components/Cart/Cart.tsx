@@ -5,6 +5,7 @@ import { Button, Card, Offcanvas } from 'react-bootstrap'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartSlice';
 import { SERVER } from '../../env'
+import PaypalButton from '../Paypalbutton';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
@@ -64,6 +65,7 @@ const Cart = () => {
                     <hr />
                     Total: ${totalCart}
                 </Offcanvas.Body>
+                <PaypalButton/>
             </Offcanvas>
         </div>
     )

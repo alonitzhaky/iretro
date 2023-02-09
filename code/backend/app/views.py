@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 
-from django.shortcuts import redirect, HttpResponse
+from django.shortcuts import redirect, HttpResponse, render
 
 from .models import Review, Type, Product, CustomUser
 from .forms import ReviewForm
@@ -200,4 +200,3 @@ def update_user_profile(request):
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
 # ~~~~~~~~~~ User Profile ~~~~~~~~~
-
