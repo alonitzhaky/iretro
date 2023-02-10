@@ -12,7 +12,7 @@ const UpdateInfo = () => {
     const [firstName, setFirstName] = useState(first_name)
     const [lastName, setLastName] = useState(last_name)
     const [emailAddress, setEmailAddress] = useState(email)
-    const [phone, setPhone] = useState("")
+    const [phone, setPhone] = useState(phone_number)
     const [shippingAddress, setShippingAddress] = useState(address)
     const [picture, setPicture] = useState<any>();
     const iretroBrown = "rgb(62,56,54)";
@@ -30,7 +30,7 @@ const UpdateInfo = () => {
         formData.append('first_name', firstName)
         formData.append('last_name', lastName)
         formData.append('email', emailAddress)
-        formData.append('phone', phone_number)
+        formData.append('phone', phone)
         formData.append('address', shippingAddress)
         dispatch(updateUserProfileAsync(formData))
     }

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartSlice';
 import { SERVER } from '../../env'
 import { Link, NavLink } from 'react-router-dom';
-import Shipping from '../Shipping/Shipping';
+import Shipping from '../Order/Order';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
@@ -16,6 +16,7 @@ const Cart = () => {
     const handleShow = () => setShow(true);
     const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
     const iretroBrown = "rgb(62,56,54)"
+    console.log(cart)
 
     let totalCart = 0
     useEffect(() => {
@@ -40,11 +41,11 @@ const Cart = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     {productsInCart.map((product, index) => {
-                        totalCart += Math.round(Number(product.price * product.quantity)) * 100/ 100
+                        totalCart += Math.round((product.price * product.quantity + Number.EPSILON) * 100) / 100
                         return (
                             <Card key={index}>
                                 <br />
-                                <Card.Img className="d-block mx-auto" variant="top" src={SERVER + product.image} style={{ width: "100px", height: "100px", textAlign: "center" }} />
+                                <Card.Img className="d-block mx-auto" variant="top" src={SERVER + product.image} style={{ width: "150px", height: "150px", textAlign: "center" }} />
                                 <Card.Body>
                                     <Card.Title>
                                         {product.name}
@@ -68,7 +69,7 @@ const Cart = () => {
                     Total: ${totalCart}
                 </Offcanvas.Body>
                 {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
-                <Shipping/>
+                <Shipping />
             </Offcanvas>
         </div>
     )

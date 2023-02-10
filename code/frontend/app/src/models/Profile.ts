@@ -6,6 +6,6 @@ export default class Profile {
     admin: boolean = false
     username: string = ""
     image: string = ""
-    phone: string = ""
+    phone_number: string = ""
     address: string = ""
 }

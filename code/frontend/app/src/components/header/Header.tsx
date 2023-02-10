@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Navbar, Nav, NavItem, NavLink, Dropdown } from 'react-bootstrap';
+import { Container, Navbar, Nav, NavItem, NavLink, Dropdown, NavDropdown } from 'react-bootstrap';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPhone, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,6 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from '../Cart/Cart';
 import { cartFix } from '../Cart/cartSlice';
-
 
 const Header = () => {
   const dispatch = useAppDispatch()
@@ -28,7 +27,7 @@ const Header = () => {
       setIsStaff(JSON.parse(String(isAdmin)))
     }
 
-    if(localStorage.getItem("token")) {
+    if (localStorage.getItem("token")) {
       dispatch(loggedCheck())
       dispatch(staffCheck())
       dispatch(tokenCheck())
@@ -41,9 +40,9 @@ const Header = () => {
       <ToastContainer />
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container fluid>
-            <Navbar.Brand as={Link} to="/">
-              <img src='./logo.png' style={{ height: '60px' }} />
-            </Navbar.Brand>
+          <Navbar.Brand as={Link} to="/">
+            <img src={"../../logo.png"} style={{ height: '60px' }} />
+          </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="navbarColor01" >
             <Nav className="me-auto">
@@ -53,9 +52,20 @@ const Header = () => {
               <NavItem>
                 <NavLink as={Link} to="/about">About Us</NavLink>
               </NavItem>
-              <NavItem>
+              {/* <NavItem>
                 <NavLink as={Link} to="/shop">Shop</NavLink>
-              </NavItem>
+              </NavItem> */}
+              <NavDropdown title="Shop" id="collasible-nav-dropdown">
+                <NavDropdown.Item as={Link} to="/product/1">
+                  Do It Yourself
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/product/2">
+                  Fully Built Kits
+                </NavDropdown.Item>
+                <NavDropdown.Item as={Link} to="/product/3">
+                  Spare Parts
+                </NavDropdown.Item>
+              </NavDropdown>
               <NavItem>
                 <NavLink as={Link} to="/contact">Contact</NavLink>
               </NavItem>
@@ -70,7 +80,7 @@ const Header = () => {
               <Dropdown.Menu>
                 {!token && <Dropdown.Item as={Link} to={"/login"}>Login</Dropdown.Item>}
                 {token && <Dropdown.Item as={Link} to={"/profile"}>Profile</Dropdown.Item>}
-                {isStaff && <Dropdown.Item href="http://127.0.0.1:8000/admin/">Admin Panel</Dropdown.Item>}
+                {isStaff && <Dropdown.Item target="_blank" href="http://127.0.0.1:8000/admin/">Admin Panel</Dropdown.Item>}
                 {token && <Dropdown.Item onClick={() => {
                   dispatch(logoutUserAsync()); toast("Logging out, please wait...", {
                     position: "top-center",

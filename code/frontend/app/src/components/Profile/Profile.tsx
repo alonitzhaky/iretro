@@ -13,7 +13,7 @@ const Profile = () => {
 
     }, [])
 
-    const { first_name, last_name, username, admin, email, image, address } = useAppSelector((state) => state.profile)
+    const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: iretroBrown }}>
@@ -35,6 +35,14 @@ const Profile = () => {
                                 <Col>{username}</Col>
                             </Row>
                         </ListGroup.Item>
+
+                        <ListGroup.Item>
+                            <Row>
+                                <Col xs={6}><strong>Phone:</strong></Col>
+                                <Col>{phone_number}</Col>
+                            </Row>
+                        </ListGroup.Item>
+
 
                         <ListGroup.Item>
                             <Row>
@@ -62,12 +70,6 @@ const Profile = () => {
                         {/* Present if the user has admin privileges. */}
                         <ListGroup.Item>
                             {admin === true &&
-                                <Row>
-                                    <Col xs={6}><strong>Administrator Privileges:</strong></Col>
-                                    <Col>{String(admin)}</Col>
-                                </Row>
-                            }
-                            {admin === false &&
                                 <Row>
                                     <Col xs={6}><strong>Administrator Privileges:</strong></Col>
                                     <Col>{String(admin)}</Col>

@@ -1,6 +1,6 @@
     import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
     import { RootState } from "../../app/store";
-    import Profile from "../../models/Profile";
+    // import Profile from "../../models/Profile";
     import { getUserProfile, updateUserProfile } from "./profileAPI";
 
 
@@ -57,6 +57,8 @@
                 state.admin = action.payload.data.admin
                 state.image = action.payload.data.image
                 state.address = action.payload.data.address
+                state.phone_number = action.payload.data.phone_number
+                console.log(action.payload)
             })
         }
     })

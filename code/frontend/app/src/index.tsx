@@ -14,7 +14,8 @@ import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
 import Profile from './components/Profile/Profile';
 import UpdateInfo from './components/Profile/UpdateInfo';
-import Shipping from './components/Shipping/Shipping';
+import Shipping from './components/Order/Order';
+import SingleProduct from './components/Products/SingleProduct';
 
 import './bootstrap.min.css';
 
@@ -22,16 +23,22 @@ const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
-    <Provider store={store}>
-      <BrowserRouter>
+  <Provider store={store}>
+    <BrowserRouter>
       <Header />
       <main>
-        <br/>
+        <br />
         <Container>
           <Routes>
             <Route path="/" element={<PhotoCarousel />} />
-            <Route path="/shop" element={<Product />} />
-            <Route path="/about" element={<AboutUs/>} />
+            <Route path="/product/:id" element={<Product />} />
+
+            <Route path="/product/info/:id">
+              <Route index element={<SingleProduct/>}></Route>
+                <Route path=":id" element={<SingleProduct/>} />
+            </Route>
+            
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/login" element={<Authentication />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<ContactUs />} />
@@ -40,10 +47,10 @@ root.render(
             <Route path="/checkout" element={<Shipping />} />
           </Routes>
         </Container>
-        <br/>
-        </main>
-        <Outlet/>
-        <Footer/>
-      </BrowserRouter>
-    </Provider>
+        <br />
+      </main>
+      <Outlet />
+      <Footer />
+    </BrowserRouter>
+  </Provider>
 );

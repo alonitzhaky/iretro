@@ -1,39 +1,32 @@
-// import React, { useState } from 'react'
-
-// const Shipping = () => {
-//     const [address, setAddress] = useState("")
-//     const [city, setCity] = useState("")
-//     const [postalCode, setPostalCode] = useState("")
-//     const [country, setCountry] = useState("")
-
-//     const submitHandler = (e: any) => {
-//         e.preventDefault()
-//         console.log("Submitted")
-//     }
-//     return (
-//         <div>Shipping</div>
-//     )
-// }
-
-// export default Shipping
-
 import React, { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { newOrderAsync } from './orderSlice';
 
 function Shipping() {
+    const { cart } = useAppSelector((state) => state.cart)
+    const dispatch = useAppDispatch()
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow((s) => !s);
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
-    const [postalCode, setPostalCode] = useState("")
+    const [zip_code, setZip_code] = useState("")
     const [country, setCountry] = useState("")
     const iretroBrown = "rgb(62,56,54)"
 
     const sumbitHandler = (e: any) => {
         e.preventDefault()
+        const orderData = {
+            address,
+            city, 
+            zip_code, 
+            country
+        };
+
+        dispatch(newOrderAsync({orderData, orderDetails: cart}))
         console.log("Submitted")
     }
 
@@ -80,8 +73,8 @@ function Shipping() {
                             required
                             type='text'
                             placeholder='Enter Postal Code'
-                            value={postalCode ? postalCode : ''}
-                            onChange={(e) => setPostalCode(e.target.value)}
+                            value={zip_code ? zip_code : ''}
+                            onChange={(e) => setZip_code(e.target.value)}
                         >
                         </Form.Control>
                         <br />

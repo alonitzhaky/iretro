@@ -3,5 +3,4 @@ export default class Cart {
     price: number = 0
     quantity: number = 0
     image: string = ""
-    
 }
