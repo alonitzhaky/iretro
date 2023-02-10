@@ -21,7 +21,6 @@ from .serializers import (
 
 # ~~~~~~~~~~~ Login ~~~~~~~~~~~
 
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -193,7 +192,6 @@ def new_order(request):
         serializer.save()
         print(serializer.data)
         for item in request.data["orderDetails"]:
-            # print(request.data)
             order_dets = {}
             order_dets["product"] = item["id"]
             order_dets["order"] = (

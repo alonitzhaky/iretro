@@ -1,8 +1,12 @@
 import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "../app/hooks";
+import { newOrderAsync } from "./Order/orderSlice";
+import Cart from "./Cart/Cart";
 
 const PaypalButton = () => {
+  const dispatch = useAppDispatch()
 
   return (
     <div>
@@ -25,17 +29,21 @@ const PaypalButton = () => {
           }}
           onApprove={(data, actions) => {
             if (actions.order) {
-              return actions.order.capture().then(details => {
-                toast.success(
-                  'Payment completed. Thank you ' + (details.payer.name?.given_name || ''),{
-                    position: toast.POSITION.TOP_CENTER
-                  }
-                );
-              });
+              return actions.order.capture()
+                .then(details => {
+                  toast.success(
+                    'Payment completed. Thank you ' + (details.payer.name?.given_name || ''),{
+                      position: toast.POSITION.TOP_CENTER
+                    }
+                  );
+                })
+                .then(() => {
+                  dispatch(newOrderAsync(order))
+                  // Add your second operation here
+                });
             }
             return Promise.resolve();
-          }}
-          
+          }}          
           onCancel={() => {
             toast.error("You canelled the payment", {
               position: toast.POSITION.TOP_CENTER,
