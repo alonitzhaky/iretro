@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import Reviews from '../Reviews/Reviews'
 import { getOneProductAsync } from './productSlice'
 
 const SingleProduct = () => {
@@ -24,6 +25,7 @@ const SingleProduct = () => {
         <p>{product.price}</p>
         <p>{product.id}</p>
         <p>{product.id}</p>
+        <Reviews/>
     </div>
   )
 }

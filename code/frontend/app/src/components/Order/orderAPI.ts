@@ -11,7 +11,7 @@ export function createOrder(orderData: orderData, orderDetails: Cart[]) {
         }
     }
     return new Promise<{ data: any }>((resolve) =>
-    axios.post(SERVER + '/order/', {'orderData': orderData, 'orderDetails': orderDetails}, config).then(res => console.log({data:res.data}))
+    axios.post(SERVER + '/order/', {'orderData': orderData, 'orderDetails': orderDetails}, config).then(res => resolve({data:res.data}))
     )
 
 }
