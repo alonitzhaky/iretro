@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import Review from "../../models/Review";
-import { getAllReviewsPerProduct } from "./reviewAPI";
+import { getAllReviewsPerProduct, sendReview } from "./reviewAPI";
 
 export interface ReviewState {
     status: 'idle' | 'loading' | 'failed';
@@ -22,6 +22,14 @@ export const getAllReviewsPerProductAsync = createAsyncThunk(
     async (id: number) => {
         const response = await getAllReviewsPerProduct(id);
         return response.data;
+    }
+)
+
+export const sendReviewAsync = createAsyncThunk(
+    'review/sendReview', 
+    async (details: any) => {
+        const response = await sendReview(details);
+        return response.data
     }
 )
 

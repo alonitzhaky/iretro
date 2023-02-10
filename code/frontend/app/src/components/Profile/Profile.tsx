@@ -38,7 +38,7 @@ const Profile = () => {
 
                         <ListGroup.Item>
                             <Row>
-                                <Col xs={6}><strong>Phone:</strong></Col>
+                                <Col xs={6}><strong>Phone Number:</strong></Col>
                                 <Col>{phone_number}</Col>
                             </Row>
                         </ListGroup.Item>
@@ -53,7 +53,7 @@ const Profile = () => {
 
                         <ListGroup.Item>
                             <Row>
-                                <Col xs={6}><strong>Address:</strong></Col>
+                                <Col xs={6}><strong>Shipping Address:</strong></Col>
                                 <Col>{address}</Col>
                             </Row>
                         </ListGroup.Item>

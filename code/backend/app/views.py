@@ -139,13 +139,22 @@ def get_reviews_per_product(request, pk):
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def submit_review(request):
-    form = ReviewForm(request.POST)
-    if form.is_valid():
-        form.save()
-        return redirect("success")
-    else:
-        form = ReviewForm()
-    return Response("Success!")
+    data = request.data
+    user = request.user
+    try: 
+        product = Product.objects.get(id = data['id'])
+        reviewing_user = CustomUser.objects.get(username = user.username)
+        Review.objects.create(
+            product = product, 
+            user = reviewing_user, 
+            customer_name = user.username, 
+            rating = data['rating'], 
+            description = data['description'])
+        return Response("Added.", status = status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(status = status.HTTP_404_NOT_FOUND)
+
 
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~
@@ -168,6 +177,7 @@ def update_user_profile(request):
     serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
+        print(serializer.data)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 

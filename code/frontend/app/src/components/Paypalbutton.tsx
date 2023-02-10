@@ -4,7 +4,6 @@ import { toast } from "react-toastify";
 
 const PaypalButton = () => {
 
-
   return (
     <div>
       <PayPalScriptProvider

@@ -30,7 +30,7 @@ const UpdateInfo = () => {
         formData.append('first_name', firstName)
         formData.append('last_name', lastName)
         formData.append('email', emailAddress)
-        formData.append('phone', phone)
+        formData.append('phone_number', phone)
         formData.append('address', shippingAddress)
         dispatch(updateUserProfileAsync(formData))
     }

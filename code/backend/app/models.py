@@ -12,12 +12,8 @@ class CustomUser(AbstractUser):
     birthday = models.DateField(null = True, blank = True)
     image = models.ImageField(null = False, blank = False, default='user_avatar.png')
 
-# class Type(models.Model):
-#     name = models.CharField(max_length=30)
-#     description = models.CharField(max_length=100)
-
-#     def __str__(self):
-#         return self.name
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email', 'first_name', 'last_name', 'phone_number']
 
 class Product(models.Model): 
     CATEGORIES = (
@@ -28,9 +24,9 @@ class Product(models.Model):
     user = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False)
     name = models.CharField(max_length=50)
     category = models.PositiveSmallIntegerField(choices = CATEGORIES)
-    price = models.DecimalField(decimal_places = 2, max_digits = 5, validators = [MinValueValidator(Decimal('0.01'))])
+    price = models.DecimalField(decimal_places = 2, max_digits = 7, validators = [MinValueValidator(Decimal('0.01'))])
     description = models.CharField(max_length = 200)
-    quantity = models.IntegerField(null = False, blank = False, validators=[MinValueValidator(1)], default = 0)
+    quantity = models.IntegerField(null = False, blank = False, validators=[MinValueValidator(0)], default = 0)
     image = models.ImageField(null = False, blank = False, default='placeholder.png')
 
     def __str__(self):
@@ -44,7 +40,6 @@ class Order(models.Model):
     city = models.CharField(max_length = 100, null = False, blank = True)
     country = models.CharField(max_length = 50, null = False, blank = True)
     zip_code = models.CharField(max_length = 15, null = False, blank = False)
-
 
     def __str__(self):
         return str(self.id)

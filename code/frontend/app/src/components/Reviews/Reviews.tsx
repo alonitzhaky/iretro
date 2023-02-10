@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Button, Form } from 'react-bootstrap'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectIsLogged } from '../Authentication/authenticationSlice'
-import { getAllReviewsPerProductAsync, selectReviewDescription } from './reviewSlice'
+import { getAllReviewsPerProductAsync, selectReviewDescription, sendReviewAsync } from './reviewSlice'
+import Rating from '@mui/material/Rating';
 
 const Reviews = () => {
     const iretroBrown = "rgb(62,56,54)";
@@ -17,6 +19,7 @@ const Reviews = () => {
         dispatch(getAllReviewsPerProductAsync(Number(id)))
     }, [])
 
+
     return (
         <div className='text-center'>
             <hr />
@@ -28,10 +31,23 @@ const Reviews = () => {
                     Review: {review.description}
                 </div>
             )}
-            <hr/>
-            <h2>New Review:</h2>
-            <input onChange={(e) => setDescription(e.target.value)} value={description} />
-            
+            <hr />
+            <h3>New Review:</h3>
+            <div>
+                <p>Rate This Product: </p>
+                <Rating
+                    value={rating}
+                    name="half-rating"
+                    defaultValue={2.5}
+                    precision={0.5}
+                    onChange={(e) => setRating(+((e.target as HTMLInputElement).value))} />
+            </div>
+            <br />
+            Leave A Description: <Form.Control onChange={(e) => setDescription(e.target.value)} value={description} />
+            {logged &&
+                <Button onClick={() => dispatch(sendReviewAsync({ rating, description, id }))}>
+                    Send
+                </Button>}
         </div>
     )
 }

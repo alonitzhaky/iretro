@@ -7,6 +7,7 @@ import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartS
 import { SERVER } from '../../env'
 import { Link, NavLink } from 'react-router-dom';
 import Shipping from '../Order/Order';
+import PaypalButton from '../Paypalbutton';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
@@ -69,6 +70,7 @@ const Cart = () => {
                     Total: ${totalCart}
                 </Offcanvas.Body>
                 {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
+                <PaypalButton/>
                 <Shipping />
             </Offcanvas>
         </div>
