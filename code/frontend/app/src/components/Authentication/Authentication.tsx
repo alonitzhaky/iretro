@@ -73,6 +73,8 @@ const Authentication = () => {
           </Button>
         </div>
       </Form>
+      <hr/>
+
       <h3 className="d-flex justify-content-center">Not registered?</h3>
       <div className="d-flex justify-content-center">
         <Button className="btn btn-light" style={{ margin: '10px' }} onClick={handleClick}>

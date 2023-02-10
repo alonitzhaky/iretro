@@ -51,7 +51,6 @@ export const productSlice = createSlice({
         builder.addCase(addProductAsync.fulfilled, (state, action) => {
             state.products.push(action.payload)
         }).addCase(getAllProductsAsync.fulfilled, (state, action) => {
-            // console.log(action.payload)
             state.products = action.payload
         }).addCase(deleteProductAsync.fulfilled, (state, action) => {
             state.products = state.products.filter(product => product.id !== action.payload)

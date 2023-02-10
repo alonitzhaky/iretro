@@ -18,7 +18,7 @@ export const CartSlice = createSlice({
     reducers: {
 
         cartFix: (state) => {
-            if(localStorage.getItem("acrt")){
+            if(localStorage.getItem("cart")){
                 state.cart = JSON.parse(String(localStorage.getItem("cart")))
             }
         },

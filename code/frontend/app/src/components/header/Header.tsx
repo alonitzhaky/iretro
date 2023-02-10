@@ -12,22 +12,13 @@ import { cartFix } from '../Cart/cartSlice';
 
 
 const Header = () => {
-  const test = useAppSelector(selectIsLogged)
   const dispatch = useAppDispatch()
   const iretroBrown = "rgb(62,56,54)"
   const [token, setToken] = useState("")
   const [userName, setUserName] = useState("")
   const [isStaff, setIsStaff] = useState(false)
-  
+
   useEffect(() => {
-
-    if(localStorage.getItem("token")){
-      dispatch(loggedCheck())
-      dispatch(staffCheck())
-      dispatch(tokenCheck())
-      dispatch(cartFix())
-    }
-
     if (!token) {
       const storedToken = localStorage.getItem("token")
       setToken(JSON.parse(String(storedToken)));
@@ -36,14 +27,23 @@ const Header = () => {
       const isAdmin = localStorage.getItem("is_staff")
       setIsStaff(JSON.parse(String(isAdmin)))
     }
+
+    if(localStorage.getItem("token")) {
+      dispatch(loggedCheck())
+      dispatch(staffCheck())
+      dispatch(tokenCheck())
+      dispatch(cartFix())
+    }
+
   }, [])
-  // console.log(test)
   return (
     <div>
       <ToastContainer />
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container fluid>
-          <Navbar.Brand href="/"><img src='./logo.png' style={{ height: '60px' }}></img></Navbar.Brand>
+            <Navbar.Brand as={Link} to="/">
+              <img src='./logo.png' style={{ height: '60px' }} />
+            </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="navbarColor01" >
             <Nav className="me-auto">

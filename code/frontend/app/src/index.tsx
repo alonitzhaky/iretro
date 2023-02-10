@@ -14,6 +14,7 @@ import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
 import Profile from './components/Profile/Profile';
 import UpdateInfo from './components/Profile/UpdateInfo';
+import Shipping from './components/Shipping/Shipping';
 
 import './bootstrap.min.css';
 
@@ -36,6 +37,7 @@ root.render(
             <Route path="/contact" element={<ContactUs />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/update" element={<UpdateInfo />} />
+            <Route path="/checkout" element={<Shipping />} />
           </Routes>
         </Container>
         <br/>

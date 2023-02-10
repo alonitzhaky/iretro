@@ -35,27 +35,24 @@ class Order(models.Model):
     id = models.BigAutoField(primary_key = True)
     customer = models.ForeignKey(CustomUser, on_delete = models.PROTECT, default = 1)
     order_date = models.DateTimeField(auto_now_add = True)
+    address = models.CharField(max_length = 100, null = False, blank = True)
+    city = models.CharField(max_length = 100, null = False, blank = True)
+    country = models.CharField(max_length = 50, null = False, blank = True)
+    zip_code = models.CharField(max_length = 15, null = False, blank = False)
+
 
     def __str__(self):
         return str(self.id)
 
 class OrderDetail(models.Model): 
     id = models.BigAutoField(primary_key = True, unique = True)
-    order_number = models.ForeignKey(Order, on_delete = models.PROTECT, null = False, blank = False)
-    customer = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False, blank = False)
+    order = models.ForeignKey(Order, on_delete = models.PROTECT, null = False, blank = False)
     products = models.ManyToManyField(Product)
     quantity = models.IntegerField(null = False, blank = False, validators=[MinValueValidator(1)])
     total = models.DecimalField(max_digits = 7, decimal_places = 2)
 
     def __str__(self): 
         return str(self.order_number)
-
-class OrderShippingAddress(models.Model): 
-    order_number = models.ForeignKey(Order, on_delete = models.PROTECT, null = False, blank = False)
-    address = models.CharField(max_length = 100, null = False, blank = True)
-    city = models.CharField(max_length = 100, null = False, blank = True)
-    country = models.CharField(max_length = 50, null = False, blank = True)
-    zip_code = models.CharField(max_length = 15, null = False, blank = False)
 
 class Review(models.Model):
     RATING_OPTIONS = (

@@ -54,7 +54,7 @@ export const authenticationSlice = createSlice({
         state.isLogged = true
       }
     },
-      // ⤵ staffCheck - checks for priviliges of Staff / Administrator.
+      // ⤵ staffCheck - checks for privileges of Staff / Administrator.
     staffCheck: (state) => {
       if (localStorage.getItem("is_staff") === "true") {
         state.is_staff = true
@@ -83,7 +83,6 @@ export const authenticationSlice = createSlice({
       }
       const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
       state.token = action.payload.data['access']
-      // console.log(state.token)
       state.username = decoded.username;
       state.is_staff = decoded.is_staff;
       localStorage.setItem("token", JSON.stringify(state.token))

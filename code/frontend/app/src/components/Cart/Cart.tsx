@@ -5,7 +5,8 @@ import { Button, Card, Offcanvas } from 'react-bootstrap'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartSlice';
 import { SERVER } from '../../env'
-import PaypalButton from '../Paypalbutton';
+import { Link, NavLink } from 'react-router-dom';
+import Shipping from '../Shipping/Shipping';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
@@ -13,7 +14,8 @@ const Cart = () => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity:number }[]>([]);
+    const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
+    const iretroBrown = "rgb(62,56,54)"
 
     let totalCart = 0
     useEffect(() => {
@@ -38,7 +40,7 @@ const Cart = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     {productsInCart.map((product, index) => {
-                        totalCart += Number(product.price * product.quantity)
+                        totalCart += Math.round(Number(product.price * product.quantity)) * 100/ 100
                         return (
                             <Card key={index}>
                                 <br />
@@ -50,13 +52,13 @@ const Cart = () => {
                                     <Card.Text>
                                         Quantity: {product.quantity}
                                     </Card.Text>
-                                    <Button onClick={() => dispatch(removeQuantity(product.id))}>-</Button>
+                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(removeQuantity(product.id))}>-</Button>
                                     {" "}
-                                    <Button onClick={() => dispatch(addQuantity(product.id))}>+</Button>
+                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(addQuantity(product.id))}>+</Button>
                                     <Card.Text>
                                         Price Per Item: {product.price}
                                     </Card.Text>
-                                    <Button onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
+                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
                                 </Card.Body>
                             </Card>
                         )
@@ -65,7 +67,8 @@ const Cart = () => {
                     <hr />
                     Total: ${totalCart}
                 </Offcanvas.Body>
-                <PaypalButton/>
+                {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
+                <Shipping/>
             </Offcanvas>
         </div>
     )

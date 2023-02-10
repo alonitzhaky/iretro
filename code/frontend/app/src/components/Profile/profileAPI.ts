@@ -11,7 +11,6 @@ export function getUserProfile() {
             'Authorization': 'Bearer ' + accessToken
         }
     }
-    // console.log(accessToken)
     return new Promise<{ data: Profile }>((resolve =>
         axios.get(SERVER + '/profile/', config).then(res => resolve({ data: res.data }))
     ))

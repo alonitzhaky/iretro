@@ -59,17 +59,17 @@ const Profile = () => {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-                        {/* Present if the user has admin priviliges. */}
+                        {/* Present if the user has admin privileges. */}
                         <ListGroup.Item>
                             {admin === true &&
                                 <Row>
-                                    <Col xs={6}><strong>Administrator Priviliges:</strong></Col>
+                                    <Col xs={6}><strong>Administrator Privileges:</strong></Col>
                                     <Col>{String(admin)}</Col>
                                 </Row>
                             }
                             {admin === false &&
                                 <Row>
-                                    <Col xs={6}><strong>Administrator Priviliges:</strong></Col>
+                                    <Col xs={6}><strong>Administrator Privileges:</strong></Col>
                                     <Col>{String(admin)}</Col>
                                 </Row>
                             }
