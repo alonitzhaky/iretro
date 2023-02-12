@@ -17,6 +17,7 @@ const Reviews = () => {
 
     useEffect(() => {
         dispatch(getAllReviewsPerProductAsync(Number(id)))
+        console.log(id)
     }, [])
 
 
@@ -28,10 +29,11 @@ const Reviews = () => {
             {reviewInfo.map((review, index) =>
                 <div key={index}>
                     <p>Name: {review.customer_name}</p>
-                    Review: {review.description}
+                    <p>Review: {review.description}</p>
+                    <hr />
                 </div>
             )}
-            <hr />
+            <hr style={{borderTop: "1px dashed", color: "deepskyblue"}} />
             <h3>New Review:</h3>
             <div>
                 <p>Rate This Product: </p>

@@ -37,10 +37,6 @@ const PaypalButton = () => {
                     }
                   );
                 })
-                .then(() => {
-                  dispatch(newOrderAsync(order))
-                  // Add your second operation here
-                });
             }
             return Promise.resolve();
           }}          

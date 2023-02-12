@@ -4,20 +4,21 @@ import { Link, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { SERVER } from "../../env";
 import { addtoCart } from "../Cart/cartSlice";
+import BasicPagination from "../Design/BasicPagination";
 import {
   selectProducts,
   getAllProductsInCategoryAsync,
 } from "./productSlice";
 
-export function Product() {
+export default function Product() {
   let { id } = useParams()
   const iretroBrown = "rgb(62,56,54)";
   const [productQuantity, setProductQuantity] = useState(1)
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllProductsInCategoryAsync(Number(id)));
-  }, []); 
+    dispatch(getAllProductsInCategoryAsync({ page: 1, id: Number(id) }));
+  }, []);
   return (
     <div className="text-center">
       {Number(id) === 1 &&
@@ -39,6 +40,13 @@ export function Product() {
             <p>Price: {product.price}</p>
             <p>Description: {product.description}</p>
             <p>Quantity In Stock: {product.quantity}</p>
+            <Link to={`/product/info/${product.id}/`}>
+              <Button style={{ backgroundColor: iretroBrown }} className="mt-3">
+                Details
+              </Button>
+            </Link>
+            <br />
+            <br />
             {product.quantity > 0 ? (
               <Form.Control as="select" onChange={(e) => setProductQuantity(+e.target.value)} value={productQuantity}>
                 {[...Array(product.quantity)].map((amount, index) => (
@@ -51,18 +59,17 @@ export function Product() {
                 Out Of Stock
               </Button>
             )}
-            <Link to={`/product/info/${product.id}/`}>
-            <Button style={{ backgroundColor: iretroBrown }} className="mt-3">
-              Details
-            </Button>
-            </Link>
-            <br/>
+            <br />
             {product.quantity > 0 && (<Button onClick={() => dispatch(addtoCart({ id: product.id, price: product.price, name: product.name, image: product.image, quantity: productQuantity }))} style={{ backgroundColor: iretroBrown }} className="mt-3">
               Add to Cart
             </Button>
             )}
           </div>
         ))}
+      </div>
+      <div className="d-flex justify-content-center">
+        <br />
+        <BasicPagination />
       </div>
     </div>
   );

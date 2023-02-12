@@ -16,6 +16,8 @@ from .serializers import (
     ReviewSerializer,
     ProductSeralizer,
 )
+from .pagination import CustomPageNumberPagination
+
 
 # Create your views here.
 
@@ -63,24 +65,22 @@ def register(request):
 
 # ~~~~~~~~~~ Full CRUD - APIViews ~~~~~~~~~
 # Products
+# @api_view(["GET"])
+# def get_products(request, pk):
+#     try:
+#         serializer = ProductSeralizer(Product.objects.filter(category=pk), many=True)
+#         return Response(serializer.data)
+#     except:
+#         return Response(status=status.HTTP_404_NOT_FOUND)
+
 @api_view(["GET"])
 def get_products(request, pk):
-    # if request.method == "GET":
-    #     if id == -1:
-    #         serializer = ProductSeralizer(Product.objects.all(), many=True)
-    #         return Response(status=status.HTTP_200_OK, data=serializer.data)
-    #     else:
-    #         try:
-    #             serializer = ProductSeralizer(Product.objects.get(id=id))
-    #         except:
-    #              return Response(status=status.HTTP_400_BAD_REQUEST, data="product not found")
-    #         return Response(status=status.HTTP_200_OK, data=serializer.data)
-    try:
-        serializer = ProductSeralizer(Product.objects.filter(category=pk), many=True)
-        return Response(serializer.data)
-    except:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-
+    pagination_class = CustomPageNumberPagination
+    products = Product.objects.filter(category=pk)
+    paginator = pagination_class()
+    result_page = paginator.paginate_queryset(products, request)
+    serializer = ProductSeralizer(result_page, many=True)
+    return paginator.get_paginated_response(serializer.data)
 
 @api_view(["GET"])
 def all_products(request):
@@ -126,8 +126,6 @@ def one_product(request, pk):
 # Products
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~~
-
-
 @api_view(["GET"])
 def get_reviews_per_product(request, pk):
     reviews = Review.objects.filter(product=Product.objects.get(id=pk))
@@ -142,6 +140,7 @@ def submit_review(request):
     user = request.user
     try: 
         product = Product.objects.get(id = data['id'])
+        print(data)
         reviewing_user = CustomUser.objects.get(username = user.username)
         Review.objects.create(
             product = product, 
@@ -152,9 +151,7 @@ def submit_review(request):
         return Response("Added.", status = status.HTTP_200_OK)
     except Exception as e:
         print(e)
-        return Response(status = status.HTTP_404_NOT_FOUND)
-
-
+        return Response(status = status.HTTP_401_UNAUTHORIZED)
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~
 

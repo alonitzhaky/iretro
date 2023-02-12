@@ -1,6 +1,7 @@
 import Product from "../../models/Product";
 import axios from 'axios'
 import { SERVER } from '../../env'
+import Pagination from "../../models/Pagination";
 
 export function getAllProducts() {
     return new Promise<{ data: Product[] }>((resolve) =>
@@ -8,9 +9,9 @@ export function getAllProducts() {
     );
 }
 
-export function getAllProductsInCategory(id: number) {
-    return new Promise<{ data: Product[] }>((resolve) =>
-        axios.get(SERVER + '/product/' + `${id}/`).then(res => resolve({ data: res.data }))
+export function getAllProductsInCategory(id: number, page: number) {
+    return new Promise<{ data: Pagination }>((resolve) =>
+        axios.get(SERVER + '/product/' + `${id}/`, {params: {page: page}}).then(res => resolve({ data: res.data }))
     )
 }
 

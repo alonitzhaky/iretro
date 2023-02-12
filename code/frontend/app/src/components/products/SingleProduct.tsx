@@ -19,11 +19,9 @@ const SingleProduct = () => {
     <div className='text-center'>
         <h1 style={{color: iretroBrown}}>More Info</h1>
         <hr/>
-        <p>{product.id}</p>
         <p>{product.name}</p>
         <p>{product.description}</p>
         <p>{product.price}</p>
-        <p>{product.id}</p>
         <p>{product.id}</p>
         <Reviews/>
     </div>

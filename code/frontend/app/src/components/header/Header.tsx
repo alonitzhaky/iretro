@@ -41,7 +41,7 @@ const Header = () => {
       <Navbar bg="dark" expand="lg" variant="dark">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            <img src={"../../logo.png"} style={{ height: '60px' }} />
+            <img src={process.env.PUBLIC_URL + '/logo.png'} style={{ height: '60px' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="navbarColor01" >

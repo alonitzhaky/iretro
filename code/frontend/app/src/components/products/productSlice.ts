@@ -6,12 +6,14 @@ import { getAllProducts, getAllProductsInCategory, getOneProduct } from './produ
 interface ProductState {
     status: 'idle' | 'loading' | 'failed';
     products: Product[];
-    product: Product
+    product: Product;
+    count: number
 }
 const initialState: ProductState = {
     status: 'idle',
     products: [], 
-    product: Object.create(null)
+    product: Object.create(null), 
+    count: 0
 };
 
 export const getAllProductsAsync = createAsyncThunk(
@@ -24,8 +26,8 @@ export const getAllProductsAsync = createAsyncThunk(
 
 export const getAllProductsInCategoryAsync = createAsyncThunk(
     'product/getAllProductsInCategory',
-    async (id: number) => {
-        const response = await getAllProductsInCategory(id);
+    async (data:{id: number, page: number}) => {
+        const response = await getAllProductsInCategory(data.id, data.page);
         console.log(response.data)
         return response.data;
     }
@@ -87,8 +89,8 @@ export const productSlice = createSlice({
             .addCase(getAllProductsAsync.fulfilled, (state, action) => {
                 state.products = action.payload
             }).addCase(getAllProductsInCategoryAsync.fulfilled, (state, action) => {
-                console.log(action.payload)
-                state.products = action.payload
+                state.products = action.payload.results
+                state.count = action.payload.count
             }).addCase(getOneProductAsync.fulfilled, (state, action) => {
                 state.product = action.payload
             })
@@ -97,4 +99,5 @@ export const productSlice = createSlice({
 
 export const { } = productSlice.actions;
 export const selectProducts = (state: RootState) => state.product.products;
+export const selectCount = (state: RootState) => state.product.count;
 export default productSlice.reducer;
