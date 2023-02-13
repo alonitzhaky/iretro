@@ -63,7 +63,7 @@ const Register = () => {
                             <br />
                             {isValid &&
                                 <div className='d-flex justify-content-center'>
-                                    <Button style={{color: iretroBrown}} variant="primary" type="submit" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email, first_name: firstName, last_name: lastName }))}>
+                                    <Button style={{color: iretroBrown}} variant="primary" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email, first_name: firstName, last_name: lastName }))}>
                                         Register
                                     </Button>
                                 </div> || 'The passwords are not identical. Try again.'}

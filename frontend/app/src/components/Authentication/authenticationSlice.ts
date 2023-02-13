@@ -2,6 +2,9 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { loginUser, logoutUser, registerUser } from './authenticationAPI';
 import jwt_decode from "jwt-decode";
+import { toast } from 'react-toastify';
+import { SERVER } from '../../env';
+import axios from 'axios';
 interface AuthenticationState {
   token: string
   isLogged: Boolean
@@ -15,18 +18,37 @@ export const initialState: AuthenticationState = {
   token: "",
   isLogged: false,
   username: "",
-  is_staff: false, 
-  first_name: "", 
+  is_staff: false,
+  first_name: "",
   last_name: ""
 }
+
+// export const registerUserAsync = createAsyncThunk(
+//   'authentication/registerUser',
+//   async (info:
+//     { username: string, password: string, email: string, first_name: string, last_name: string }, thunkApi) => {
+//     try {
+//       const response = await registerUser(info.username, info.password, info.email, info.first_name, info.last_name);
+//       return response.data;
+//     } catch (error: any) {
+//       console.log(error.response.data)
+//       return thunkApi.rejectWithValue(error.response.data.error)
+//     }
+//   });
 
 export const registerUserAsync = createAsyncThunk(
   'authentication/registerUser',
   async (info:
-    { username: string, password: string, email: string, first_name: string, last_name: string}) => {
-    const response = await registerUser(info.username, info.password, info.email, info.first_name, info.last_name);
-    return response.data;
+    { username: string, password: string, email: string, first_name: string, last_name: string }, thunkApi) => {
+    try {
+      const response = await axios.post(SERVER + '/register/', {username: info.username, password: info.password, email: info.email, first_name: info.first_name, last_name: info.last_name});
+      return response.data;
+    } catch (error: any) {
+      console.log(error.response.data)
+      return thunkApi.rejectWithValue(error.response.data.error)
+    }
   });
+
 
 export const loginUserAsync = createAsyncThunk(
   'authentication/loginUser',
@@ -54,7 +76,7 @@ export const authenticationSlice = createSlice({
         state.isLogged = true
       }
     },
-      // ⤵ staffCheck - checks for privileges of Staff / Administrator.
+    // ⤵ staffCheck - checks for privileges of Staff / Administrator.
     staffCheck: (state) => {
       if (localStorage.getItem("is_staff") === "true") {
         state.is_staff = true
@@ -70,35 +92,45 @@ export const authenticationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(registerUserAsync.fulfilled, (state, action) => {
-      state.isLogged = true
-    }).addCase(loginUserAsync.fulfilled, (state, action) => {
-      interface JwtPayload {
-        exp: number;
-        iat: number;
-        jti: string;
-        token_type: string;
-        user_id: number;
-        username: string;
-        is_staff: boolean;
-      }
-      const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
-      state.token = action.payload.data['access']
-      state.username = decoded.username;
-      state.is_staff = decoded.is_staff;
-      localStorage.setItem("token", JSON.stringify(state.token))
-      localStorage.setItem("username", JSON.stringify(state.username));
-      localStorage.setItem("is_staff", JSON.stringify(state.is_staff));
+      toast.success(`Successfully registered. Welcome!`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
       setTimeout(function () {
         window.location.replace("/")
       }, 2000)
-      state.isLogged = true;
-    }).addCase(logoutUserAsync.fulfilled, (state, action) => {
-      localStorage.clear()
-      setTimeout(function () {
-        window.location.replace("/");
-      }, 1000);
-      state.isLogged = false;
-    });
+      state.isLogged = true
+    }).addCase(registerUserAsync.rejected, (state, action) => {
+      toast.error(`${action.payload}`, {
+        position: toast.POSITION.TOP_CENTER
+      })
+    }).addCase(loginUserAsync.fulfilled, (state, action) => {
+        interface JwtPayload {
+          exp: number;
+          iat: number;
+          jti: string;
+          token_type: string;
+          user_id: number;
+          username: string;
+          is_staff: boolean;
+        }
+        const decoded = jwt_decode(action.payload.data.access) as JwtPayload;
+        state.token = action.payload.data['access']
+        state.username = decoded.username;
+        state.is_staff = decoded.is_staff;
+        localStorage.setItem("token", JSON.stringify(state.token))
+        localStorage.setItem("username", JSON.stringify(state.username));
+        localStorage.setItem("is_staff", JSON.stringify(state.is_staff));
+        setTimeout(function () {
+          window.location.replace("/")
+        }, 2000)
+        state.isLogged = true;
+      }).addCase(logoutUserAsync.fulfilled, (state, action) => {
+        localStorage.clear()
+        setTimeout(function () {
+          window.location.replace("/");
+        }, 1000);
+        state.isLogged = false;
+      });
   },
 });
 
