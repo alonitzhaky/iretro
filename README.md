@@ -24,9 +24,9 @@ The iRetro Store is a concept website that sells framed, taken apart iPhones. Th
 
 # Pre-requisites
 Please ensure you have the following installed on your local machine: 
-- [Python 3.x]((https://www.python.org/downloads/))
+- [Python 3.x](https://www.python.org/downloads/)
 - [Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
-- [pip]((https://www.geeksforgeeks.org/how-to-install-pip-on-windows/))
+- [pip](https://www.geeksforgeeks.org/how-to-install-pip-on-windows/)
 - [Django](https://docs.djangoproject.com/en/4.1/topics/install/)
 - [Django Rest Framework](https://www.django-rest-framework.org/#installation)
 - [React](https://reactjs.org/docs/create-a-new-react-app.html)
