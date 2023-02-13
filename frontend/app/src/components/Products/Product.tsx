@@ -18,7 +18,7 @@ export default function Product() {
   const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllProductsInCategoryAsync({ page: 1, id: Number(id) }));
-  }, []);
+  }, [id]);
   return (
     <div className="text-center">
       {Number(id) === 1 &&

@@ -12,8 +12,9 @@ const Cart = () => {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(selectCart); // Cart imported from slicer
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const toggleShow = () => setShow(!show)
+    // const handleClose = () => setShow(false);
+    // const handleShow = () => setShow(true);
     const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
     const iretroBrown = "rgb(62,56,54)"
     console.log(cart)
@@ -24,18 +25,16 @@ const Cart = () => {
         if (localStorageCart) {
             setProductsInCart(JSON.parse(localStorageCart))
         }
-        if (cart.length) {
-            handleShow()
-        }
     }, [cart])
+
 
     return (
         <div>
-            <div onClick={handleShow}>
+            <div className='hover-disable' onClick={() => toggleShow()}>
                 <FontAwesomeIcon icon={faCartShopping} />
                 <a>{" "}Cart</a>
             </div>
-            <Offcanvas placement={"end"} show={show} onHide={handleClose}>
+            <Offcanvas placement={"end"} show={show} onHide={() => toggleShow()}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Cart</Offcanvas.Title>
                 </Offcanvas.Header>

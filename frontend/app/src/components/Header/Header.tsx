@@ -95,19 +95,23 @@ const Header = () => {
                 </Dropdown.Item>}
               </Dropdown.Menu>
             </Dropdown>
+
             <Nav style={{ margin: "0 5px" }}>
               <Navbar.Text>
-                <a href="tel:+972547144714" target="_blank" style={{ color: "white", margin: "0 10px" }}>
-                  <FontAwesomeIcon icon={faPhone} />
-                  <a>{" "}Call Us</a>
-                </a>
-                <Nav>
-                  <Nav.Link>
-                    <Cart />
-                  </Nav.Link>
-                </Nav>
+                <Nav.Link>
+                  <a href="tel:+972547144714" target="_blank" style={{ color: "white", margin: "0 10px" }}>
+                    <FontAwesomeIcon icon={faPhone} />
+                    <a>{" "}Call Us</a>
+                  </a>
+                </Nav.Link>
               </Navbar.Text>
             </Nav>
+            <Nav>
+              <Nav.Link>
+                <Cart />
+              </Nav.Link>
+            </Nav>
+
           </Navbar.Collapse>
         </Container>
       </Navbar>
