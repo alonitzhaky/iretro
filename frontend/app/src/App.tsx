@@ -8,7 +8,7 @@ import Register from './components/Authentication/Register';
 import ContactUs from './components/ContactUs/ContactUs';
 import Profile from './components/Profile/Profile';
 import UpdateInfo from './components/Profile/UpdateInfo';
-import Shipping from './components/Order/Order';
+import Shipping from './components/Order/Shipping';
 import SingleProduct from './components/Products/SingleProduct';
 import { Container } from 'react-bootstrap';
 import { Routes, Route, Outlet } from 'react-router-dom';

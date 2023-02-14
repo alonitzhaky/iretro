@@ -4,10 +4,3 @@ export default class Order {
     zip_code: string = ""
     country: string = ""
 }
-
-export interface orderData {
-    address: string
-    city: string
-    zip_code: string
-    country: string
-}

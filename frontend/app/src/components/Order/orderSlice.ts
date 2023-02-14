@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import Cart from "../../models/Cart"
-import { orderData } from "../../models/Order"
+import Order from "../../models/Order"
 import { createOrder } from "./orderAPI"
 
 export interface OrderState {
@@ -20,11 +20,15 @@ const initialState: OrderState = {
 }
 
 export const newOrderAsync = createAsyncThunk(
-    "order/newOrder",
-    async (data: { orderData: orderData, orderDetails: Cart[] }) => {
-        const response = await createOrder(data.orderData, data.orderDetails);
+    'order/newOrder', 
+    async(data: {orderData: Order, orderDetails: Cart[]}) => {
+        const total = data.orderDetails.reduce((accumulate, item) => accumulate + item.price * item.quantity, 0)
+        const quantity = data.orderDetails.reduce((accumulate, item) => accumulate + item.quantity, 0)
+        const orderDataWithTotalAndQuantity = {...data.orderData, total, quantity}
+        const response = await createOrder(orderDataWithTotalAndQuantity, data.orderDetails)
         return response.data;
-    });
+    }
+)
 
     export const orderSlice = createSlice({
         name: 'order', 

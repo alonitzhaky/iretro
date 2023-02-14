@@ -5,21 +5,19 @@ import { Button, Card, Offcanvas } from 'react-bootstrap'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartSlice';
 import { SERVER } from '../../env'
-import Shipping from '../Order/Order';
-import PaypalButton from '../Paypalbutton';
+import Shipping from '../Order/Shipping';
+import PaypalButton from '../Order/Paypalbutton';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
     const cart = useAppSelector(selectCart); // Cart imported from slicer
     const [show, setShow] = useState(false);
     const toggleShow = () => setShow(!show)
-    // const handleClose = () => setShow(false);
-    // const handleShow = () => setShow(true);
     const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
     const iretroBrown = "rgb(62,56,54)"
-    console.log(cart)
+    const [totalCart, setTotalCart] = useState(0)
 
-    let totalCart = 0
+
     useEffect(() => {
         const localStorageCart = localStorage.getItem("cart");
         if (localStorageCart) {
@@ -27,10 +25,17 @@ const Cart = () => {
         }
     }, [cart])
 
+    useEffect(() => {
+        let total = 0
+        productsInCart.forEach(product => {
+          total += product.price * product.quantity
+        })
+        setTotalCart(parseFloat(total.toFixed(2)));
+      }, [productsInCart])
 
     return (
         <div>
-            <div className='hover-disable' onClick={() => toggleShow()}>
+            <div onClick={() => toggleShow()}>
                 <FontAwesomeIcon icon={faCartShopping} />
                 <a>{" "}Cart</a>
             </div>
@@ -40,7 +45,6 @@ const Cart = () => {
                 </Offcanvas.Header>
                 <Offcanvas.Body>
                     {productsInCart.map((product, index) => {
-                        totalCart += Math.round((product.price * product.quantity + Number.EPSILON) * 100) / 100
                         return (
                             <Card key={index}>
                                 <br />
@@ -68,7 +72,7 @@ const Cart = () => {
                     Total: ${totalCart}
                 </Offcanvas.Body>
                 {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
-                <PaypalButton/>
+                <PaypalButton />
                 <Shipping />
             </Offcanvas>
         </div>

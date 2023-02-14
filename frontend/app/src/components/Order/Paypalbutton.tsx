@@ -1,9 +1,9 @@
 import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
-import { useAppDispatch } from "../app/hooks";
-import { newOrderAsync } from "./Order/orderSlice";
-import Cart from "./Cart/Cart";
+import { useAppDispatch } from "../../app/hooks";
+import { newOrderAsync } from "./orderSlice";
+import Cart from "../Cart/Cart";
 
 const PaypalButton = () => {
   const dispatch = useAppDispatch()

@@ -21,13 +21,12 @@ function Shipping() {
         e.preventDefault()
         const orderData = {
             address,
-            city, 
-            zip_code, 
+            city,
+            zip_code,
             country
         };
 
-        dispatch(newOrderAsync({orderData, orderDetails: cart}))
-        console.log("Submitted")
+        dispatch(newOrderAsync({ orderData, orderDetails: cart }))
     }
 
     return (
@@ -78,7 +77,13 @@ function Shipping() {
                         >
                         </Form.Control>
                         <br />
-                        <Button style={{backgroundColor: iretroBrown}} type='submit' variant='primary' onClick={sumbitHandler}>
+                        <Button
+                            style={{ backgroundColor: iretroBrown }}
+                            type='submit'
+                            variant='primary'
+                            onClick={sumbitHandler}
+                            disabled={!address || !city || !country || !zip_code}
+                        >
                             Continue
                         </Button>
                     </Form.Group>

@@ -1,9 +1,9 @@
 import axios from "axios";
 import { SERVER } from "../../env"
 import Cart from "../../models/Cart";
-import { orderData } from "../../models/Order";
+import Order from "../../models/Order";
 
-export function createOrder(orderData: orderData, orderDetails: Cart[]) {
+export function createOrder(orderData: Order, orderDetails: Cart[]) {
     const accessToken = JSON.parse(String(localStorage.getItem("token")))
     let config = {
         headers: {
