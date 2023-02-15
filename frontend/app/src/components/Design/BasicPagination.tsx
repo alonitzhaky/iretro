@@ -17,8 +17,10 @@ export default function BasicPagination() {
     }
     
     return (
+      
     <Stack spacing={2}>
-      <Pagination count={Math.ceil(count)} color="standard" onChange={handleChange} />
+        <br />
+      <Pagination count={Math.ceil(count / 6)} color="standard" onChange={handleChange} />
     </Stack>
   );
 }

@@ -17,7 +17,6 @@ import ErrorFallback from './components/Errors/ErrorFallback';
 
 import './bootstrap.min.css';
 
-
 const Product = React.lazy(() => import('./components/Products/Product'))
 
 function App() {
@@ -57,7 +56,6 @@ function App() {
       </main>
       <Outlet />
       <Footer />
-
     </div>
   );
 }
