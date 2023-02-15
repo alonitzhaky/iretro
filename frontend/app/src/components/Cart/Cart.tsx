@@ -3,20 +3,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState, useEffect } from 'react'
 import { Button, Card, Offcanvas } from 'react-bootstrap'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { addQuantity, removefromCart, removeQuantity, selectCart } from './cartSlice';
+import { addQuantity, removefromCart, removeQuantity, selectCart, updateTotal } from './cartSlice';
 import { SERVER } from '../../env'
 import Shipping from '../Order/Shipping';
 import PaypalButton from '../Order/Paypalbutton';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
+    const iretroBrown = "rgb(62,56,54)"
+    const { total } = useAppSelector((state) => state.cart)
     const cart = useAppSelector(selectCart); // Cart imported from slicer
     const [show, setShow] = useState(false);
-    const toggleShow = () => setShow(!show)
     const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
-    const iretroBrown = "rgb(62,56,54)"
-    const [totalCart, setTotalCart] = useState(0)
-
+    const toggleShow = () => setShow(!show)
 
     useEffect(() => {
         const localStorageCart = localStorage.getItem("cart");
@@ -28,10 +27,11 @@ const Cart = () => {
     useEffect(() => {
         let total = 0
         productsInCart.forEach(product => {
-          total += product.price * product.quantity
+            total += product.price * product.quantity
         })
-        setTotalCart(parseFloat(total.toFixed(2)));
-      }, [productsInCart])
+        dispatch(updateTotal(Math.round((total + Number.EPSILON) * 100) / 100));
+    }, [productsInCart])
+
 
     return (
         <div>
@@ -69,7 +69,7 @@ const Cart = () => {
                     })}
                     <br />
                     <hr />
-                    Total: ${totalCart}
+                    Total: ${total}
                 </Offcanvas.Body>
                 {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
                 <PaypalButton />

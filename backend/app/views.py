@@ -259,6 +259,7 @@ def new_order(request):
     order_serializer = OrderSerializer(data=request.data["orderData"], context={"user": request.user})
     order_serializer.is_valid(raise_exception=True)
     order = order_serializer.save()
+    print(order_serializer.data)
 
     # Create a list of order details and save them
     order_details = [

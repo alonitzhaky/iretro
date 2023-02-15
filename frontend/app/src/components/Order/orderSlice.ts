@@ -20,26 +20,26 @@ const initialState: OrderState = {
 }
 
 export const newOrderAsync = createAsyncThunk(
-    'order/newOrder', 
-    async(data: {orderData: Order, orderDetails: Cart[]}) => {
+    'order/newOrder',
+    async (data: { orderData: Order, orderDetails: Cart[] }) => {
         const total = data.orderDetails.reduce((accumulate, item) => accumulate + item.price * item.quantity, 0)
         const quantity = data.orderDetails.reduce((accumulate, item) => accumulate + item.quantity, 0)
-        const orderDataWithTotalAndQuantity = {...data.orderData, total, quantity}
+        const orderDataWithTotalAndQuantity = { ...data.orderData, total, quantity }
         const response = await createOrder(orderDataWithTotalAndQuantity, data.orderDetails)
         return response.data;
     }
 )
 
-    export const orderSlice = createSlice({
-        name: 'order', 
-        initialState, 
-        reducers: {}, 
-        extraReducers: (builder) => {
-            builder.addCase(newOrderAsync.fulfilled, (state, action) => {
-                state.order = action.payload
-            })
-        }
-    })
+export const orderSlice = createSlice({
+    name: 'order',
+    initialState,
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(newOrderAsync.fulfilled, (state, action) => {
+            state.order = action.payload
+        })
+    }
+})
 
-export const { } = orderSlice.actions; 
+export const { } = orderSlice.actions;
 export default orderSlice.reducer;

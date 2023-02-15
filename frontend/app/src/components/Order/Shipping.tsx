@@ -6,24 +6,25 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { newOrderAsync } from './orderSlice';
 
 function Shipping() {
-    const { cart } = useAppSelector((state) => state.cart)
+    const { cart, total } = useAppSelector((state) => state.cart)
     const dispatch = useAppDispatch()
-    const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow((s) => !s);
+    const [show, setShow] = useState(false);
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
     const [zip_code, setZip_code] = useState("")
     const [country, setCountry] = useState("")
     const iretroBrown = "rgb(62,56,54)"
-
+    
     const sumbitHandler = (e: any) => {
         e.preventDefault()
         const orderData = {
             address,
             city,
             zip_code,
-            country
+            country, 
+            total: total
         };
 
         dispatch(newOrderAsync({ orderData, orderDetails: cart }))

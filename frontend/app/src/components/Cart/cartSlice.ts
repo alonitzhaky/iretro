@@ -5,11 +5,13 @@ import Cart from "../../models/Cart";
 interface CartState {
     status: 'idle' | 'loading' | 'failed';
     cart: Cart[]
+    total: number
 }
 
 const initialState: CartState = {
     status: 'idle',
-    cart: []
+    cart: [], 
+    total: 0
 };
 
 export const CartSlice = createSlice({
@@ -61,10 +63,13 @@ export const CartSlice = createSlice({
                     localStorage.setItem("cart", JSON.stringify(state.cart))
                 }
             }   
+        }, 
+        updateTotal: (state, action) => {
+            state.total = action.payload
         }
     }
 })
 
-export const { addtoCart, removefromCart, addQuantity, removeQuantity, cartFix } = CartSlice.actions;
+export const { addtoCart, removefromCart, addQuantity, removeQuantity, cartFix, updateTotal } = CartSlice.actions;
 export const selectCart = (state: RootState) => state.cart.cart;
 export default CartSlice.reducer;
