@@ -20,8 +20,6 @@ from .pagination import CustomPageNumberPagination
 # Create your views here.
 
 # ~~~~~~~~~~~ Login ~~~~~~~~~~~
-
-
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -32,11 +30,8 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
         return token
-
-
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
-
 
 # ~~~~~~~~~~~ Login ~~~~~~~~~~~
 
@@ -232,27 +227,62 @@ def update_user_profile(request):
 #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+# @api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+# def new_order(request): 
+#     serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
+#     if serializer.is_valid(raise_exception = True): 
+#         order = serializer.save()
+#         order_total = 0
+#         order_quantity = 0
+#         for item in request.data["orderDetails"]: 
+#             order_details = {}
+#             order_details["product"] = item["id"]
+#             order_details["order"] = order.id
+#             order_details["quantity"] = item["quantity"]
+#             order_details["total"] = float(item["price"]) * item["quantity"]
+#             order_total += round(float(order_details["total"]))
+#             order_quantity += order_details["quantity"]
+#             serializer2 = OrderDetailSerializer(data = order_details)
+#             if serializer2.is_valid(raise_exception = True): 
+#                 serializer2.save()
+#         order.total = order_total
+#         order.quantity = order_quantity
+#         order.save()
+#         return Response(serializer.data, status = status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
-def new_order(request): 
-    serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
-    if serializer.is_valid(raise_exception = True): 
-        order = serializer.save()
-        order_total = 0
-        order_quantity = 0
-        for item in request.data["orderDetails"]: 
-            order_details = {}
-            order_details["product"] = item["id"]
-            order_details["order"] = order.id
-            order_details["quantity"] = item["quantity"]
-            order_details["total"] = float(item["price"]) * item["quantity"]
-            order_total += round(float(order_details["total"]))
-            order_quantity += order_details["quantity"]
-            serializer2 = OrderDetailSerializer(data = order_details)
-            if serializer2.is_valid(raise_exception = True): 
-                serializer2.save()
-        order.total = order_total
-        order.quantity = order_quantity
-        order.save()
-        return Response(serializer.data, status = status.HTTP_201_CREATED)
-    return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+def new_order(request):
+    # Serialize the order data and save the order
+    order_serializer = OrderSerializer(data=request.data["orderData"], context={"user": request.user})
+    order_serializer.is_valid(raise_exception=True)
+    order = order_serializer.save()
+
+    # Create a list of order details and save them
+    order_details = [
+        {
+            "product": item["id"],
+            "order": order.id,
+            "quantity": item["quantity"],
+            "total": float(item["price"]) * item["quantity"],
+        }
+        for item in request.data["orderDetails"]
+    ]
+    order_detail_serializer = OrderDetailSerializer(data=order_details, many=True)
+    order_detail_serializer.is_valid(raise_exception=True)
+    order_detail_serializer.save()
+
+    # Calculate the order total and quantity
+    order_total = round(sum(detail["total"] for detail in order_details), 2)
+    order_quantity = sum(detail["quantity"] for detail in order_details)
+
+    # Update the order with the total and quantity
+    order.total = order_total
+    order.quantity = order_quantity
+    order.save()
+
+    # Serialize and return the order in the response
+    response_data = OrderSerializer(order).data
+    return Response(response_data, status=status.HTTP_201_CREATED)

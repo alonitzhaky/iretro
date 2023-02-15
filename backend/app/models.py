@@ -30,7 +30,7 @@ class Product(models.Model):
     image = models.ImageField(null = False, blank = False, default='placeholder.png')
 
     def __str__(self):
-        return self.description
+        return self.name
 
 class Order(models.Model): 
     id = models.BigAutoField(primary_key = True)
