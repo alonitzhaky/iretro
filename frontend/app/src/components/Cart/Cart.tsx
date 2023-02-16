@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart, updateTotal } from './cartSlice';
 import { SERVER } from '../../env'
 import Shipping from '../Order/Shipping';
-import PaypalButton from '../Order/Paypalbutton';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
@@ -72,7 +71,6 @@ const Cart = () => {
                     Total: ${total}
                 </Offcanvas.Body>
                 {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
-                <PaypalButton />
                 <Shipping />
             </Offcanvas>
         </div>

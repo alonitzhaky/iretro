@@ -1,34 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import { selectCart } from '../Cart/cartSlice';
+import { newAddress, newCity, newCountry, newZipCode, selectNewAddress, selectNewCity, selectNewCountry, selectNewZipCode } from './orderSlice';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { newOrderAsync } from './orderSlice';
+import PaypalButton from './Paypalbutton';
 
 function Shipping() {
-    const { cart, total } = useAppSelector((state) => state.cart)
+    const cart = useAppSelector(selectCart)
     const dispatch = useAppDispatch()
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow((s) => !s);
     const [show, setShow] = useState(false);
-    const [address, setAddress] = useState("")
-    const [city, setCity] = useState("")
-    const [zip_code, setZip_code] = useState("")
-    const [country, setCountry] = useState("")
+    const address = useAppSelector(selectNewAddress)
+    const city = useAppSelector(selectNewCity)
+    const country = useAppSelector(selectNewCountry)
+    const zipCode = useAppSelector(selectNewZipCode)
     const iretroBrown = "rgb(62,56,54)"
-    
-    const sumbitHandler = (e: any) => {
-        e.preventDefault()
-        const orderData = {
-            address,
-            city,
-            zip_code,
-            country, 
-            total: total
-        };
-
-        dispatch(newOrderAsync({ orderData, orderDetails: cart }))
-    }
+    let total = 0
+    useEffect(() => {
+        for (let index = 0; index < cart.length; index ++) {
+            total += Math.round(cart[index].price * cart[index].quantity + Number.EPSILON) * 100 / 100;
+        }
+    }, [cart])
 
     return (
         <div>
@@ -46,8 +41,8 @@ function Shipping() {
                             required
                             type='text'
                             placeholder='Enter Address'
-                            value={address ? address : ''}
-                            onChange={(e) => setAddress(e.target.value)}
+                            value={address}
+                            onChange={(e) => dispatch(newAddress(e.target.value))}
                         >
                         </Form.Control>
                         <Form.Label>City</Form.Label>
@@ -55,8 +50,8 @@ function Shipping() {
                             required
                             type='text'
                             placeholder='Enter City'
-                            value={city ? city : ''}
-                            onChange={(e) => setCity(e.target.value)}
+                            value={city}
+                            onChange={(e) => dispatch(newCity(e.target.value))}
                         >
                         </Form.Control>
                         <Form.Label>Country</Form.Label>
@@ -64,8 +59,8 @@ function Shipping() {
                             required
                             type='text'
                             placeholder='Enter Country'
-                            value={country ? country : ''}
-                            onChange={(e) => setCountry(e.target.value)}
+                            value={country}
+                            onChange={(e) => dispatch(newCountry(e.target.value))}
                         >
                         </Form.Control>
                         <Form.Label>Postal Code</Form.Label>
@@ -73,22 +68,14 @@ function Shipping() {
                             required
                             type='text'
                             placeholder='Enter Postal Code'
-                            value={zip_code ? zip_code : ''}
-                            onChange={(e) => setZip_code(e.target.value)}
+                            value={zipCode}
+                            onChange={(e) => dispatch(newZipCode(e.target.value))}
                         >
                         </Form.Control>
                         <br />
-                        <Button
-                            style={{ backgroundColor: iretroBrown }}
-                            type='submit'
-                            variant='primary'
-                            onClick={sumbitHandler}
-                            disabled={!address || !city || !country || !zip_code}
-                        >
-                            Continue
-                        </Button>
                     </Form.Group>
                 </Offcanvas.Body>
+                <PaypalButton/>
             </Offcanvas>
         </div>);
 }
