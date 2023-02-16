@@ -13,14 +13,14 @@ function Shipping() {
     const handleClose = () => setShow(false);
     const toggleShow = () => setShow((s) => !s);
     const [show, setShow] = useState(false);
-    const address = useAppSelector(selectNewAddress)
-    const city = useAppSelector(selectNewCity)
-    const country = useAppSelector(selectNewCountry)
-    const zipCode = useAppSelector(selectNewZipCode)
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [country, setCountry] = useState('');
+    const [zipCode, setZipCode] = useState('');
     const iretroBrown = "rgb(62,56,54)"
     let total = 0
     useEffect(() => {
-        for (let index = 0; index < cart.length; index ++) {
+        for (let index = 0; index < cart.length; index++) {
             total += Math.round(cart[index].price * cart[index].quantity + Number.EPSILON) * 100 / 100;
         }
     }, [cart])
@@ -42,8 +42,8 @@ function Shipping() {
                             type='text'
                             placeholder='Enter Address'
                             value={address}
-                            onChange={(e) => dispatch(newAddress(e.target.value))}
-                        >
+                            onChange={(e) => setAddress(e.target.value)}
+                            >
                         </Form.Control>
                         <Form.Label>City</Form.Label>
                         <Form.Control
@@ -51,7 +51,7 @@ function Shipping() {
                             type='text'
                             placeholder='Enter City'
                             value={city}
-                            onChange={(e) => dispatch(newCity(e.target.value))}
+                            onChange={(e) => setCity(e.target.value)}
                         >
                         </Form.Control>
                         <Form.Label>Country</Form.Label>
@@ -60,8 +60,8 @@ function Shipping() {
                             type='text'
                             placeholder='Enter Country'
                             value={country}
-                            onChange={(e) => dispatch(newCountry(e.target.value))}
-                        >
+                            onChange={(e) => setCountry(e.target.value)}
+                            >
                         </Form.Control>
                         <Form.Label>Postal Code</Form.Label>
                         <Form.Control
@@ -69,13 +69,13 @@ function Shipping() {
                             type='text'
                             placeholder='Enter Postal Code'
                             value={zipCode}
-                            onChange={(e) => dispatch(newZipCode(e.target.value))}
+                            onChange={(e) => setZipCode(e.target.value)}
                         >
                         </Form.Control>
                         <br />
                     </Form.Group>
                 </Offcanvas.Body>
-                <PaypalButton/>
+                <PaypalButton />
             </Offcanvas>
         </div>);
 }
