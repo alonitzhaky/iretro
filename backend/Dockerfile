@@ -18,7 +18,7 @@ RUN pip install python-decouple
 
 ENV DJANGO_SETTINGS_MODULE=project.settings
 
-ENV SECRET_KEY ${SECRET_KEY}
+ENV SECRET_KEY "django-insecure-@)^nelgw@q3@2+c$fvoh&ncwe#9hy#l1uj3d1d+uez&fgsg62j"
 
 RUN python manage.py makemigrations
 
@@ -26,4 +26,4 @@ RUN python manage.py migrate
 
 EXPOSE 8000
 
-CMD ["python", "manage.py", "runserver"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
