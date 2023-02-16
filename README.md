@@ -36,8 +36,6 @@ In the event where the pre-requisites aren't being met, please follow the links 
 
 **The proccess is identical between Windows and Mac.**
 
-<br>
-
 # Step-by-step Tutorial
 
 1. Once all pre-requisites are compeleted, please run the following command in your VSCode / PyCharm Terminal in order to install 'virtualenv': 
