@@ -11,9 +11,9 @@ const Authentication = () => {
   const [password, setPassword] = useState("");
   const logged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
-  const handleClick = () => {
-    window.location.assign("http://localhost:3000/register");
-  };
+  // const handleClick = () => {
+  //   window.location.assign("http://localhost:3000/register");
+  // };
 
   useEffect(() => {
     if (logged) {
@@ -77,7 +77,7 @@ const Authentication = () => {
 
       <h3 className="d-flex justify-content-center">Not registered?</h3>
       <div className="d-flex justify-content-center">
-        <Button className="btn btn-light" style={{ margin: '10px' }} onClick={handleClick}>
+        <Button className="btn btn-light" style={{ margin: '10px' }} href="https://iretro.netlify.app/register">
           Click Here
         </Button>
       </div>

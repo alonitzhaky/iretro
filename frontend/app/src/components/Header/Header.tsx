@@ -77,7 +77,7 @@ const Header = () => {
               <Dropdown.Menu>
                 {!token && <Dropdown.Item as={Link} to={"/login"}>Login</Dropdown.Item>}
                 {token && <Dropdown.Item as={Link} to={"/profile"}>Profile</Dropdown.Item>}
-                {isStaff && <Dropdown.Item target="_blank" href="http://127.0.0.1:8000/admin/">Admin Panel</Dropdown.Item>}
+                {isStaff && <Dropdown.Item target="_blank" href="https://iretro.onrender.com/admin/">Admin Panel</Dropdown.Item>}
                 {token && <Dropdown.Item onClick={() => {
                   dispatch(logoutUserAsync()); toast("Logging out, please wait...", {
                     position: "top-center",

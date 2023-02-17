@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework import status
 
 from django.shortcuts import redirect, HttpResponse
+from django.contrib.auth.hashers import make_password
 
 from .models import Order, Review, Product, CustomUser, OrderDetail
 from .serializers import (
@@ -43,7 +44,8 @@ def register(request):
     last_name = data["last_name"]
     username = data["username"]
     email = data["email"]
-    password = data["password"]
+    password = make_password(data["password"])
+    print(password)
     try: 
         duplicate_check = CustomUser.objects.get(username = username)
         return Response({"error": "This username already exists. Please select a different username."}, status = status.HTTP_400_BAD_REQUEST)
