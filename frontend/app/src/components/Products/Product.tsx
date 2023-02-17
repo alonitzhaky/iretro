@@ -31,42 +31,6 @@ export default function Product() {
         <h1 style={{ color: iretroBrown }}>Spare Parts</h1>
       }
       <hr style={{ color: iretroBrown }} />
-      {/* <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)" }}>
-        {products.map((product, index) => (
-          <div key={index} className="card" style={{ backgroundColor: "#fff", padding: "20px", borderRadius: "10px", boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)" }}>
-            <Card.Img src={SERVER + product.image} style={{ objectFit: "cover" }} alt={product.name} />
-            <hr />
-            <p>ID: {product.id}</p>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-            <p>Quantity In Stock: {product.quantity}</p>
-            <Link to={`/product/info/${product.id}/`}>
-              <Button style={{ backgroundColor: iretroBrown }} className="mt-3">
-                Details
-              </Button>
-            </Link>
-            <br />
-            <br />
-            {product.quantity > 0 ? (
-              <Form.Control as="select" onChange={(e) => setProductQuantity(+e.target.value)} value={productQuantity}>
-                {[...Array(product.quantity)].map((amount, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))}
-              </Form.Control>) : (
-              <Button className="disabled mt-3" style={{ backgroundColor: iretroBrown, opacity: "50%" }}>
-                Out Of Stock
-              </Button>
-            )}
-            <br />
-            {product.quantity > 0 && (<Button onClick={() => dispatch(addtoCart({ id: product.id, price: product.price, name: product.name, image: product.image, quantity: productQuantity }))} style={{ backgroundColor: iretroBrown }} className="mt-3">
-              Add to Cart
-            </Button>
-            )}
-          </div>
-        ))}
-      </div> */}
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {products.map((product, index) => (
           <div key={index} className="col">

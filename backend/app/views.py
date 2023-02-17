@@ -7,8 +7,6 @@ from rest_framework import status
 
 from django.contrib.auth.hashers import make_password
 
-from django.shortcuts import redirect, HttpResponse
-
 from .models import Order, Review, Product, CustomUser, OrderDetail
 from .serializers import (
     CustomUserSerializer,
@@ -187,20 +185,6 @@ def new_order(request):
     return Response(response_data, status=status.HTTP_201_CREATED)
 
 # ~~~~~~~~~~ User Profile ~~~~~~~~~
-
-# ~~~~~~~~~~~~ 404 Page ~~~~~~~~~~~
-
-@api_view(["GET"])
-def handle404(request):
-    data = {
-        "error": "The requested resource was not found."
-    }
-    return Response(data, status = status.HTTP_404_NOT_FOUND)
-    
-
-# ~~~~~~~~~~~~ 404 Page ~~~~~~~~~~~
-
-
 
 # Inactive Functions
 
