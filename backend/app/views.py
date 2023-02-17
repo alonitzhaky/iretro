@@ -59,8 +59,6 @@ def register(request):
             # user.save()
             serializer = CustomUserSerializer(user, many = False)
             return Response(serializer.data)
-
-
 # ~~~~~~~~~~ Register ~~~~~~~~~
 
 @api_view(["GET"])

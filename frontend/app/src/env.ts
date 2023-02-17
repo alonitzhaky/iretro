@@ -1,2 +1,2 @@
-export const SERVER = "https://iretro.onrender.com"
+export const SERVER = "https://iretro-production.up.railway.app/"
 
