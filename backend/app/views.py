@@ -133,6 +133,7 @@ def get_all_products_from_user_order(request):
 def get_user_profile(request):
     user = request.user
     serilaizer = CustomUserSerializer(user, many=False)
+    print(serilaizer.data)
     return Response(serilaizer.data)
 
 
