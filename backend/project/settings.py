@@ -26,12 +26,12 @@ SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-DEBUG = False
+DEBUG = True
 
 # Remove comment after completion
 # DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "iretro.onrender.com"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "iretro.onrender.com", "0.0.0.0"]
 
 # Application definition
 
