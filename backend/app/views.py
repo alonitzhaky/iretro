@@ -30,8 +30,11 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
         return token
+
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
+
 
 # ~~~~~~~~~~~ Login ~~~~~~~~~~~
 
@@ -43,23 +46,40 @@ def register(request):
     last_name = data["last_name"]
     username = data["username"]
     email = data["email"]
-    password = make_password(data['password'])
+    password = make_password(data["password"])
     print(password)
-    try: 
-        duplicate_check = CustomUser.objects.get(username = username)
-        return Response({"error": "This username already exists. Please select a different username."}, status = status.HTTP_400_BAD_REQUEST)
+    try:
+        duplicate_check = CustomUser.objects.get(username=username)
+        return Response(
+            {
+                "error": "This username already exists. Please select a different username."
+            },
+            status=status.HTTP_400_BAD_REQUEST,
+        )
     except CustomUser.DoesNotExist:
-        try: 
-            duplicate_check = CustomUser.objects.get(email = email) 
-            return Response({"error": "This email already exists."}, status = status.HTTP_400_BAD_REQUEST)
-        except CustomUser.DoesNotExist: 
-            user = CustomUser.objects.create(first_name = first_name, last_name = last_name, username = username, email = email, password = password)
+        try:
+            duplicate_check = CustomUser.objects.get(email=email)
+            return Response(
+                {"error": "This email already exists."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except CustomUser.DoesNotExist:
+            user = CustomUser.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                password=password,
+            )
             user.is_active = True
             user.is_staff = False  # To prevent bugs with normal customers
             # user.save()
-            serializer = CustomUserSerializer(user, many = False)
+            serializer = CustomUserSerializer(user, many=False)
             return Response(serializer.data)
+
+
 # ~~~~~~~~~~ Register ~~~~~~~~~
+
 
 @api_view(["GET"])
 def get_products(request, pk):
@@ -81,6 +101,8 @@ def all_products(request):
 def one_product(request, pk):
     serializer = ProductSeralizer(Product.objects.get(id=pk), many=False)
     return Response(serializer.data)
+
+
 # Products
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~~
@@ -112,6 +134,7 @@ def submit_review(request):
         print(e)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_all_products_from_user_order(request):
@@ -122,6 +145,7 @@ def get_all_products_from_user_order(request):
     for i in range(len(serializer_order_details.data)):
         product_list.append(serializer_order_details.data[i]["product"])
     return Response(product_list)
+
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~
 
@@ -151,7 +175,9 @@ def update_user_profile(request):
 @permission_classes([IsAuthenticated])
 def new_order(request):
     # Serialize the order data and save the order
-    order_serializer = OrderSerializer(data=request.data["orderData"], context={"user": request.user})
+    order_serializer = OrderSerializer(
+        data=request.data["orderData"], context={"user": request.user}
+    )
     order_serializer.is_valid(raise_exception=True)
     order = order_serializer.save()
     print(order_serializer.data)
@@ -182,6 +208,7 @@ def new_order(request):
     # Serialize and return the order in the response
     response_data = OrderSerializer(order).data
     return Response(response_data, status=status.HTTP_201_CREATED)
+
 
 # ~~~~~~~~~~ User Profile ~~~~~~~~~
 
@@ -217,17 +244,17 @@ def new_order(request):
 #         else:
 #             return Response(status = status.HTTP_400_BAD_REQUEST, data = "product not found")
 
-## Possibly not functioning: 
+## Possibly not functioning:
 
 # @api_view(["POST"])
 # @permission_classes([IsAuthenticated])
-# def new_order(request): 
+# def new_order(request):
 #     serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
-#     if serializer.is_valid(raise_exception = True): 
+#     if serializer.is_valid(raise_exception = True):
 #         order = serializer.save()
 #         order_total = 0
 #         order_quantity = 0
-#         for item in request.data["orderDetails"]: 
+#         for item in request.data["orderDetails"]:
 #             order_details = {}
 #             order_details["product"] = item["id"]
 #             order_details["order"] = order.id
@@ -236,7 +263,7 @@ def new_order(request):
 #             order_total += round(float(order_details["total"]))
 #             order_quantity += order_details["quantity"]
 #             serializer2 = OrderDetailSerializer(data = order_details)
-#             if serializer2.is_valid(raise_exception = True): 
+#             if serializer2.is_valid(raise_exception = True):
 #                 serializer2.save()
 #         order.total = order_total
 #         order.quantity = order_quantity
