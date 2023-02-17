@@ -1,5 +1,8 @@
 <!-- Put photo of store. -->
 <!-- ![Logo]()  --> 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/aab0b306-f55a-4205-a7dc-422f46670a6f/deploy-status)](https://app.netlify.com/sites/iretro/deploys)
+
+<hr/>
 
 # iRetro Store
 
