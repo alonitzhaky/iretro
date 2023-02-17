@@ -16,7 +16,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN pip install python-decouple
 
-ENV DJANGO_SETTINGS_MODULE=project.settings
+ENV DJANGO_SETTINGS_MODULE = project.settings
 
 ENV SECRET_KEY "django-insecure-@)^nelgw@q3@2+c$fvoh&ncwe#9hy#l1uj3d1d+uez&fgsg62j"
 
