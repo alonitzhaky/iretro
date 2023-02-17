@@ -19,14 +19,13 @@ Our initial concept was preserving the internal beauty of our everyday electroni
 Now, it's possible.
 
 # Introduction
-The iRetro Store is a concept website that sells framed, taken apart iPhones. The website is built using a combination of Django (a Python web framework) and React-Typescript (a JavaScript library for building user interfaces), and uses several other technologies, including Django Rest Framework API, React-Redux, PostgreSQL, and JWT. The website features a login/register system, an active cart, PayPal checkout API, and an admin panel using Django Administration. The source code for the website is available on GitHub and can be installed on a local machine by following the step-by-step tutorial in the readme file. 
+The iRetro Store is a concept website that sells framed, taken apart iPhones. The website is built using a combination of Django (a Python web framework) and React-Typescript (a JavaScript library for building user interfaces), and uses several other technologies, including Django Rest Framework API, React-Redux, SQLite3, and JWT. The website features a login/register system, an active cart, PayPal checkout API, and an admin panel using Django Administration. The source code for the website is available on GitHub and can be installed on a local machine by following the step-by-step tutorial in the readme file. 
 
 # Technologies Used
 - Django
 - Django Rest Framework API
 - React-Typescript
 - React-Redux
-- PostgreSQL
 - JWT
 
 # Pre-requisites
