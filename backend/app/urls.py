@@ -16,3 +16,5 @@ urlpatterns = [
     path('order/', views.new_order),
     path('profile/orders/', views.get_all_products_from_user_order)
 ]
+
+handler404 = views.handle404

@@ -65,17 +65,6 @@ def register(request):
 
 # ~~~~~~~~~~ Register ~~~~~~~~~
 
-# ~~~~~~~~~~ Full CRUD - APIViews ~~~~~~~~~
-# Products
-# @api_view(["GET"])
-# def get_products(request, pk):
-#     try:
-#         serializer = ProductSeralizer(Product.objects.filter(category=pk), many=True)
-#         return Response(serializer.data)
-#     except:
-#         return Response(status=status.HTTP_404_NOT_FOUND)
-
-
 @api_view(["GET"])
 def get_products(request, pk):
     pagination_class = CustomPageNumberPagination
@@ -96,37 +85,6 @@ def all_products(request):
 def one_product(request, pk):
     serializer = ProductSeralizer(Product.objects.get(id=pk), many=False)
     return Response(serializer.data)
-
-
-# @api_view(["POST","DELETE","PUT"])
-# @permission_classes([IsAdminUser])
-# # Seperate between API Views
-# def change_products(request,id=-1):
-#     if request.method == "POST":
-#         # create varabile with the serialixation type , if it valid we save it to the DB
-#         new_product = ProductSeralizer(data=request.data)
-#         if new_product.is_valid():
-#             new_product.save()
-#             return Response(status=status.HTTP_201_CREATED, data=new_product.data)
-#         return Response(status=status.HTTP_400_BAD_REQUEST, data="product not valid")
-#     # delete by id
-#     elif request.method == "DELETE":
-#         id_2_del = id
-#         try:
-#             product = Product.objects.get(id=id_2_del)
-#             product.delete()
-#         except:
-#             return Response(status=status.HTTP_400_BAD_REQUEST, data="product not found")
-#         return Response(status=status.HTTP_200_OK, data="product delete")
-#     # update by id
-#     elif request.method == "PUT":
-#         if id == id:
-#             ser = ProductSeralizer(data = request.data)
-#             old_product = Product.objects.get(id = id)
-#             res = ser.update(old_product, request.data)
-#             return HttpResponse(res, status = status.HTTP_200_OK)
-#         else:
-#             return Response(status = status.HTTP_400_BAD_REQUEST, data = "product not found")
 # Products
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~~
@@ -158,20 +116,6 @@ def submit_review(request):
         print(e)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-
-# @api_view(["GET"])
-# @permission_classes([IsAuthenticated])
-# def get_all_products_from_user_order(request):
-#     user = request.user
-#     product_list = []
-#     order = Order.objects.filter(user = user)
-#     serializer_order_details = OrderDetailSerializer(order, many = True)
-#     for i in range(len(serializer_order_details.data)):
-#         print("Blablabla")
-#         product_list.append(serializer_order_details.data[i]["product"])
-#     return Response(serializer_order_details.data)
-
-
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def get_all_products_from_user_order(request):
@@ -182,7 +126,6 @@ def get_all_products_from_user_order(request):
     for i in range(len(serializer_order_details.data)):
         product_list.append(serializer_order_details.data[i]["product"])
     return Response(product_list)
-
 
 # ~~~~~~~~~~ Reviews ~~~~~~~~~
 
@@ -206,55 +149,6 @@ def update_user_profile(request):
         return Response(status=status.HTTP_200_OK, data=serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
-
-# ~~~~~~~~~~ User Profile ~~~~~~~~~
-# @api_view(["POST"])
-# def new_order(request):
-#     serializer = OrderSerializer(
-#         data=request.data["orderData"], context={"user": request.user}
-#     )
-#     if serializer.is_valid(raise_exception=True):
-#         serializer.save()
-#         print(serializer.data)
-#         for item in request.data["orderDetails"]:
-#             order_dets = {}
-#             order_dets["product"] = item["id"]
-#             order_dets["order"] = (
-#                 Order.objects.values_list("id", flat=True)
-#                 .filter(user=request.user.id)
-#                 .last()
-#             )
-#             serializer2 = OrderDetailSerializer(data=order_dets)
-#             if serializer2.is_valid(raise_exception=True):
-#                 serializer2.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-# @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
-# def new_order(request): 
-#     serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
-#     if serializer.is_valid(raise_exception = True): 
-#         order = serializer.save()
-#         order_total = 0
-#         order_quantity = 0
-#         for item in request.data["orderDetails"]: 
-#             order_details = {}
-#             order_details["product"] = item["id"]
-#             order_details["order"] = order.id
-#             order_details["quantity"] = item["quantity"]
-#             order_details["total"] = float(item["price"]) * item["quantity"]
-#             order_total += round(float(order_details["total"]))
-#             order_quantity += order_details["quantity"]
-#             serializer2 = OrderDetailSerializer(data = order_details)
-#             if serializer2.is_valid(raise_exception = True): 
-#                 serializer2.save()
-#         order.total = order_total
-#         order.quantity = order_quantity
-#         order.save()
-#         return Response(serializer.data, status = status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -291,3 +185,114 @@ def new_order(request):
     # Serialize and return the order in the response
     response_data = OrderSerializer(order).data
     return Response(response_data, status=status.HTTP_201_CREATED)
+
+# ~~~~~~~~~~ User Profile ~~~~~~~~~
+
+# ~~~~~~~~~~~~ 404 Page ~~~~~~~~~~~
+
+@api_view(["GET"])
+def handle404(request):
+    data = {
+        "error": "The requested resource was not found."
+    }
+    return Response(data, status = status.HTTP_404_NOT_FOUND)
+    
+
+# ~~~~~~~~~~~~ 404 Page ~~~~~~~~~~~
+
+
+
+# Inactive Functions
+
+# @api_view(["POST","DELETE","PUT"])
+# @permission_classes([IsAdminUser])
+# # Seperate between API Views
+# def change_products(request,id=-1):
+#     if request.method == "POST":
+#         # create varabile with the serialixation type , if it valid we save it to the DB
+#         new_product = ProductSeralizer(data=request.data)
+#         if new_product.is_valid():
+#             new_product.save()
+#             return Response(status=status.HTTP_201_CREATED, data=new_product.data)
+#         return Response(status=status.HTTP_400_BAD_REQUEST, data="product not valid")
+#     # delete by id
+#     elif request.method == "DELETE":
+#         id_2_del = id
+#         try:
+#             product = Product.objects.get(id=id_2_del)
+#             product.delete()
+#         except:
+#             return Response(status=status.HTTP_400_BAD_REQUEST, data="product not found")
+#         return Response(status=status.HTTP_200_OK, data="product delete")
+#     # update by id
+#     elif request.method == "PUT":
+#         if id == id:
+#             ser = ProductSeralizer(data = request.data)
+#             old_product = Product.objects.get(id = id)
+#             res = ser.update(old_product, request.data)
+#             return HttpResponse(res, status = status.HTTP_200_OK)
+#         else:
+#             return Response(status = status.HTTP_400_BAD_REQUEST, data = "product not found")
+
+## Possibly not functioning: 
+
+# @api_view(["POST"])
+# @permission_classes([IsAuthenticated])
+# def new_order(request): 
+#     serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
+#     if serializer.is_valid(raise_exception = True): 
+#         order = serializer.save()
+#         order_total = 0
+#         order_quantity = 0
+#         for item in request.data["orderDetails"]: 
+#             order_details = {}
+#             order_details["product"] = item["id"]
+#             order_details["order"] = order.id
+#             order_details["quantity"] = item["quantity"]
+#             order_details["total"] = float(item["price"]) * item["quantity"]
+#             order_total += round(float(order_details["total"]))
+#             order_quantity += order_details["quantity"]
+#             serializer2 = OrderDetailSerializer(data = order_details)
+#             if serializer2.is_valid(raise_exception = True): 
+#                 serializer2.save()
+#         order.total = order_total
+#         order.quantity = order_quantity
+#         order.save()
+#         return Response(serializer.data, status = status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+# ~~~~~~~~~~ User Profile ~~~~~~~~~
+# @api_view(["POST"])
+# def new_order(request):
+#     serializer = OrderSerializer(
+#         data=request.data["orderData"], context={"user": request.user}
+#     )
+#     if serializer.is_valid(raise_exception=True):
+#         serializer.save()
+#         print(serializer.data)
+#         for item in request.data["orderDetails"]:
+#             order_dets = {}
+#             order_dets["product"] = item["id"]
+#             order_dets["order"] = (
+#                 Order.objects.values_list("id", flat=True)
+#                 .filter(user=request.user.id)
+#                 .last()
+#             )
+#             serializer2 = OrderDetailSerializer(data=order_dets)
+#             if serializer2.is_valid(raise_exception=True):
+#                 serializer2.save()
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+# @api_view(["GET"])
+# @permission_classes([IsAuthenticated])
+# def get_all_products_from_user_order(request):
+#     user = request.user
+#     product_list = []
+#     order = Order.objects.filter(user = user)
+#     serializer_order_details = OrderDetailSerializer(order, many = True)
+#     for i in range(len(serializer_order_details.data)):
+#         print("Blablabla")
+#         product_list.append(serializer_order_details.data[i]["product"])
+#     return Response(serializer_order_details.data)

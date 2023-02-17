@@ -16,6 +16,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/Errors/ErrorFallback';
 
 import './bootstrap.min.css';
+import Error404 from './components/Errors/Error404';
 
 const Product = React.lazy(() => import('./components/Products/Product'))
 
@@ -50,6 +51,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/update" element={<UpdateInfo />} />
             <Route path="/checkout" element={<Shipping />} />
+            <Route path="*" element={<Error404/>} />
           </Routes>
         </Container>
         <br />
