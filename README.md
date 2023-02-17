@@ -1,5 +1,8 @@
-<!-- Put photo of store. -->
-<!-- ![Logo]()  --> 
+<h1 align="center">
+   <b>
+        <a href="iretro.netlify.app"><img src="https://iretro.netlify.app/logo.png" /></a><br>
+    </b>
+</h1>
 
 <div align="center">
 
