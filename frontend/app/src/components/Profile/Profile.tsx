@@ -2,17 +2,19 @@ import React, { useEffect } from 'react'
 import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { getUserProfileAsync } from './profileSlice';
+import { getUserOrdersAsync, getUserProfileAsync } from './profileSlice';
 import { SERVER, webColor } from '../../env';
 
 const Profile = () => {
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(getUserProfileAsync())
+        dispatch(getUserOrdersAsync())
 
     }, [])
 
     const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile)
+    const { orders } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: webColor }}>
@@ -69,6 +71,17 @@ const Profile = () => {
                                 </Row>
                             }
                         </ListGroup.Item>
+                        <ListGroup.Item>
+                                <Row>
+                                    <Col xs={6}><strong>Orders:</strong></Col>
+                                    <Col>{orders.map(order => (
+                                        <div key={order.order_number}>
+                                            Product: {order.product_name}
+                                        </div>
+                                    ))}</Col>
+                                </Row>
+                        </ListGroup.Item>
+
                         <br />
                         <div>
                             <Link to={'/profile/update'}>

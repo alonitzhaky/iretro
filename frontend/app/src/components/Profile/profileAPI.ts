@@ -33,3 +33,15 @@ export function updateUserProfile(profileData: any) {
         });
     }));
 }
+
+export function getUserOrders() {
+    const accessToken = JSON.parse(String(localStorage.getItem("token")))
+    let config = {
+        headers: {
+            'Authorization': 'Bearer ' + accessToken
+        }
+    }
+    return new Promise<{ data: any }>((resolve) => 
+    axios.get(SERVER + '/profile/all_orders/', config).then((res) => ({data: res.data}))
+    )
+}
