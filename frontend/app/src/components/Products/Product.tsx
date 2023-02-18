@@ -40,6 +40,7 @@ export default function Product() {
             <div className="card h-100">
               <img src={SERVER + product.image} className="card-img-top" style={{ objectFit: "cover" }} alt={product.name} />
               <div className="card-body">
+                <hr />
                 <h5 className="card-title">{product.name}</h5>
                 <hr />
                 <p className="card-text-description">{product.description}</p>

@@ -12499,7 +12499,12 @@ th {
 }
 
 main {
-    min-height: 72vh;
+    min-height: 75vh;
+}
+
+footer {
+    position: absolute;
+    width: 100%;
 }
 
 a {
