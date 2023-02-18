@@ -8,18 +8,12 @@ from rest_framework import status
 from django.contrib.auth.hashers import make_password
 
 from .models import Order, Review, Product, CustomUser, OrderDetail
-from .serializers import (
-    CustomUserSerializer,
-    OrderDetailSerializer,
-    OrderSerializer,
-    ReviewSerializer,
-    ProductSeralizer,
-)
+from .serializers import (CustomUserSerializer, OrderDetailSerializer, OrderSerializer, ReviewSerializer, ProductSeralizer,)
 from .pagination import CustomPageNumberPagination
 
-# Create your views here.
-
-# ~~~~~~~~~~~ Login ~~~~~~~~~~~
+# ====================================
+#               Login
+# ====================================
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
@@ -30,12 +24,14 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         token["first_name"] = user.first_name
         token["last_name"] = user.last_name
         return token
+
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-# ~~~~~~~~~~~ Login ~~~~~~~~~~~
+# ====================================
+#               Register
+# ====================================
 
-# ~~~~~~~~~~ Register ~~~~~~~~~
 @api_view(["POST"])
 def register(request):
     data = request.data
@@ -43,25 +39,64 @@ def register(request):
     last_name = data["last_name"]
     username = data["username"]
     email = data["email"]
-    password = make_password(data['password'])
-    print(password)
-    try: 
-        duplicate_check = CustomUser.objects.get(username = username)
-        return Response({"error": "This username already exists. Please select a different username."}, status = status.HTTP_400_BAD_REQUEST)
+    password = make_password(data["password"])
+    try:
+        duplicate_check = CustomUser.objects.get(username=username)
+        return Response({"error": "This username already exists. Please select a different username."}, status=status.HTTP_400_BAD_REQUEST)
     except CustomUser.DoesNotExist:
-        try: 
-            duplicate_check = CustomUser.objects.get(email = email) 
-            return Response({"error": "This email already exists."}, status = status.HTTP_400_BAD_REQUEST)
-        except CustomUser.DoesNotExist: 
-            user = CustomUser.objects.create(first_name = first_name, last_name = last_name, username = username, email = email, password = password)
+        try:
+            duplicate_check = CustomUser.objects.get(email=email)
+            return Response(
+                {"error": "This email already exists."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        except CustomUser.DoesNotExist:
+            user = CustomUser.objects.create(
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                email=email,
+                password=password,
+            )
             user.is_active = True
             user.is_staff = False  # To prevent bugs with normal customers
-            # user.save()
-            serializer = CustomUserSerializer(user, many = False)
+            serializer = CustomUserSerializer(user, many=False)
             return Response(serializer.data)
 
+# ====================================
+#            User Profile
+# ====================================
 
-# ~~~~~~~~~~ Register ~~~~~~~~~
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_user_profile(request):
+    user = request.user
+    serilaizer = CustomUserSerializer(user, many=False)
+    return Response(serilaizer.data)
+
+@api_view(["PUT"])
+@permission_classes([IsAuthenticated])
+def update_user_profile(request):
+    user = request.user
+    serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        print(serializer.data)
+        return Response(status=status.HTTP_200_OK, data=serializer.data)
+    return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def get_orders_for_customer(request):
+    user = request.user
+    orders = Order.objects.filter(user = user)
+    order_details = OrderDetail.objects.filter(order__user=user)
+    order_data = OrderSerializer(orders, many=True).data
+    order_detail_data = OrderDetailSerializer(order_details, many=True).data
+    return Response({"orders": order_data, "order_details": order_detail_data})
+# ====================================
+#              Products
+# ====================================
 
 @api_view(["GET"])
 def get_products(request, pk):
@@ -72,26 +107,20 @@ def get_products(request, pk):
     serializer = ProductSeralizer(result_page, many=True)
     return paginator.get_paginated_response(serializer.data)
 
-
-@api_view(["GET"])
-def all_products(request):
-    serializer = ProductSeralizer(Product.objects.all(), many=True)
-    return Response(serializer.data)
-
-
 @api_view(["GET"])
 def one_product(request, pk):
     serializer = ProductSeralizer(Product.objects.get(id=pk), many=False)
     return Response(serializer.data)
-# Products
 
-# ~~~~~~~~~~ Reviews ~~~~~~~~~~
+# ====================================
+#               Reviews
+# ====================================
+
 @api_view(["GET"])
 def get_reviews_per_product(request, pk):
     reviews = Review.objects.filter(product=Product.objects.get(id=pk))
     serializer = ReviewSerializer(reviews, many=True)
     return Response(serializer.data)
-
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
@@ -125,34 +154,17 @@ def get_all_products_from_user_order(request):
         product_list.append(serializer_order_details.data[i]["product"])
     return Response(product_list)
 
-# ~~~~~~~~~~ Reviews ~~~~~~~~~
-
-# ~~~~~~~~~~ User Profile ~~~~~~~~~
-@api_view(["GET"])
-@permission_classes([IsAuthenticated])
-def get_user_profile(request):
-    user = request.user
-    serilaizer = CustomUserSerializer(user, many=False)
-    return Response(serilaizer.data)
-
-
-@api_view(["PUT"])
-@permission_classes([IsAuthenticated])
-def update_user_profile(request):
-    user = request.user
-    serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
-    if serializer.is_valid():
-        serializer.save()
-        print(serializer.data)
-        return Response(status=status.HTTP_200_OK, data=serializer.data)
-    return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
-
+# ====================================
+#              Orders
+# ====================================
 
 @api_view(["POST"])
 @permission_classes([IsAuthenticated])
 def new_order(request):
     # Serialize the order data and save the order
-    order_serializer = OrderSerializer(data=request.data["orderData"], context={"user": request.user})
+    order_serializer = OrderSerializer(
+        data=request.data["orderData"], context={"user": request.user}
+    )
     order_serializer.is_valid(raise_exception=True)
     order = order_serializer.save()
     print(order_serializer.data)
@@ -183,8 +195,6 @@ def new_order(request):
     # Serialize and return the order in the response
     response_data = OrderSerializer(order).data
     return Response(response_data, status=status.HTTP_201_CREATED)
-
-# ~~~~~~~~~~ User Profile ~~~~~~~~~
 
 # Inactive Functions
 
@@ -218,56 +228,7 @@ def new_order(request):
 #         else:
 #             return Response(status = status.HTTP_400_BAD_REQUEST, data = "product not found")
 
-## Possibly not functioning: 
-
-# @api_view(["POST"])
-# @permission_classes([IsAuthenticated])
-# def new_order(request): 
-#     serializer = OrderSerializer(data = request.data["orderData"], context = {"user": request.user})
-#     if serializer.is_valid(raise_exception = True): 
-#         order = serializer.save()
-#         order_total = 0
-#         order_quantity = 0
-#         for item in request.data["orderDetails"]: 
-#             order_details = {}
-#             order_details["product"] = item["id"]
-#             order_details["order"] = order.id
-#             order_details["quantity"] = item["quantity"]
-#             order_details["total"] = float(item["price"]) * item["quantity"]
-#             order_total += round(float(order_details["total"]))
-#             order_quantity += order_details["quantity"]
-#             serializer2 = OrderDetailSerializer(data = order_details)
-#             if serializer2.is_valid(raise_exception = True): 
-#                 serializer2.save()
-#         order.total = order_total
-#         order.quantity = order_quantity
-#         order.save()
-#         return Response(serializer.data, status = status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
-
-# ~~~~~~~~~~ User Profile ~~~~~~~~~
-# @api_view(["POST"])
-# def new_order(request):
-#     serializer = OrderSerializer(
-#         data=request.data["orderData"], context={"user": request.user}
-#     )
-#     if serializer.is_valid(raise_exception=True):
-#         serializer.save()
-#         print(serializer.data)
-#         for item in request.data["orderDetails"]:
-#             order_dets = {}
-#             order_dets["product"] = item["id"]
-#             order_dets["order"] = (
-#                 Order.objects.values_list("id", flat=True)
-#                 .filter(user=request.user.id)
-#                 .last()
-#             )
-#             serializer2 = OrderDetailSerializer(data=order_dets)
-#             if serializer2.is_valid(raise_exception=True):
-#                 serializer2.save()
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
+## Possibly not functioning:
 
 # @api_view(["GET"])
 # @permission_classes([IsAuthenticated])

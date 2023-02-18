@@ -25,6 +25,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
 
 class OrderDetailSerializer(serializers.ModelSerializer): 
+    product_name = serializers.ReadOnlyField(source='product.name')
     class Meta: 
         model = OrderDetail
         fields = "__all__"

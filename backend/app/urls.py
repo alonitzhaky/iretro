@@ -6,7 +6,6 @@ from . import views
 urlpatterns = [
     path('login/', views.MyTokenObtainPairView.as_view(), name = 'token_obtain_pair'),
     path('register/', views.register),
-    path('all-products/', views.all_products),     
     path('product/<int:pk>/', views.get_products), 
     path('profile/', views.get_user_profile),
     path('profile/update/', views.update_user_profile),
@@ -14,5 +13,6 @@ urlpatterns = [
     path('product/reviews/<int:pk>/', views.get_reviews_per_product), 
     path('product/info/<int:pk>/', views.one_product), 
     path('order/', views.new_order),
-    path('profile/orders/', views.get_all_products_from_user_order)
+    path('profile/orders/', views.get_all_products_from_user_order), 
+    path('profile/all_orders/', views.get_orders_for_customer)
 ]

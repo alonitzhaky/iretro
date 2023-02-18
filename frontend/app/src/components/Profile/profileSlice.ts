@@ -64,6 +64,5 @@
     })
 
     export const { } = profileSlice.actions; 
-    // ⤵ Ask Lidor if line below is relevant or RootState not needed in reducer.
     // export const selectProfile = (state: RootState) => state.profile.username
     export default profileSlice.reducer;

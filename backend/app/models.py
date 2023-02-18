@@ -7,7 +7,7 @@ from decimal import Decimal
 class CustomUser(AbstractUser):
     address = models.CharField(max_length = 150, null = True, blank = True)
     phone_number = models.CharField(max_length = 20, null = True, blank = True)
-    age = models.IntegerField(null = True, blank = True)
+    age = models.IntegerField(null = True, blank = True, validators=[MinValueValidator(0)], default = 0)
     location = models.CharField(max_length = 30, blank = True)
     birthday = models.DateField(null = True, blank = True)
     image = models.ImageField(null = False, blank = False, default='user_avatar.png')
