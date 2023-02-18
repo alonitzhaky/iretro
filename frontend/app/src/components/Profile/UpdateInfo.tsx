@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { webColor } from '../../env';
 import { Button, Card, Form, ListGroup } from 'react-bootstrap';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { updateUserProfileAsync } from './profileSlice';
@@ -15,7 +16,6 @@ const UpdateInfo = () => {
     const [phone, setPhone] = useState(phone_number)
     const [shippingAddress, setShippingAddress] = useState(address)
     const [picture, setPicture] = useState<any>();
-    const iretroBrown = "rgb(62,56,54)";
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPicture(e.target.files ? e.target.files[0] : undefined);
@@ -41,7 +41,7 @@ const UpdateInfo = () => {
                 <ToastContainer />
             </>
             <div className='text-center'>
-                <h1 style={{ color: iretroBrown }}>
+                <h1 style={{ color: webColor }}>
                     Update Your Information
                 </h1>
             </div>
@@ -92,7 +92,7 @@ const UpdateInfo = () => {
                                     <Form.Control type="file" onChange={handleImageChange} />
                                 </Form.Group>
                                 <br />
-                                <Button style={{ color: iretroBrown }} variant='primary' onClick={handleUpdate} className='btn btn-light'>
+                                <Button style={{ color: webColor }} variant='primary' onClick={handleUpdate} className='btn btn-light'>
                                     Update Info
                                 </Button>
                             </Form>

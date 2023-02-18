@@ -75,7 +75,7 @@ const Authentication = () => {
       </Form>
       <hr/>
 
-      <h3 className="d-flex justify-content-center">Not registered?</h3>
+      <h1 className="d-flex justify-content-center">Not registered?</h1>
       <div className="d-flex justify-content-center">
         <Button className="btn btn-light" style={{ margin: '10px' }} href="https://iretro.netlify.app/register">
           Click Here

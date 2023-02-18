@@ -3,10 +3,9 @@ import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserProfileAsync } from './profileSlice';
-import { SERVER } from '../../env';
+import { SERVER, webColor } from '../../env';
 
 const Profile = () => {
-    const iretroBrown = "rgb(62,56,54)";
     const dispatch = useAppDispatch()
     useEffect(() => {
         dispatch(getUserProfileAsync())
@@ -16,7 +15,7 @@ const Profile = () => {
     const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
-            <h1 style={{ color: iretroBrown }}>
+            <h1 style={{ color: webColor }}>
                 User Profile
             </h1>
             <hr />
@@ -35,35 +34,29 @@ const Profile = () => {
                                 <Col>{username}</Col>
                             </Row>
                         </ListGroup.Item>
-
                         <ListGroup.Item>
                             <Row>
                                 <Col xs={6}><strong>Phone Number:</strong></Col>
                                 <Col>{phone_number}</Col>
                             </Row>
                         </ListGroup.Item>
-
-
                         <ListGroup.Item>
                             <Row>
                                 <Col xs={6}><strong>Email Address:</strong></Col>
                                 <Col>{email}</Col>
                             </Row>
                         </ListGroup.Item>
-
                         <ListGroup.Item>
                             <Row>
                                 <Col xs={6}><strong>Shipping Address:</strong></Col>
                                 <Col>{address}</Col>
                             </Row>
                         </ListGroup.Item>
- 
-
                         <ListGroup.Item>
                             <Row>
                                 <Col xs={6}><strong>Profile Picture:</strong></Col>
                                 <Col>
-                                <img style={{ maxWidth: "200px", maxHeight: "400px"}} src={SERVER + image} />
+                                    <img className='profile-image' style={{ maxWidth: "200px", maxHeight: "400px" }} src={SERVER + image} />
                                 </Col>
                             </Row>
                         </ListGroup.Item>
@@ -79,7 +72,7 @@ const Profile = () => {
                         <br />
                         <div>
                             <Link to={'/profile/update'}>
-                                <Button style={{ color: iretroBrown }} variant="primary" type="submit" className='btn btn-light'>Click Here to Update Information</Button>
+                                <Button style={{ color: webColor }} variant="primary" type="submit" className='btn btn-light'>Click Here to Update Information</Button>
                             </Link>
                         </div>
                     </ListGroup>

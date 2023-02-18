@@ -2,10 +2,10 @@ import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
 const PhotoCarousel = () => {
-  
+
   return (
     <div>
-      <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/></head>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
       <br />
       <Carousel className="animate__animated animate__fadeIn" slide={true} interval={3000}>
         <Carousel.Item>

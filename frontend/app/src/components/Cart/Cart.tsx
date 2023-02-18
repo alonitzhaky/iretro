@@ -4,12 +4,11 @@ import React, { useState, useEffect } from 'react'
 import { Button, Card, Offcanvas } from 'react-bootstrap'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart, updateTotal } from './cartSlice';
-import { SERVER } from '../../env'
+import { SERVER, webColor } from '../../env'
 import Shipping from '../Order/Shipping';
 
 const Cart = () => {
     const dispatch = useAppDispatch()
-    const iretroBrown = "rgb(62,56,54)"
     const { total } = useAppSelector((state) => state.cart)
     const cart = useAppSelector(selectCart); // Cart imported from slicer
     const [show, setShow] = useState(false);
@@ -55,13 +54,13 @@ const Cart = () => {
                                     <Card.Text>
                                         Quantity: {product.quantity}
                                     </Card.Text>
-                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(removeQuantity(product.id))}>-</Button>
+                                    <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(removeQuantity(product.id))}>-</Button>
                                     {" "}
-                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(addQuantity(product.id))}>+</Button>
+                                    <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(addQuantity(product.id))}>+</Button>
                                     <Card.Text>
                                         Price Per Item: {product.price}
                                     </Card.Text>
-                                    <Button style={{ backgroundColor: iretroBrown }} onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
+                                    <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
                                 </Card.Body>
                             </Card>
                         )
@@ -70,7 +69,6 @@ const Cart = () => {
                     <hr />
                     Total: ${total}
                 </Offcanvas.Body>
-                {/* <Button style={{ backgroundColor: iretroBrown }}>Proceed To Checkout</Button> */}
                 <Shipping />
             </Offcanvas>
         </div>

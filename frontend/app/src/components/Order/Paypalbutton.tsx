@@ -7,39 +7,29 @@ import { newOrderAsync } from "./orderSlice";
 import { selectNewAddress, selectNewCity, selectNewCountry, selectNewZipCode } from "./orderSlice";
 
 const PaypalButton = () => {
+  const dispatch = useAppDispatch()
   const cart = useAppSelector(selectCart)
   const address = useAppSelector(selectNewAddress)
   const city = useAppSelector(selectNewCity)
   const country = useAppSelector(selectNewCountry)
   const zip_code = useAppSelector(selectNewZipCode)
-  const dispatch = useAppDispatch()
 
   let total = 0
-
-  const submitHandler = () => {
-    const orderData = {
-      address: address,
-      city: city,
-      country: country,
-      zip_code: zip_code 
-    };
-    dispatch(newOrderAsync({ orderData, orderDetails: cart }))
-  }
 
   useEffect(() => {
     let newTotal = 0
     for (let index = 0; index < cart.length; index++) {
-      newTotal += Math.round(cart[index].price * cart[index].quantity + Number.EPSILON) * 100 / 100
+      newTotal += cart[index].price * cart[index].quantity + (Number.EPSILON * 100 / 100)
       total = newTotal
     }
   }, [cart])
 
   const handleApprove = (data: any, actions: any) => {
     if (actions.order) {
-      submitHandler();
       return actions.order
         .capture()
         .then((details: any) => {
+          dispatch(newOrderAsync({ orderDetails: cart }));
           toast.success(
             "Payment completed. Thank you " +
             (details.payer.name?.given_name || ""),
@@ -61,6 +51,7 @@ const PaypalButton = () => {
     <div>
       <PayPalScriptProvider
         options={{
+          // Change to proper client ID
           "client-id":
             "AT_RMGrGtqhVq-71qKQiqGSgox1JmeVTRco64KeCMqaWOs7jRnSEI40iuG_jpyHsJnzbHNUf0ueCPtqi",
         }}
@@ -77,7 +68,7 @@ const PaypalButton = () => {
               ],
             });
           }}
-          onApprove={handleApprove}
+          onApprove={(data, action) => handleApprove(data, action)}
           onCancel={() => {
             toast.error("You canelled the payment", {
               position: toast.POSITION.TOP_CENTER,

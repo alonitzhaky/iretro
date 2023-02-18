@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useAppDispatch } from '../../app/hooks';
 import { registerUserAsync } from './authenticationSlice';
+import { webColor } from '../../env';
 
 const Register = () => {
-    const iretroBrown = "rgb(62,56,54)"
     const dispatch = useAppDispatch()
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -21,7 +21,7 @@ const Register = () => {
             <Container>
                 <Row className="justify-content-center">
                     <Col md={6}>
-                        <h2 style={{color: iretroBrown}} className="text-center mb-4">Register</h2>
+                        <h2 style={{color: webColor}} className="text-center mb-4">Register</h2>
                         <Form>
                         <Form.Group controlId="formBasicFirstName">
                                 <div className='d-flex justify-content-center'>
@@ -63,7 +63,7 @@ const Register = () => {
                             <br />
                             {isValid &&
                                 <div className='d-flex justify-content-center'>
-                                    <Button style={{color: iretroBrown}} variant="primary" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email, first_name: firstName, last_name: lastName }))}>
+                                    <Button style={{color: webColor}} variant="primary" className='btn btn-light' onClick={() => dispatch(registerUserAsync({ username, password, email, first_name: firstName, last_name: lastName }))}>
                                         Register
                                     </Button>
                                 </div> || 'The passwords are not identical. Try again.'}

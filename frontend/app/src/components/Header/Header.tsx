@@ -11,8 +11,8 @@ import Cart from '../Cart/Cart';
 import { cartFix } from '../Cart/cartSlice';
 
 const Header = () => {
+  let logged = useAppSelector(selectIsLogged)
   const dispatch = useAppDispatch()
-  const iretroBrown = "rgb(62,56,54)"
   const [token, setToken] = useState("")
   const [userName, setUserName] = useState("")
   const [isStaff, setIsStaff] = useState(false)
@@ -33,18 +33,18 @@ const Header = () => {
       dispatch(tokenCheck())
       dispatch(cartFix())
     }
+  }, [logged])
 
-  }, [])
   return (
     <div>
       <ToastContainer />
-      <Navbar bg="dark" expand="lg" variant="dark">
+      <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
             <img src={process.env.PUBLIC_URL + '/logo.png'} style={{ height: '60px' }} />
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="navbarColor01" >
+          <Navbar.Collapse id="navbarScroll" >
             <Nav className="me-auto">
               <NavItem>
                 <NavLink as={Link} to="/">Home</NavLink>
@@ -52,7 +52,7 @@ const Header = () => {
               <NavItem>
                 <NavLink as={Link} to="/about">About Us</NavLink>
               </NavItem>
-              <NavDropdown title="Shop" id="collasible-nav-dropdown">
+              <NavDropdown title="Shop">
                 <NavDropdown.Item as={Link} to="/product/1">
                   Do It Yourself
                 </NavDropdown.Item>
@@ -77,7 +77,7 @@ const Header = () => {
               <Dropdown.Menu>
                 {!token && <Dropdown.Item as={Link} to={"/login"}>Login</Dropdown.Item>}
                 {token && <Dropdown.Item as={Link} to={"/profile"}>Profile</Dropdown.Item>}
-                {isStaff && <Dropdown.Item target="_blank" href="https://iretro.onrender.com/admin/">Admin Panel</Dropdown.Item>}
+                {isStaff && <Dropdown.Item target="_blank" href="http://127.0.0.1:8000/admin/">Admin Panel</Dropdown.Item>}
                 {token && <Dropdown.Item onClick={() => {
                   dispatch(logoutUserAsync()); toast("Logging out, please wait...", {
                     position: "top-center",
@@ -90,7 +90,7 @@ const Header = () => {
                     pauseOnHover: true,
                     theme: "light"
                   });
-                }} style={{ color: iretroBrown }}>
+                }}>
                   Logout
                 </Dropdown.Item>}
               </Dropdown.Menu>

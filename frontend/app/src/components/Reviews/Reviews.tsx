@@ -7,8 +7,8 @@ import { getAllReviewsPerProductAsync, selectAllowedToReview, selectReviewDescri
 import Rating from '@mui/material/Rating';
 
 const Reviews = () => {
-    const iretroBrown = "rgb(62,56,54)";
-    let logged = useAppSelector(selectIsLogged) // Change to if bought, not if logged in.
+    const webColor = "rgb(62,56,54)";
+    let logged = useAppSelector(selectIsLogged)
     let { id } = useParams()
     let dispatch = useAppDispatch()
     const productList = useAppSelector(selectAllowedToReview)
@@ -25,42 +25,58 @@ const Reviews = () => {
             setHasCheckedForPurchasedProducts(true);
         }
     }, [dispatch, id, logged, hasCheckedForPurchasedProducts])
-    
+
     useEffect(() => {
         if (productList.includes(Number(id))) {
             setReviewButton(true)
         }
     }, [productList, id])
-
     return (
         <div className='text-center'>
             <hr />
-            {/* <th colSpan={2} style={{ color: iretroBrown }}>Reviews</th> */}
-            <h1 style={{ color: iretroBrown }}>Reviews</h1>
-            {reviewInfo.map((review, index) =>
-                <div key={index}>
-                    <p>Name: {review.customer_name}</p>
-                    <p>Review: {review.description}</p>
-                    <hr />
+            <h2 style={{ color: "black" }}>Customer Reviews</h2>
+            <div className="reviews-container">
+                <div className="review-list">
+                    {reviewInfo.map((review, index) => (
+                        <div key={index} className="review-item">
+
+                            <div className="review-header">
+                                <span className="reviewer-name">{review.customer_name}</span>
+                            </div>
+                            <div className="review-rating">
+                                {[...Array(review.rating)].map((star, i) => (
+                                    <i key={i} className="fas fa-star"></i>
+                                ))}
+                                {[...Array(5 - review.rating)].map((star, i) => (
+                                    <i key={i} className="far fa-star"></i>
+                                ))}
+                            </div>
+                            <div className="review-description">{review.description}</div>
+                        </div>
+                    ))}
                 </div>
-            )}
-            <h3>New Review:</h3>
+                <hr />
+            </div>
+            <h2>New Review:</h2>
             <div>
                 <p>Rate This Product: </p>
                 <Rating
                     value={rating}
-                    style={{ color: iretroBrown }}
+                    style={{ color: webColor }}
                     name="half-rating"
                     defaultValue={2.5}
-                    precision={0.5}
+                    precision={1}
                     onChange={(e) => setRating(+((e.target as HTMLInputElement).value))} />
             </div>
             <br />
             Leave A Description: <Form.Control onChange={(e) => setDescription(e.target.value)} value={description} />
-            {reviewButton &&
-                <Button onClick={() => { dispatch(sendReviewAsync({ rating, description, id })); window.location.reload() }}>
+            {reviewButton
+                ? <Button onClick={() => { dispatch(sendReviewAsync({ rating, description, id })); window.location.reload() }}>
                     Send
-                </Button>}
+                </Button>
+                :
+                <div><hr /><p>You must log in and purchase the item to leave a review.</p></div>
+            }
         </div >
     )
 }

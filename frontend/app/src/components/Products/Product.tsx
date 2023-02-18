@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
-import { Link, useParams } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { SERVER } from "../../env";
 import { addtoCart } from "../Cart/cartSlice";
@@ -9,28 +9,31 @@ import {
   selectProducts,
   getAllProductsInCategoryAsync,
 } from "./productSlice";
+import { webColor } from "../../env";
+import { useNavigate } from "react-router-dom";
 
 export default function Product() {
+  const navigate = useNavigate()
   let { id } = useParams()
-  const iretroBrown = "rgb(62,56,54)";
   const [productQuantity, setProductQuantity] = useState(1)
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getAllProductsInCategoryAsync({ page: 1, id: Number(id) }));
   }, [id]);
   return (
     <div className="text-center">
       {Number(id) === 1 &&
-        <h1 style={{ color: iretroBrown }}>DIY - Do It Yourself</h1>
+        <h1 style={{ color: webColor }}>DIY - Do It Yourself</h1>
       }
       {Number(id) === 2 &&
-        <h1 style={{ color: iretroBrown }}>Fully Built Kits</h1>
+        <h1 style={{ color: webColor }}>Fully Built Kits</h1>
       }
       {Number(id) === 3 &&
-        <h1 style={{ color: iretroBrown }}>Spare Parts</h1>
+        <h1 style={{ color: webColor }}>Spare Parts</h1>
       }
-      <hr style={{ color: iretroBrown }} />
+      <hr style={{ color: webColor }} />
       <div className="row row-cols-1 row-cols-md-3 g-4">
         {products.map((product, index) => (
           <div key={index} className="col">
@@ -38,36 +41,39 @@ export default function Product() {
               <img src={SERVER + product.image} className="card-img-top" style={{ objectFit: "cover" }} alt={product.name} />
               <div className="card-body">
                 <h5 className="card-title">{product.name}</h5>
-                <p className="card-text">{product.description}</p>
-                <p className="card-text"><small className="text-muted">ID: {product.id}</small></p>
-                <p className="card-text"><small className="text-muted">Price: {product.price}</small></p>
-                <p className="card-text"><small className="text-muted">Quantity In Stock: {product.quantity}</small></p>
-                <Form.Control as="select" onChange={(e) => setProductQuantity(+e.target.value)} value={productQuantity}>
-                {[...Array(product.quantity)].map((amount, index) => (
-                  <option key={index + 1} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))}
-              </Form.Control>
-
+                <hr />
+                <p className="card-text-description">{product.description}</p>
+                <hr />
+                <h5 className="card-title"><small>Price: ${product.price}</small></h5>
+                <hr />
+                {product.quantity === 0 && <div>This product is out of stock. We will restock it soon.</div>}
+                {product.quantity > 0 && (
+                  <Form.Control className="quantity-selector" as="select" onChange={(e) => setProductQuantity(+e.target.value)} value={productQuantity}>
+                    {[...Array(product.quantity)].map((amount, index) => (
+                      <option key={index + 1} value={index + 1}>
+                        Quantity Selected: {" "}
+                        {index + 1}
+                      </option>
+                    ))}
+                  </Form.Control>
+                )}
               </div>
-              <div className="card-footer">
+              <div className="card-footer d-flex justify-content-center">
                 {product.quantity > 0 ? (
-                  <div>
-                    <Button onClick={() => dispatch(addtoCart({ id: product.id, price: product.price, name: product.name, image: product.image, quantity: productQuantity }))} style={{ backgroundColor: iretroBrown }} className="mt-3">
-                      Add to Cart
-                    </Button>
-                  </div>
+                  <Button onClick={() => dispatch(addtoCart({ id: product.id, price: product.price, name: product.name, image: product.image, quantity: productQuantity }))} style={{ backgroundColor: webColor, marginRight: "10px" }}>
+                    Add to Cart
+                  </Button>
                 ) : (
-                  <Button className="disabled mt-3" style={{ backgroundColor: iretroBrown, opacity: "50%" }}>
-                    Out Of Stock
+                  <Button className="disabled" style={{ backgroundColor: webColor, marginRight: "10px" }}>
+                    Not In Stock
                   </Button>
                 )}
-                <Link to={`/product/info/${product.id}/`}>
-                  <Button style={{ backgroundColor: iretroBrown }} className="mt-3">
-                    Details
-                  </Button>
-                </Link>
+                <Button style={{ backgroundColor: webColor }} onClick={() => {
+                  navigate(`/product/info/${product.id}/`);
+                  window.scrollTo(0, 0);
+                }}>
+                  Details
+                </Button>
               </div>
             </div>
           </div>
@@ -78,6 +84,6 @@ export default function Product() {
         <br />
         <BasicPagination />
       </div>
-    </div>
+    </div >
   );
 }
