@@ -26,7 +26,6 @@ const Header = () => {
       const isAdmin = localStorage.getItem("is_staff")
       setIsStaff(JSON.parse(String(isAdmin)))
     }
-
     if (localStorage.getItem("token")) {
       dispatch(loggedCheck())
       dispatch(staffCheck())
@@ -71,7 +70,7 @@ const Header = () => {
               <Dropdown.Toggle style={{ background: "transparent", border: "none", margin: "-10px" }}>
                 <a style={{ color: "white", margin: "0 10px" }}>
                   <FontAwesomeIcon icon={faUser} />
-                  {token ? ` ${userName}` : <a>{" "}Account</a>}
+                  {token ? ` ${userName}` : <span>{" "}Account</span>}
                 </a>
               </Dropdown.Toggle>
               <Dropdown.Menu>

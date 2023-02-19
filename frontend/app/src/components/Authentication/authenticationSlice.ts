@@ -103,7 +103,6 @@ export const authenticationSlice = createSlice({
         state.token = action.payload.data['access']
         state.username = decoded.username;
         state.is_staff = decoded.is_staff;
-        localStorage.setItem("refresh", JSON.stringify((action.payload.data['refresh']))) // Saving refresh token for regeneration of access token, if expired.
         localStorage.setItem("token", JSON.stringify(state.token))
         localStorage.setItem("username", JSON.stringify(state.username));
         localStorage.setItem("is_staff", JSON.stringify(state.is_staff));
