@@ -14,5 +14,5 @@ urlpatterns = [
     path('product/info/<int:pk>/', views.one_product), 
     path('order/', views.new_order),
     path('profile/orders/', views.get_all_products_from_user_order), 
-    path('profile/all_orders/', views.get_orders_for_customer)
+    path('profile/all_orders/', views.get_orders_for_customer), 
 ]

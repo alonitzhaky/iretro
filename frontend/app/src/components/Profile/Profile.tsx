@@ -10,8 +10,8 @@ const Profile = () => {
     useEffect(() => {
         dispatch(getUserProfileAsync())
         dispatch(getUserOrdersAsync())
-
     }, [])
+    
     const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile)
     const { order, order_details } = useAppSelector((state) => state.profile)
     return (
@@ -72,7 +72,7 @@ const Profile = () => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Container>
-                                <Col xs={6}><strong>Orders:</strong></Col>
+                                <Col className='d-flex justify-content-center'><h1 style={{color: webColor}}>Orders</h1></Col>
                                 <Row>
                                     {order.map((order_info) => (
                                         <Col key={order_info.id}>

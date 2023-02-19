@@ -2,9 +2,11 @@ FROM python:3.10
 
 ENV PYTHONUNBUFFERED 1
 
-RUN git clone https://github.com/alonitzhaky/iretro-store.git
+# RUN git clone https://github.com/alonitzhaky/iretro-store.git
 
 WORKDIR /iretro-store/backend
+
+COPY . .
 
 RUN pip install virtualenv
 

@@ -94,6 +94,7 @@ def get_orders_for_customer(request):
     order_data = OrderSerializer(orders, many=True).data
     order_detail_data = OrderDetailSerializer(order_details, many=True).data
     return Response({"orders": order_data, "order_details": order_detail_data})
+
 # ====================================
 #              Products
 # ====================================
@@ -152,6 +153,7 @@ def get_all_products_from_user_order(request):
     product_list = []
     for i in range(len(serializer_order_details.data)):
         product_list.append(serializer_order_details.data[i]["product"])
+    print(product_list)
     return Response(product_list)
 
 # ====================================
@@ -195,6 +197,14 @@ def new_order(request):
     # Serialize and return the order in the response
     response_data = OrderSerializer(order).data
     return Response(response_data, status=status.HTTP_201_CREATED)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def example_all_orders(request): 
+    user = request.user
+    orders = Order.objects.filter(user = user)
+    orders_serializer = OrderSerializer(orders, many = True).data
+    return Response({"orders": orders_serializer})
 
 # Inactive Functions
 

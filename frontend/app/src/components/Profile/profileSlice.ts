@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store";
 // import Profile from "../../models/Profile";
 import { getUserOrders, getUserProfile, updateUserProfile } from "./profileAPI";
 
