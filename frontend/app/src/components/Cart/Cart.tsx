@@ -13,7 +13,9 @@ const Cart = () => {
     const cart = useAppSelector(selectCart); // Cart imported from slicer
     const [show, setShow] = useState(false);
     const [productsInCart, setProductsInCart] = useState<{ id: string; price: number; image: string, name: string, quantity: number }[]>([]);
-    const toggleShow = () => setShow(!show)
+    // const toggleShow = () => setShow(!show)
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     useEffect(() => {
         const localStorageCart = localStorage.getItem("cart");
@@ -23,6 +25,9 @@ const Cart = () => {
     }, [cart])
 
     useEffect(() => {
+        if (cart.length) {
+            handleShow()
+        }
         let total = 0
         productsInCart.forEach(product => {
             total += product.price * product.quantity
@@ -33,11 +38,11 @@ const Cart = () => {
 
     return (
         <div>
-            <div onClick={() => toggleShow()}>
+            <div onClick={handleShow}>
                 <FontAwesomeIcon icon={faCartShopping} />
                 <a>{" "}Cart</a>
             </div>
-            <Offcanvas placement={"end"} show={show} onHide={() => toggleShow()}>
+            <Offcanvas placement={"end"} show={show} onHide={handleClose}>
                 <Offcanvas.Header closeButton>
                     <Offcanvas.Title>Cart</Offcanvas.Title>
                 </Offcanvas.Header>
@@ -52,22 +57,23 @@ const Cart = () => {
                                         {product.name}
                                     </Card.Title>
                                     <Card.Text>
+                                        ${product.price}
+                                    </Card.Text>
+                                    <Card.Text>
                                         Quantity: {product.quantity}
                                     </Card.Text>
                                     <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(removeQuantity(product.id))}>-</Button>
                                     {" "}
                                     <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(addQuantity(product.id))}>+</Button>
-                                    <Card.Text>
-                                        Price Per Item: {product.price}
-                                    </Card.Text>
-                                    <Button style={{ backgroundColor: webColor }} onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
+                                    {" "}
+                                    <Button style={{ backgroundColor: webColor, marginLeft: "100px" }} onClick={() => dispatch(removefromCart(product.id))}>Remove</Button>
                                 </Card.Body>
                             </Card>
                         )
                     })}
                     <br />
                     <hr />
-                    Total: ${total}
+                    <h2 style={{ color: webColor }} className='text-center'>Total: ${total.toFixed(2)}</h2>
                 </Offcanvas.Body>
                 <Shipping />
             </Offcanvas>

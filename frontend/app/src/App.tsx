@@ -14,9 +14,9 @@ import { Container } from 'react-bootstrap';
 import { Routes, Route, Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import ErrorFallback from './components/Errors/ErrorFallback';
+import Error404 from './components/Errors/Error404';
 
 import './bootstrap.min.css';
-import Error404 from './components/Errors/Error404';
 
 const Product = React.lazy(() => import('./components/Products/Product'))
 

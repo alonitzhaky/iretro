@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, ListGroup, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { getUserOrdersAsync, getUserProfileAsync } from './profileSlice';
@@ -12,9 +12,8 @@ const Profile = () => {
         dispatch(getUserOrdersAsync())
 
     }, [])
-
     const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile)
-    const { orders } = useAppSelector((state) => state.profile)
+    const { order, order_details } = useAppSelector((state) => state.profile)
     return (
         <div className='text-center'>
             <h1 style={{ color: webColor }}>
@@ -72,14 +71,34 @@ const Profile = () => {
                             }
                         </ListGroup.Item>
                         <ListGroup.Item>
+                            <Container>
+                                <Col xs={6}><strong>Orders:</strong></Col>
                                 <Row>
-                                    <Col xs={6}><strong>Orders:</strong></Col>
-                                    <Col>{orders.map(order => (
-                                        <div key={order.order_number}>
-                                            Product: {order.product_name}
-                                        </div>
-                                    ))}</Col>
+                                    {order.map((order_info) => (
+                                        <Col key={order_info.id}>
+                                            <Card>
+                                                <Card.Header>Order ID: {order_info.id}</Card.Header>
+                                                <Card.Body>
+                                                    <Card.Title>Order Date: {new Date(order_info.order_date).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</Card.Title>
+                                                    <Card.Text>
+                                                        {order_details.map((order_detail) => (
+                                                            <p>Total: {order_info.total} | Products: {order_detail.product_name} </p>
+                                                        ))}
+                                                        {/* <h5>Order Details</h5>
+                                                        <ul>
+                                                            <li key={order_detail.id}>
+                                                                <p>Product Name: {order_detail.product_name}</p>
+                                                                <p>Quantity: {order_detail.quantity}</p>
+                                                                <p>Price: {order_detail.total}</p>
+                                                            </li>
+                                                        </ul> */}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Col>
+                                    ))}
                                 </Row>
+                            </Container>
                         </ListGroup.Item>
 
                         <br />
@@ -91,7 +110,7 @@ const Profile = () => {
                     </ListGroup>
                 </Card.Body>
             </Card>
-        </div>
+        </div >
     )
 }
 

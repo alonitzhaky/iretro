@@ -39,7 +39,6 @@ const Reviews = () => {
                 <div className="review-list">
                     {reviewInfo.map((review, index) => (
                         <div key={index} className="review-item">
-
                             <div className="review-header">
                                 <span className="reviewer-name">{review.customer_name}</span>
                             </div>

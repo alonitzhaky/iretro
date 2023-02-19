@@ -42,6 +42,6 @@ export function getUserOrders() {
         }
     }
     return new Promise<{ data: any }>((resolve) => 
-    axios.get(SERVER + '/profile/all_orders/', config).then((res) => ({data: res.data}))
+    axios.get(SERVER + '/profile/all_orders/', config).then((res) => resolve({data: res.data}))
     )
 }

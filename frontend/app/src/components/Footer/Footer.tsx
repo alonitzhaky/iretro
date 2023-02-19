@@ -5,7 +5,7 @@ import { Container } from 'react-bootstrap';
 
 const Footer = () => {
     return (
-        <footer className="bg-dark text-white py-4">
+        <footer className="bg-dark text-white py-2">
             <Container className='text-center'>
                 <a href="https://github.com/alonitzhaky" target="_blank" style={{ color: "white" }}>
                     <FontAwesomeIcon icon={faGithub} style={{margin: "0 10px"}}/>

@@ -38,7 +38,7 @@ const Header = () => {
   return (
     <div>
       <ToastContainer />
-      <Navbar collapseOnSelect bg="dark" expand="lg" variant="dark">
+      <Navbar className='navbar-iretro' collapseOnSelect bg="dark" expand="lg" variant="dark">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
             <img src={process.env.PUBLIC_URL + '/logo.png'} style={{ height: '60px' }} />
@@ -98,12 +98,10 @@ const Header = () => {
 
             <Nav style={{ margin: "0 5px" }}>
               <Navbar.Text>
-                <Nav.Link>
                   <a href="tel:+972547144714" target="_blank" style={{ color: "white", margin: "0 10px" }}>
                     <FontAwesomeIcon icon={faPhone} />
-                    <a>{" "}Call Us</a>
+                    {" "}Call Us
                   </a>
-                </Nav.Link>
               </Navbar.Text>
             </Nav>
             <Nav>
@@ -111,7 +109,6 @@ const Header = () => {
                 <Cart />
               </Nav.Link>
             </Nav>
-
           </Navbar.Collapse>
         </Container>
       </Navbar>

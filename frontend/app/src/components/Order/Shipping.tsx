@@ -16,10 +16,6 @@ function Shipping() {
     const toggleShow = () => setShow((s) => !s);
     
     const cart = useAppSelector(selectCart)
-    // const [address, setAddress] = useState('');
-    // const [city, setCity] = useState('');
-    // const [country, setCountry] = useState('');
-    // const [zipCode, setZipCode] = useState('');
     const address = useAppSelector(selectNewAddress)
     const city = useAppSelector(selectNewCity)
     const country = useAppSelector(selectNewCountry)

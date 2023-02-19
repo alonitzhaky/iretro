@@ -13,12 +13,27 @@ export interface ProfileState {
     image: string,
     address: string,
     phone_number: string,
-    orders: Order[]
+    order: Order[]
+    order_details: OrderDetail[]
 }
 
-interface Order {
-    order_number: string;
+export interface Order {
+    id: number;
+    order_date: string;
+    address: string;
+    city: string;
+    country: string;
+    zip_code: string;
+    total: string;
+    user: number;
+}
+interface OrderDetail {
+    id: number;
     product_name: string;
+    quantity: number;
+    total: string;
+    order: number;
+    product: number;
 }
 
 const initialState: ProfileState = {
@@ -31,13 +46,15 @@ const initialState: ProfileState = {
     image: '',
     address: '',
     phone_number: '',
-    orders: []
+    order: [],
+    order_details: []
 };
 
 export const getUserOrdersAsync = createAsyncThunk(
     'profile/getUserOrders',
     async () => {
         const response = await getUserOrders();
+        console.log(response.data)
         return response.data
     }
 )
@@ -46,6 +63,7 @@ export const getUserProfileAsync = createAsyncThunk(
     'profile/getUserProfile',
     async () => {
         const response = await getUserProfile();
+        console.log(response.data)
         return response.data
     }
 )
@@ -73,8 +91,8 @@ export const profileSlice = createSlice({
             state.address = action.payload.address
             state.phone_number = action.payload.phone_number
         }).addCase(getUserOrdersAsync.fulfilled, (state, action) => {
-            state.orders = action.payload
-            console.log(state.orders)
+            state.order = action.payload.orders
+            state.order_details = action.payload.order_details
         })
     }
 })
