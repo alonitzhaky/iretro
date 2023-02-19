@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import { loginUser, logoutUser, registerUser } from './authenticationAPI';
+import { loginUser, logoutUser } from './authenticationAPI';
 import jwt_decode from "jwt-decode";
 import { toast } from 'react-toastify';
 import { SERVER } from '../../env';
@@ -23,19 +23,6 @@ export const initialState: AuthenticationState = {
   last_name: ""
 }
 
-// export const registerUserAsync = createAsyncThunk(
-//   'authentication/registerUser',
-//   async (info:
-//     { username: string, password: string, email: string, first_name: string, last_name: string }, thunkApi) => {
-//     try {
-//       const response = await registerUser(info.username, info.password, info.email, info.first_name, info.last_name);
-//       return response.data;
-//     } catch (error: any) {
-//       console.log(error.response.data)
-//       return thunkApi.rejectWithValue(error.response.data.error)
-//     }
-//   });
-
 export const registerUserAsync = createAsyncThunk(
   'authentication/registerUser',
   async (info:
@@ -48,7 +35,6 @@ export const registerUserAsync = createAsyncThunk(
       return thunkApi.rejectWithValue(error.response.data.error)
     }
   });
-
 
 export const loginUserAsync = createAsyncThunk(
   'authentication/loginUser',
@@ -117,6 +103,7 @@ export const authenticationSlice = createSlice({
         state.token = action.payload.data['access']
         state.username = decoded.username;
         state.is_staff = decoded.is_staff;
+        localStorage.setItem("refresh", JSON.stringify((action.payload.data['refresh']))) // Saving refresh token for regeneration of access token, if expired.
         localStorage.setItem("token", JSON.stringify(state.token))
         localStorage.setItem("username", JSON.stringify(state.username));
         localStorage.setItem("is_staff", JSON.stringify(state.is_staff));
