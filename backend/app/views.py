@@ -121,6 +121,7 @@ def one_product(request, pk):
 def get_reviews_per_product(request, pk):
     reviews = Review.objects.filter(product=Product.objects.get(id=pk))
     serializer = ReviewSerializer(reviews, many=True)
+    print("Review call.")
     return Response(serializer.data)
 
 @api_view(["POST"])
@@ -153,7 +154,7 @@ def get_all_products_from_user_order(request):
     product_list = []
     for i in range(len(serializer_order_details.data)):
         product_list.append(serializer_order_details.data[i]["product"])
-    print(product_list)
+    print("Get user order call.")
     return Response(product_list)
 
 # ====================================

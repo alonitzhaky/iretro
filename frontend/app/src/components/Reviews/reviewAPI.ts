@@ -15,8 +15,8 @@ export function sendReviewIfPurchased() {
             'Authorization': 'Bearer ' + accessToken
         }
     }
-    return new Promise<{ data: any }>((resolve) => 
-    axios.get(SERVER + '/profile/orders/', config).then(res => resolve({ data: res.data }))
+    return new Promise<{ data: any }>((resolve) =>
+        axios.get(SERVER + '/profile/orders/', config).then(res => resolve({ data: res.data }))
     )
 }
 
@@ -28,7 +28,7 @@ export function sendReview(details: any) {
         }
     }
     return new Promise<{ data: any }>((resolve) =>
-    axios.post(SERVER + '/product/reviews/submit/', {description: details.description, rating: details.rating, user: config.headers, id: details.id}, config).then(res => resolve({data: res.data}))
+        axios.post(SERVER + '/product/reviews/submit/', { description: details.description, rating: details.rating, user: config.headers, id: details.id }, config).then(res => resolve({ data: res.data }))
     )
 }
 

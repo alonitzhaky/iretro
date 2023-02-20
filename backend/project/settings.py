@@ -119,9 +119,7 @@ WSGI_APPLICATION = "project.wsgi.application"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    "default": dj_database_url.parse(
-        "postgres://iretro_database_user:6mDw9lKZXW9HwjCYJbAYCVRBXdI5Ffwi@dpg-cfpdkg2rrk0fd9t2gv70-a.frankfurt-postgres.render.com/iretro_database"
-    )
+    "default": dj_database_url.parse(config("DATABASE_URL"))
 }
 
 # DATABASES = {

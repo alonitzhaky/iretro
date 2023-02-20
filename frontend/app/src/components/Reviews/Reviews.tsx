@@ -20,11 +20,14 @@ const Reviews = () => {
 
     useEffect(() => {
         dispatch(getAllReviewsPerProductAsync(Number(id)))
+    }, [id])
+
+    useEffect(() => {
         if (logged && !hasCheckedForPurchasedProducts) {
             dispatch(sendReviewIfPurchasedAsync());
             setHasCheckedForPurchasedProducts(true);
         }
-    }, [dispatch, id, logged, hasCheckedForPurchasedProducts])
+    }, [logged, hasCheckedForPurchasedProducts])
 
     useEffect(() => {
         if (productList.includes(Number(id))) {
@@ -63,7 +66,7 @@ const Reviews = () => {
                     value={rating}
                     style={{ color: webColor }}
                     name="half-rating"
-                    defaultValue={2.5}
+                    defaultValue={2}
                     precision={1}
                     onChange={(e) => setRating(+((e.target as HTMLInputElement).value))} />
             </div>

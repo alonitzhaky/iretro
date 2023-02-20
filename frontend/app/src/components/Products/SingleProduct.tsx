@@ -9,16 +9,16 @@ import { addtoCart } from '../Cart/cartSlice';
 import Spinner from '../Design/Spinner';
 
 const SingleProduct = () => {
+  let { id } = useParams();
   const isLoading = useAppSelector(selectIsLoading)
   const rating = useAppSelector((state) => state.review.rating);
   const { product } = useAppSelector((state) => state.product);
   const [productQuantity, setProductQuantity] = useState(1)
-  const { id } = useParams();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getOneProductAsync(Number(id)));
-  }, [dispatch, id]);
+  }, [id]);
 
   return (
     <div>

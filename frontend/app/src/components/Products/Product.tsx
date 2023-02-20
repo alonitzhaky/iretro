@@ -1,4 +1,4 @@
-import React, { startTransition, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -27,12 +27,7 @@ export default function Product() {
   const currentPage = useAppSelector(selectCurrentPage)
 
   useEffect(() => {
-    const fetchData = async () => {
-      await startTransition(() => {
-        dispatch(getAllProductsInCategoryAsync({ page: currentPage, id: Number(id) }));
-      })
-    }
-    fetchData()
+    dispatch(getAllProductsInCategoryAsync({ page: currentPage, id: Number(id) }));
   }, [dispatch, currentPage, id]);
 
   return (
