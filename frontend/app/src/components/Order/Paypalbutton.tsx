@@ -37,7 +37,11 @@ const PaypalButton = () => {
               position: toast.POSITION.TOP_CENTER
             }
           );
-        }, localStorage.removeItem("cart"))
+        }, localStorage.removeItem("cart"),
+          setTimeout(function () {
+            window.location.replace("/")
+          }, 3000)
+        )
         .catch((error: any) => {
           toast.error("Error capturing the payment. Please try again.", {
             position: toast.POSITION.TOP_CENTER,
