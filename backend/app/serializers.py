@@ -38,6 +38,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         fields = '__all__'
         extra_kwargs = {'password': {'write_only': True}}
+        expected_fields = ['id', 'username', 'email', 'name', 'is_active', 'is_staff', 'groups', 'user_permissions']
 
     def get_name(self, object):
         name = object.first_name

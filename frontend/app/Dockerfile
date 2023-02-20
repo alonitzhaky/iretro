@@ -1,7 +1,6 @@
 FROM node:18.14.0-alpine
 
 RUN apk update 
-# RUN git clone https://github.com/alonitzhaky/iretro-store.git
 
 WORKDIR /iretro-store/frontend/app
 

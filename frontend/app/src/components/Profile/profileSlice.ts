@@ -1,4 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../../app/store";
+import Profile from "../../models/Profile";
 // import Profile from "../../models/Profile";
 import { getUserOrders, getUserProfile, updateUserProfile } from "./profileAPI";
 
@@ -14,6 +16,8 @@ export interface ProfileState {
     phone_number: string,
     order: Order[]
     order_details: OrderDetail[]
+    isLoading: Boolean
+    profile?: Profile
 }
 
 export interface Order {
@@ -55,7 +59,9 @@ const initialState: ProfileState = {
     address: '',
     phone_number: '',
     order: [],
-    order_details: []
+    order_details: [], 
+    isLoading: true, 
+    profile: undefined
 };
 
 export const getUserOrdersAsync = createAsyncThunk(
@@ -89,7 +95,10 @@ export const profileSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addCase(getUserProfileAsync.fulfilled, (state, action) => {
+        builder.addCase(getUserProfileAsync.pending, (state, action) => {
+            state.isLoading = true
+        })
+        .addCase(getUserProfileAsync.fulfilled, (state, action) => {
             state.first_name = action.payload.first_name
             state.last_name = action.payload.last_name
             state.email = action.payload.email
@@ -98,6 +107,7 @@ export const profileSlice = createSlice({
             state.image = action.payload.image
             state.address = action.payload.address
             state.phone_number = action.payload.phone_number
+            state.isLoading = false
         }).addCase(getUserOrdersAsync.fulfilled, (state, action) => {
             state.order = action.payload.orders
             state.order_details = action.payload.order_details
@@ -106,4 +116,5 @@ export const profileSlice = createSlice({
 })
 
 export const { } = profileSlice.actions;
+export const selectIsLoadingProfile = (state: RootState) => state.profile.isLoading
 export default profileSlice.reducer;

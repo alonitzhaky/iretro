@@ -53,13 +53,13 @@ const Header = () => {
               </NavItem>
               <NavDropdown title="Shop">
                 <NavDropdown.Item as={Link} to="/product/1">
-                  Do It Yourself
+                  Smart Watches &  Chips
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product/2">
-                  Fully Built Kits
+                  iPhone Kits
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product/3">
-                  Spare Parts
+                  Game Consoles
                 </NavDropdown.Item>
               </NavDropdown>
               <NavItem>

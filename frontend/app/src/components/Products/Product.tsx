@@ -34,13 +34,13 @@ export default function Product() {
     <div>
       {isLoading ? <div className="d-flex justify-content-center"><Spinner /></div> : <div className="text-center">
         {Number(id) === 1 &&
-          <h1 style={{ color: webColor }}>DIY - Do It Yourself</h1>
+          <h1 style={{ color: webColor }}>Smart Watched and  Chips</h1>
         }
         {Number(id) === 2 &&
-          <h1 style={{ color: webColor }}>Fully Built Kits</h1>
+          <h1 style={{ color: webColor }}>iPhone Kits</h1>
         }
         {Number(id) === 3 &&
-          <h1 style={{ color: webColor }}>Spare Parts</h1>
+          <h1 style={{ color: webColor }}>Game Consoles</h1>
         }
         <hr style={{ color: webColor }} />
         <div className="row row-cols-1 row-cols-md-3 g-4">

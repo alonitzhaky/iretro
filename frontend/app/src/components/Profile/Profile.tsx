@@ -2,18 +2,23 @@ import React, { useEffect } from "react";
 import { Button, Card, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { getUserOrdersAsync, getUserProfileAsync } from "./profileSlice";
+import { getUserOrdersAsync, getUserProfileAsync, selectIsLoadingProfile } from "./profileSlice";
 import { SERVER, webColor } from "../../env";
+import Spinner from "../Design/Spinner";
 
 const Profile = () => {
     const dispatch = useAppDispatch();
+    const isLoading = useAppSelector(selectIsLoadingProfile)
+    const { profile } = useAppSelector((state) => state.profile)
+    const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile);
+    const { order } = useAppSelector((state) => state.profile);
+
     useEffect(() => {
         dispatch(getUserProfileAsync());
         dispatch(getUserOrdersAsync());
     }, []);
 
-    const { first_name, last_name, username, admin, email, image, address, phone_number } = useAppSelector((state) => state.profile);
-    const { order } = useAppSelector((state) => state.profile);
+    if (isLoading) return <Spinner clx="d-flex justify-content-center" />
     return (
         <div className="text-center">
             <h1 style={{ color: webColor }}>User Profile</h1>
@@ -90,7 +95,7 @@ const Profile = () => {
                         </ListGroup.Item>
                         <ListGroup.Item>
                             <Container>
-                                <Col className="d-flex justify-content-center">
+                                <Col className="d-flex justify-content-center" style={{minHeight: ""}}>
                                     <h1 style={{ color: webColor }}>Orders</h1>
                                 </Col>
                                 <Row>
@@ -105,7 +110,7 @@ const Profile = () => {
                                                 <Card.Header>
                                                     Total Price: ${order_info.total}
                                                 </Card.Header>{" "}
-                                                <Card.Body>
+                                                <Card.Body style={{minHeight: "472px"}}>
                                                     {" "}
                                                     <Card.Title>
                                                         Order Date:{" "}

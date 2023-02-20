@@ -17,9 +17,9 @@ class CustomUser(AbstractUser):
 
 class Product(models.Model): 
     CATEGORIES = (
-        (1, 'DIY - Do It Yourself'), 
-        (2, 'Full Kits'), 
-        (3, 'Parts')
+        (1, 'Smart Watches and Apple Chips'), 
+        (2, 'iPhone Kits'), 
+        (3, 'Game Consoles')
     )
     user = models.ForeignKey(CustomUser, on_delete = models.PROTECT, null = False)
     name = models.CharField(max_length=50)

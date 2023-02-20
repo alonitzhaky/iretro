@@ -22,7 +22,7 @@ ENV DJANGO_SETTINGS_MODULE=project.settings
 
 ENV SECRET_KEY "django-insecure-@)^nelgw@q3@2+c$fvoh&ncwe#9hy#l1uj3d1d+uez&fgsg62j"
 
-ENV DATABASE_URL "postgres://iretro_database_user:6mDw9lKZXW9HwjCYJbAYCVRBXdI5Ffwi@dpg-cfpdkg2rrk0fd9t2gv70-a.frankfurt-postgres.render.com/iretro_database"
+ENV DATABASE_URL "postgres://iretro_database_d4da_user:mr5cG2uSo5GTcuCElZgyKfe493Jukm8g@dpg-cfpphdqrrk0fd9vp4nj0-a.frankfurt-postgres.render.com/iretro_database_d4da"
 
 RUN python manage.py makemigrations
 
