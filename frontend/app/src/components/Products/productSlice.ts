@@ -6,7 +6,7 @@ import { getAllProductsInCategory, getOneProduct } from './productAPI';
 interface ProductState {
     status: 'idle' | 'loading' | 'failed';
     products: Product[];
-    product?: Product;
+    product: Product;
     count: number;
     isLoading: Boolean
     currentPage: number
@@ -14,7 +14,7 @@ interface ProductState {
 const initialState: ProductState = {
     status: 'idle',
     products: [],
-    product: undefined,
+    product: Object.create(null),
     count: 0,
     isLoading: true,
     currentPage: 1

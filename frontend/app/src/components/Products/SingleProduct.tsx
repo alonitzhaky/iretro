@@ -21,8 +21,6 @@ const SingleProduct = () => {
   }, [id]);
 
 
-  if (!product) return null;
-
   if (isLoading) return <Spinner clx='d-flex justify-content-center' />
   return (
     <Container>

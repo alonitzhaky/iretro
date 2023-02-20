@@ -64,7 +64,7 @@ def register(request):
             serializer = CustomUserSerializer(user, many=False)
             subject = 'Thank you for registering to iRetro.'
             message = 'Thank you for registering on our site.'
-            from_email = 'alon.itzhaky@gmail.com'
+            from_email = 'soccerstorelidor@gmail.com'
             recipient_list = [email]
             send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
             return Response(serializer.data)
