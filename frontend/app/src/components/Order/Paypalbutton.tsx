@@ -51,14 +51,18 @@ const PaypalButton = () => {
     <div>
       <PayPalScriptProvider
         options={{
-          // Change to proper client ID
           "client-id":
-            "AT_RMGrGtqhVq-71qKQiqGSgox1JmeVTRco64KeCMqaWOs7jRnSEI40iuG_jpyHsJnzbHNUf0ueCPtqi",
+            "AYAwtlmAjZaOpJIltcq1JhQPVM7S5Ge5bAAy2CfshzmC3XbMOWGzrjDH6N446YVG5Ula6yDEdrZHlsGD",
         }}
       >
         <PayPalButtons
           disabled={!address || !city || !country || !zip_code}
-          style={{ layout: 'vertical' }}
+          style={{
+            color: 'blue',
+            label: 'pay',
+            height: 50,
+            layout: 'vertical'
+          }}
           createOrder={(data, actions) => {
             return actions.order.create({
               purchase_units: [

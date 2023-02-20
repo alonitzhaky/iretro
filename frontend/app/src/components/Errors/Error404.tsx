@@ -1,4 +1,5 @@
 import React from 'react'
+import { webColor } from '../../env';
 import './style.css'
 
 const Error404 = () => {
@@ -11,10 +12,10 @@ const Error404 = () => {
           <h3>Oops! Page not found.</h3>
           <h1><span>4</span><span>0</span><span>4</span></h1>
         </div>
-        <div className='notfound-404-click'>
-          <h3>we are sorry, but the page you requested was not found.</h3>
+        <div className='notfound-404-click' >
+          <h3 style={{color: webColor}}>we are sorry, but the page you requested was not found.</h3>
           <br />
-          <h3>Please click <a style={{color: "rgb(77,57,45)"}} href="http://localhost:3000/">here</a> to go back to the homepage.</h3>
+          <h3 style={{color: webColor}}>Please click <a style={{color: "rgb(77,57,45)"}} href="http://localhost:3000/">here</a> to go back to the homepage.</h3>
         </div>
       </div>
     </div>
