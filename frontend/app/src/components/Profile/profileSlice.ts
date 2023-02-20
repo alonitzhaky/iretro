@@ -25,6 +25,15 @@ export interface Order {
     zip_code: string;
     total: string;
     user: number;
+    products: Array<{
+        id: number;
+        product_name: string;
+        quantity: number;
+        total: string;
+        order: number;
+        product: number;
+    }>;
+
 }
 interface OrderDetail {
     id: number;

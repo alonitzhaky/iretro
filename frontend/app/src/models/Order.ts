@@ -6,3 +6,6 @@ export type Order = {
     country: string; 
     zip_code: string;
 }
+
+// export type Order = {
+// }

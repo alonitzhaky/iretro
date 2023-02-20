@@ -85,15 +85,31 @@ def update_user_profile(request):
         return Response(status=status.HTTP_200_OK, data=serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
+# @api_view(['GET'])
+# @permission_classes([IsAuthenticated])
+# def get_orders_for_customer(request):
+#     user = request.user
+#     orders = Order.objects.filter(user = user)
+#     order_details = OrderDetail.objects.filter(order__user=user)
+#     order_data = OrderSerializer(orders, many=True).data
+#     order_detail_data = OrderDetailSerializer(order_details, many=True).data
+#     return Response({"orders": order_data, "order_details": order_detail_data})
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_orders_for_customer(request):
     user = request.user
-    orders = Order.objects.filter(user = user)
-    order_details = OrderDetail.objects.filter(order__user=user)
+    orders = Order.objects.filter(user=user)
+    order_details = OrderDetail.objects.filter(order__user=user).select_related('product')
     order_data = OrderSerializer(orders, many=True).data
     order_detail_data = OrderDetailSerializer(order_details, many=True).data
-    return Response({"orders": order_data, "order_details": order_detail_data})
+    orders_with_products = []
+    for order in order_data:
+        order_id = order['id']
+        order_products = [detail for detail in order_detail_data if detail['order'] == order_id]
+        order['products'] = order_products
+        orders_with_products.append(order)
+    return Response({"orders": orders_with_products})
 
 # ====================================
 #              Products
