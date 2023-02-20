@@ -11,9 +11,7 @@ const Authentication = () => {
   const [password, setPassword] = useState("");
   const logged = useAppSelector(selectIsLogged);
   const dispatch = useAppDispatch();
-  // const handleClick = () => {
-  //   window.location.assign("http://localhost:3000/register");
-  // };
+
 
   useEffect(() => {
     if (logged) {
