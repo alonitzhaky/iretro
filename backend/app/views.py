@@ -6,6 +6,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 from django.contrib.auth.hashers import make_password
+from django.core.mail import send_mail
 
 from .models import Order, Review, Product, CustomUser, OrderDetail
 from .serializers import (CustomUserSerializer, OrderDetailSerializer, OrderSerializer, ReviewSerializer, ProductSeralizer,)
@@ -61,6 +62,11 @@ def register(request):
             user.is_active = True
             user.is_staff = False  # To prevent bugs with normal customers
             serializer = CustomUserSerializer(user, many=False)
+            subject = 'Thank you for registering to iRetro.'
+            message = 'Thank you for registering on our site.'
+            from_email = 'alon.itzhaky@gmail.com'
+            recipient_list = [email]
+            send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
             return Response(serializer.data)
 
 # ====================================
@@ -84,16 +90,6 @@ def update_user_profile(request):
         print(serializer.data)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
-
-# @api_view(['GET'])
-# @permission_classes([IsAuthenticated])
-# def get_orders_for_customer(request):
-#     user = request.user
-#     orders = Order.objects.filter(user = user)
-#     order_details = OrderDetail.objects.filter(order__user=user)
-#     order_data = OrderSerializer(orders, many=True).data
-#     order_detail_data = OrderDetailSerializer(order_details, many=True).data
-#     return Response({"orders": order_data, "order_details": order_detail_data})
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
