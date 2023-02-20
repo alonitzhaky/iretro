@@ -12517,7 +12517,7 @@ footer {
     /* background-color: #333;
     color: #fff;
     padding: 20px; */
-  }
+}
 
 .navbar-iretro {
     position: sticky;
@@ -12595,4 +12595,8 @@ a {
 
 .profile-image {
     border-radius: 50%;
+}
+
+.product--dimmed {
+    filter: brightness(0.5)
 }

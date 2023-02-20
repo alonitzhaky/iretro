@@ -6,8 +6,10 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { addQuantity, removefromCart, removeQuantity, selectCart, updateTotal } from './cartSlice';
 import { SERVER, webColor } from '../../env'
 import Shipping from '../Order/Shipping';
+import { selectIsLogged } from '../Authentication/authenticationSlice';
 
 const Cart = () => {
+    let logged = useAppSelector(selectIsLogged)
     const dispatch = useAppDispatch()
     const { total } = useAppSelector((state) => state.cart)
     const cart = useAppSelector(selectCart); // Cart imported from slicer
@@ -73,9 +75,9 @@ const Cart = () => {
                     })}
                     <br />
                     <hr />
-                    <h2 style={{ color: webColor }} className='text-center'>Total: ${total.toFixed(2)}</h2>
+                    <h4 style={{ color: webColor }} className='text-center'>Total: ${total.toFixed(2)}</h4>
                 </Offcanvas.Body>
-                <Shipping />
+                {logged ? <Shipping /> : <div style={{margin: "20px", fontWeight: "bold"}} className='d-flex justify-content-center'>You must be logged in to make a purchase.</div>}
             </Offcanvas>
         </div>
     )

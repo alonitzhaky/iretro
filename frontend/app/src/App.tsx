@@ -17,8 +17,7 @@ import ErrorFallback from './components/Errors/ErrorFallback';
 import Error404 from './components/Errors/Error404';
 
 import './bootstrap.min.css';
-
-const Product = React.lazy(() => import('./components/Products/Product'))
+import Product from './components/Products/Product';
 
 function App() {
   return (
@@ -31,13 +30,7 @@ function App() {
             <Route path="/" element={<PhotoCarousel />} />
             <Route path="/product/:id" element={
               <ErrorBoundary FallbackComponent={ErrorFallback} onReset={() => { }}>
-                <React.Suspense fallback={
-                  <div>
-                    <h1>Loading...</h1>
-                  </div>
-                }>
-                  <Product />
-                </React.Suspense>
+                <Product />
               </ErrorBoundary>
             } />
             <Route path="/product/info/:id">
@@ -51,7 +44,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/profile/update" element={<UpdateInfo />} />
             <Route path="/checkout" element={<Shipping />} />
-            <Route path="*" element={<Error404/>} />
+            <Route path="*" element={<Error404 />} />
           </Routes>
         </Container>
         <br />

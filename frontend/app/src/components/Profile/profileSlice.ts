@@ -97,5 +97,4 @@ export const profileSlice = createSlice({
 })
 
 export const { } = profileSlice.actions;
-// export const selectProfile = (state: RootState) => state.profile.username
 export default profileSlice.reducer;

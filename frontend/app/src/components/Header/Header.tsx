@@ -94,13 +94,12 @@ const Header = () => {
                 </Dropdown.Item>}
               </Dropdown.Menu>
             </Dropdown>
-
-            <Nav style={{ margin: "0 5px" }}>
+            <Nav style={{ margin: "0 10px" }}>
               <Navbar.Text>
-                  <a href="tel:+972547144714" target="_blank" style={{ color: "white", margin: "0 10px" }}>
-                    <FontAwesomeIcon icon={faPhone} />
-                    {" "}Call Us
-                  </a>
+                <a href="tel:+972547144714" target="_blank" style={{ margin: "0 10px" }}>
+                  <FontAwesomeIcon icon={faPhone} />
+                  {" "}Call Us
+                </a>
               </Navbar.Text>
             </Nav>
             <Nav>

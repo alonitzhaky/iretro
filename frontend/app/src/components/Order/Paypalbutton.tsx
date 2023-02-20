@@ -58,7 +58,7 @@ const PaypalButton = () => {
         <PayPalButtons
           disabled={!address || !city || !country || !zip_code}
           style={{
-            color: 'blue',
+            color: 'black',
             label: 'pay',
             height: 50,
             layout: 'vertical'
