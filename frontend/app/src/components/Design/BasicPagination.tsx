@@ -9,7 +9,7 @@ export default function BasicPagination() {
   const dispatch = useAppDispatch()
   const currentPage = useAppSelector(selectCurrentPage)
   const count = useAppSelector(selectCount)
-  let { id } = useParams()
+  const { id } = useParams()
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     dispatch(updateCurrentPage(value))

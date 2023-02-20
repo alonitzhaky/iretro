@@ -1,9 +1,13 @@
 import React from 'react'
 import { MutatingDots } from 'react-loader-spinner'
 
-const Spinner = () => {
+type Props = {
+    clx?: string;
+}
+
+const Spinner = ({clx}: Props) => {
     return (
-        <div>
+        <div className={clx}>
             <MutatingDots
                 height="100"
                 width="100"

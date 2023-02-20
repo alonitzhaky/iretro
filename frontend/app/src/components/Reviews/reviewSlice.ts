@@ -9,6 +9,7 @@ export interface ReviewState {
     amountReviews: number
     rating: number
     purchasedProducts: number[]
+    isLoading: Boolean
 }
 
 const initialState: ReviewState = {
@@ -16,7 +17,8 @@ const initialState: ReviewState = {
     review: [], 
     amountReviews: 0, 
     rating: 0, 
-    purchasedProducts: []
+    purchasedProducts: [], 
+    isLoading: true
 }
 
 export const getAllReviewsPerProductAsync = createAsyncThunk(
@@ -43,13 +45,15 @@ export const sendReviewAsync = createAsyncThunk(
     }
 )
 
-
 export const ReviewSlice = createSlice({
     name: "review", 
     initialState, 
     reducers: {}, 
     extraReducers: (builder) => {
-        builder.addCase(getAllReviewsPerProductAsync.fulfilled, (state, action) => {
+        builder.addCase(getAllReviewsPerProductAsync.pending, (state, action) => {
+            state.isLoading = true
+        })
+        .addCase(getAllReviewsPerProductAsync.fulfilled, (state, action) => {
             state.review = action.payload
             state.amountReviews = state.review.length
             let total = 0
@@ -58,6 +62,7 @@ export const ReviewSlice = createSlice({
                 total += state.review[index].rating;
                 state.rating = Math.round(total / state.review.length)
             }
+            state.isLoading = false
         }).addCase(sendReviewIfPurchasedAsync.fulfilled, (state, action) => {
             state.purchasedProducts = action.payload
         })
@@ -68,4 +73,5 @@ export const {} = ReviewSlice.actions;
 export const selectReviewDescription = (state: RootState) => state.review.review
 export const selectAverageRating = (state: RootState) => state.review.rating
 export const selectAllowedToReview = (state: RootState) => state.review.purchasedProducts
+export const selectIsLoadingReview = (state: RootState) => state.review.isLoading
 export default ReviewSlice.reducer;

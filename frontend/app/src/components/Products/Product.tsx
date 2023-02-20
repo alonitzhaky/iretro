@@ -8,7 +8,7 @@ import BasicPagination from "../Design/BasicPagination";
 import {
   selectProducts,
   getAllProductsInCategoryAsync,
-  selectIsLoading,
+  selectIsLoadingProduct,
   selectCurrentPage,
 } from "./productSlice";
 import { webColor } from "../../env";
@@ -18,9 +18,9 @@ import Spinner from "../Design/Spinner";
 import '../../bootstrap.min.css'
 
 export default function Product() {
-  const isLoading = useAppSelector(selectIsLoading)
+  const isLoading = useAppSelector(selectIsLoadingProduct)
   const navigate = useNavigate()
-  let { id } = useParams()
+  const { id } = useParams()
   const [productQuantity, setProductQuantity] = useState(1)
   const products = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();

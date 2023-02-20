@@ -6,7 +6,7 @@ import { getAllProductsInCategory, getOneProduct } from './productAPI';
 interface ProductState {
     status: 'idle' | 'loading' | 'failed';
     products: Product[];
-    product: Product;
+    product?: Product;
     count: number;
     isLoading: Boolean
     currentPage: number
@@ -14,9 +14,9 @@ interface ProductState {
 const initialState: ProductState = {
     status: 'idle',
     products: [],
-    product: Object.create(null),
+    product: undefined,
     count: 0,
-    isLoading: false,
+    isLoading: true,
     currentPage: 1
 }
 
@@ -68,6 +68,6 @@ export const productSlice = createSlice({
 export const { updateCurrentPage } = productSlice.actions;
 export const selectProducts = (state: RootState) => state.product.products;
 export const selectCount = (state: RootState) => state.product.count;
-export const selectIsLoading = (state: RootState) => state.product.isLoading
+export const selectIsLoadingProduct = (state: RootState) => state.product.isLoading
 export const selectCurrentPage = (state: RootState) => state.product.currentPage
 export default productSlice.reducer;

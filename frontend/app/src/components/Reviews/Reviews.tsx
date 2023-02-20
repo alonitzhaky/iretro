@@ -9,7 +9,7 @@ import Rating from '@mui/material/Rating';
 const Reviews = () => {
     const webColor = "rgb(62,56,54)";
     let logged = useAppSelector(selectIsLogged)
-    let { id } = useParams()
+    const { id } = useParams()
     let dispatch = useAppDispatch()
     const productList = useAppSelector(selectAllowedToReview)
     const [rating, setRating] = useState(0)
@@ -34,6 +34,7 @@ const Reviews = () => {
             setReviewButton(true)
         }
     }, [productList, id])
+    
     return (
         <div className='text-center'>
             <hr />
