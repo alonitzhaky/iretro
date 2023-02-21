@@ -32,8 +32,8 @@
     - [🖱️ Frontend Installation](#frontend-installation)
     - [⌨️ Backend Installation](#backend-installation)
     - [🗝️ Authentication](#authentication)
-- [Disclaimers](#disclaimers)
-- [Authors](#authors)
+- [⚠️ Disclaimers](#disclaimers)
+- [✍🏽 Authors](#authors)
 
 
 # Introduction
