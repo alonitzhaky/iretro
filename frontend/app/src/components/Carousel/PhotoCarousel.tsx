@@ -16,7 +16,7 @@ const PhotoCarousel = () => {
             alt="First slide"
           />
           <Carousel.Caption>
-            <h3 style={{ color: "white" }}>iRetro - Preserve Your Technology</h3>
+            <h2 style={{ color: "white" }}>iRetro - Preserve Your Technology</h2>
             <p>Keep your old iPhone, showing off its internal beauty.</p>
           </Carousel.Caption>
         </Carousel.Item>
@@ -28,9 +28,9 @@ const PhotoCarousel = () => {
             alt="Second slide"
           />
 
-          <Carousel.Caption>
-            <h3 style={{ color: "white" }}>Second slide label</h3>
-            <p style={{ color: "black" }}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          <Carousel.Caption style={{ color: "black" }}>
+            <h2>A memory for a lifetime.</h2>
+            <p>The perfect gift for the tech enthusiast!</p>
           </Carousel.Caption>
         </Carousel.Item>
         <Carousel.Item>
@@ -41,11 +41,9 @@ const PhotoCarousel = () => {
             alt="Third slide"
           />
 
-          <Carousel.Caption>
-            <h3 style={{ color: "black" }}>Third slide label</h3>
-            <p style={{ color: "black" }}>
-              Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-            </p>
+          <Carousel.Caption style={{ color: "black" }}>
+            <h2>The internal beauty.</h2>
+            <p>Even the smallest components have a story behind them.</p>
           </Carousel.Caption>
         </Carousel.Item>
       </Carousel>

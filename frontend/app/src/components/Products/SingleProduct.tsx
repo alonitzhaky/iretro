@@ -64,18 +64,6 @@ const SingleProduct = () => {
             <div className="d-flex justify-content-center align-items-center">
               <h2 style={{ color: "black" }}>Ratings</h2>
             </div>
-            <div className="d-flex justify-content-center align-items-center">
-              {[...Array(5)].map((_, i) => {
-                const ratingValue = i + 1;
-                return (
-                  <span key={i}>
-                    <i className={rating >= ratingValue ? "fas fa-star" : rating >= ratingValue - 0.5 ? "fas fa-star-half-alt" : "far fa-star"}
-                    ></i>
-                  </span>
-                );
-              })}
-              <span>{"‏‏‎ ‎"}{rating && rating} / 5</span>
-            </div>
             <Reviews />
           </Card>
         </Col>

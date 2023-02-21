@@ -24,7 +24,6 @@ export const getAllProductsInCategoryAsync = createAsyncThunk(
     'product/getAllProductsInCategory',
     async (data: { id: number, page: number }) => {
         const response = await getAllProductsInCategory(data.id, data.page);
-        console.log(response.data)
         return response.data;
     }
 )

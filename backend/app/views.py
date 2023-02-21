@@ -34,45 +34,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 #              Register
 # ====================================
 
-# @api_view(["POST"])
-# def register(request):
-#     data = request.data
-#     first_name = data["first_name"]
-#     last_name = data["last_name"]
-#     username = data["username"]
-#     email = data["email"]
-#     password = make_password(data["password"])
-#     try:
-#         duplicate_check = CustomUser.objects.get(username=username)
-#         return Response({"error": "This username already exists. Please select a different username."}, status=status.HTTP_400_BAD_REQUEST)
-#     except CustomUser.DoesNotExist:
-#         try:
-#             duplicate_check = CustomUser.objects.get(email=email)
-#             return Response(
-#                 {"error": "This email already exists."},
-#                 status=status.HTTP_400_BAD_REQUEST,
-#             )
-#         except CustomUser.DoesNotExist:
-#             user = CustomUser.objects.create(
-#                 first_name=first_name,
-#                 last_name=last_name,
-#                 username=username,
-#                 email=email,
-#                 password=password,
-#             )
-#             user.is_active = True
-#             user.is_staff = False  # To prevent bugs with normal customers
-#             serializer = CustomUserSerializer(user, many=False)
-#         try:
-#             subject = 'Thank you for registering to iRetro.'
-#             message = 'Thank you for registering on our site.'
-#             from_email = 'soccerstorelidor@gmail.com'
-#             recipient_list = [email]
-#             send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
-#             return Response(serializer.data)
-#         except: 
-#             return Response(serializer.data)
-
 @api_view(["POST"])
 def register(request):
     data = request.data
@@ -118,15 +79,14 @@ def register(request):
         user.save()
         return Response({"success": "user created, yet no e-mail will be sent."}, status=status.HTTP_201_CREATED)
 
-
-
 # ====================================
 #            User Profile
 # ====================================
 
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
-def get_user_profile(request):
+def get_user_profile(request): 
+    # Retrieves the user's information for displayment on Profile page.
     user = request.user
     serilaizer = CustomUserSerializer(user, many=False)
     return Response(serilaizer.data)
@@ -134,11 +94,11 @@ def get_user_profile(request):
 @api_view(["PUT"])
 @permission_classes([IsAuthenticated])
 def update_user_profile(request):
+    # Sends a PUT request to the server to update some of the fields he may want to update, such as address or new phone number. 
     user = request.user
     serializer = CustomUserSerializer(instance=user, data=request.data, partial=True)
     if serializer.is_valid():
         serializer.save()
-        print(serializer.data)
         return Response(status=status.HTTP_200_OK, data=serializer.data)
     return Response(status=status.HTTP_400_BAD_REQUEST, data=serializer.errors)
 
@@ -184,7 +144,6 @@ def one_product(request, pk):
 def get_reviews_per_product(request, pk):
     reviews = Review.objects.filter(product=Product.objects.get(id=pk))
     serializer = ReviewSerializer(reviews, many=True)
-    print("Review call.")
     return Response(serializer.data)
 
 @api_view(["POST"])
@@ -194,7 +153,6 @@ def submit_review(request):
     user = request.user
     try:
         product = Product.objects.get(id=data["id"])
-        print(data)
         reviewing_user = CustomUser.objects.get(username=user.username)
         Review.objects.create(
             product=product,
@@ -205,7 +163,6 @@ def submit_review(request):
         )
         return Response("Added.", status=status.HTTP_200_OK)
     except Exception as e:
-        print(e)
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(["GET"])
@@ -217,7 +174,6 @@ def get_all_products_from_user_order(request):
     product_list = []
     for i in range(len(serializer_order_details.data)):
         product_list.append(serializer_order_details.data[i]["product"])
-    print("Get user order call.")
     return Response(product_list)
 
 # ====================================
@@ -233,7 +189,6 @@ def new_order(request):
     )
     order_serializer.is_valid(raise_exception=True)
     order = order_serializer.save()
-    print(order_serializer.data)
 
     # Create a list of order details and save them
     order_details = [

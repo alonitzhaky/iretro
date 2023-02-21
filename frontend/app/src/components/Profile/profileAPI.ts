@@ -27,7 +27,6 @@ export function updateUserProfile(profileData: any) {
     axios.put(SERVER + '/profile/update/', profileData, config)
     .then(res => {
         resolve({ data: res.data });
-        console.log(res.data)
         toast.success("Your profile has been updated successfully!", {
             position: "top-center",
         });

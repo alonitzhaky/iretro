@@ -31,7 +31,6 @@ export const registerUserAsync = createAsyncThunk(
       const response = await axios.post(SERVER + '/register/', { username: info.username, password: info.password, email: info.email, first_name: info.first_name, last_name: info.last_name });
       return response.data;
     } catch (error: any) {
-      console.log(error.response.data)
       return thunkApi.rejectWithValue(error.response.data.error)
     }
   });

@@ -68,7 +68,6 @@ export const getUserOrdersAsync = createAsyncThunk(
     'profile/getUserOrders',
     async () => {
         const response = await getUserOrders();
-        console.log(response.data)
         return response.data
     }
 )
@@ -77,7 +76,6 @@ export const getUserProfileAsync = createAsyncThunk(
     'profile/getUserProfile',
     async () => {
         const response = await getUserProfile();
-        console.log(response.data)
         return response.data
     }
 )
