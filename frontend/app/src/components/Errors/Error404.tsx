@@ -15,7 +15,7 @@ const Error404 = () => {
         <div className='notfound-404-click' >
           <h3 style={{color: webColor}}>we are sorry, but the page you requested was not found.</h3>
           <br />
-          <h3 style={{color: webColor}}>Please click <a style={{color: "rgb(77,57,45)"}} href="http://localhost:3000/">here</a> to go back to the homepage.</h3>
+          <h3 style={{color: webColor}}>Please click <a style={{color: "rgb(77,57,45)"}} href="https://iretro.netlify.app/">here</a> to go back to the homepage.</h3>
         </div>
       </div>
     </div>
