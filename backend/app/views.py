@@ -1,3 +1,4 @@
+from smtplib import SMTPException
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -33,6 +34,45 @@ class MyTokenObtainPairView(TokenObtainPairView):
 #              Register
 # ====================================
 
+# @api_view(["POST"])
+# def register(request):
+#     data = request.data
+#     first_name = data["first_name"]
+#     last_name = data["last_name"]
+#     username = data["username"]
+#     email = data["email"]
+#     password = make_password(data["password"])
+#     try:
+#         duplicate_check = CustomUser.objects.get(username=username)
+#         return Response({"error": "This username already exists. Please select a different username."}, status=status.HTTP_400_BAD_REQUEST)
+#     except CustomUser.DoesNotExist:
+#         try:
+#             duplicate_check = CustomUser.objects.get(email=email)
+#             return Response(
+#                 {"error": "This email already exists."},
+#                 status=status.HTTP_400_BAD_REQUEST,
+#             )
+#         except CustomUser.DoesNotExist:
+#             user = CustomUser.objects.create(
+#                 first_name=first_name,
+#                 last_name=last_name,
+#                 username=username,
+#                 email=email,
+#                 password=password,
+#             )
+#             user.is_active = True
+#             user.is_staff = False  # To prevent bugs with normal customers
+#             serializer = CustomUserSerializer(user, many=False)
+#         try:
+#             subject = 'Thank you for registering to iRetro.'
+#             message = 'Thank you for registering on our site.'
+#             from_email = 'soccerstorelidor@gmail.com'
+#             recipient_list = [email]
+#             send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
+#             return Response(serializer.data)
+#         except: 
+#             return Response(serializer.data)
+
 @api_view(["POST"])
 def register(request):
     data = request.data
@@ -45,29 +85,40 @@ def register(request):
         duplicate_check = CustomUser.objects.get(username=username)
         return Response({"error": "This username already exists. Please select a different username."}, status=status.HTTP_400_BAD_REQUEST)
     except CustomUser.DoesNotExist:
-        try:
-            duplicate_check = CustomUser.objects.get(email=email)
-            return Response(
-                {"error": "This email already exists."},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        except CustomUser.DoesNotExist:
-            user = CustomUser.objects.create(
-                first_name=first_name,
-                last_name=last_name,
-                username=username,
-                email=email,
-                password=password,
-            )
-            user.is_active = True
-            user.is_staff = False  # To prevent bugs with normal customers
-            serializer = CustomUserSerializer(user, many=False)
-            subject = 'Thank you for registering to iRetro.'
-            message = 'Thank you for registering on our site.'
-            from_email = 'soccerstorelidor@gmail.com'
-            recipient_list = [email]
-            send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
-            return Response(serializer.data)
+        pass
+    try:
+        duplicate_check = CustomUser.objects.get(email=email)
+        return Response(
+            {"error": "This email already exists."},
+            status=status.HTTP_400_BAD_REQUEST,
+        )
+    except CustomUser.DoesNotExist:
+        pass
+    user = CustomUser.objects.create(
+        first_name=first_name,
+        last_name=last_name,
+        username=username,
+        email=email,
+        password=password,
+    )
+    user.is_active = True
+    user.is_staff = False  # To prevent bugs with normal customers
+    serializer = CustomUserSerializer(user, many=False)
+    try:
+        subject = 'Thank you for registering to iRetro.'
+        message = 'Thank you for registering on our site.'
+        from_email = 'soccerstorelidor@gmail.com'
+        recipient_list = [email]
+        send_mail(subject, message, from_email, recipient_list, fail_silently=False) # This sends an email registering a user.
+        user.save()
+        return Response(serializer.data)
+    except SMTPException as e:
+        # Handle email sending errors appropriately
+        # If e-mail system is down, user will still be created, to avoid confusion on frontend.
+        user.save()
+        return Response({"success": "user created, yet no e-mail will be sent."}, status=status.HTTP_201_CREATED)
+
+
 
 # ====================================
 #            User Profile
