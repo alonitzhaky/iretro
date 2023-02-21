@@ -34,7 +34,7 @@ export default function Product() {
     <div>
       {isLoading ? <div className="d-flex justify-content-center"><Spinner /></div> : <div className="text-center">
         {Number(id) === 1 &&
-          <h1 style={{ color: webColor }}>Smart Watched and  Chips</h1>
+          <h1 style={{ color: webColor }}>Smart Watches and Apple Chips</h1>
         }
         {Number(id) === 2 &&
           <h1 style={{ color: webColor }}>iPhone Kits</h1>

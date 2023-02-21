@@ -230,7 +230,7 @@ Please note that the admin panel is only accessible to users with appropriate pe
 # Disclaimers
 This is a concept website built as a final project for John Bryce Training. All rights are reserved to © Grid Studio, including photos and products. 
 
-## Author
+# Authors
 
 [![Alon Itzhaky](https://img.shields.io/badge/Creator-Alon%20Itzhaky-informational?style=flat-square)](https://www.linkedin.com/in/alonitzhaky)
 

@@ -53,7 +53,7 @@ const Header = () => {
               </NavItem>
               <NavDropdown title="Shop">
                 <NavDropdown.Item as={Link} to="/product/1">
-                  Smart Watches &  Chips
+                  Smart Watches & Apple Chips
                 </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/product/2">
                   iPhone Kits
